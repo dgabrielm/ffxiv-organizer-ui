@@ -1,0 +1,21 @@
+<h1 class="page-header">Account Page</h1>
+
+<p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt unde nulla earum totam nesciunt, beatae animi,
+    enim velit saepe aut, quia molestiae corrupti vitae! Neque quod cupiditate quidem id perspiciatis. Lorem ipsum
+    dolor sit, amet consectetur adipisicing elit. Laudantium officiis rerum aliquam laboriosam, ad excepturi explicabo
+    quos maxime nam ea. Repellat, distinctio incidunt. Veniam aliquam deserunt quo placeat velit alias.</p>
+
+<table class="table">
+    <tbody>
+        <tr ng-repeat="(field, contents) in user">
+            <th scope="row">{{contents.display}}</th>
+            <td ng-hide="editMode">{{contents.value}}</td>
+            <td ng-show="editMode"><input type="text" class="form-control" placeholder="{{contents.value}}" ng-model="userNew[field]"></td>
+        </tr>
+    </tbody>
+</table>
+<!--Needs to have a log out method and an 'are you sure' confirmation. Implementation of log out will depend on the structure of the angular app so I need to think about it more carefully-->
+<button ng-hide="editMode" ng-click="toggleEditMode()" class="btn btn-default">Edit</button>
+<button ng-hide="editMode" ng-click="" class="btn btn-default">Log Out</button>
+<button ng-show="editMode" ng-click="update()" class="btn btn-default">Confirm</button>
+<button ng-show="editMode" ng-click="cancelUpdate()" class="btn btn-default">Cancel</button>

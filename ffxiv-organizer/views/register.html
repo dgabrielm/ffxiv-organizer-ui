@@ -1,0 +1,87 @@
+<h1 class="page-header">Register Account</h1>
+
+<p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt unde nulla earum totam nesciunt, beatae animi,
+    enim velit saepe aut, quia molestiae corrupti vitae! Neque quod cupiditate quidem id perspiciatis. Lorem ipsum
+    dolor sit, amet consectetur adipisicing elit.</p>
+
+{{register}}
+
+<form ng-submit="register()" name="registerForm" novalidate>
+
+    <div class="text-left">
+        <div class="form-group">
+            <label>Name</label>
+            <input type="text" name="first_name" class="form-control" placeholder="First Name" ng-model="register.first_name"
+                ng-required="true" />
+            <div ng-show="registerForm.first_name.$touched && registerForm.first_name.$invalid" class="text-danger text-center">Please
+                enter your first name</div>
+        </div>
+
+        <div class="form-group">
+            <input type="text" name="last_name" class="form-control" placeholder="Last Name" ng-model="register.last_name"
+                ng-required="true" />
+            <div ng-show="registerForm.last_name.$touched && registerForm.last_name.$invalid" class="text-danger text-center">Please
+                enter your last name</div>
+        </div>
+
+        <div class="form-group">
+            <label>Character Name</label>
+            <input type="text" name="character_name" class="form-control" ng-model="register.character_name"
+                placeholder="Optional" />
+        </div>
+
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email" name="email_address" class="form-control" placeholder="Email Address" ng-model="register.email_address"
+                ng-required="true" />
+            <div ng-show="registerForm.email_address.$touched && registerForm.email_address.$invalid" class="text-danger text-center">Please
+                enter a valid email address</div>
+        </div>
+
+        <div class="form-group">
+            <input type="email" name="validateEmail" class="form-control" placeholder="Confirm Email Address" ng-model="register.validateEmail"
+                ng-required="true" />
+            <div ng-show="registerForm.validateEmail.$touched && registerForm.validateEmail.$invalid" class="text-danger text-center">Please
+                enter a valid email address</div>
+        </div>
+
+        <!-- Emails don't match alert -->
+        <div ng-hide="register.validateEmail === register.email_address || registerForm.validateEmail.$untouched || registerForm.email_address.$untouched "
+            class="alert alert-warning" role="alert">Email addresses do not match</div>
+
+        <div class="form-group">
+            <label>Username</label>
+            <input type="text" name="username" class="form-control" placeholder="Choose Username" ng-model="register.username"
+                ng-required="true" ng-minlength="4" ng-maxlength="20" />
+            <div ng-show="registerForm.username.$touched && registerForm.username.$invalid" class="text-danger text-center">Please
+                enter a valid username. Usernames must be between 4 - 20 characters </div>
+        </div>
+
+        <!-- Username availability alert -->
+        <div ng-show="usernameIsAvailable() && registerForm.username.$valid" class="alert alert-success" role="alert">Username is available</div>
+
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" name="password" class="form-control" placeholder="Choose Password" ng-model="register.password"
+                ng-required="true" ng-minlength="6" ng-maxlength="10" />
+            <div ng-show="registerForm.password.$touched && registerForm.password.$invalid" class="text-danger text-center">Please
+                enter a valid password. Passwords must be between 6 - 10 characters</div>
+        </div>
+
+        <div class="form-group">
+            <input type="password" name="validatePassword" class="form-control" placeholder="Confirm Password" ng-model="register.validatePassword"
+                ng-required="true" />
+            <div ng-show="registerForm.validatePassword.$touched && registerForm.validatePassword.$invalid" class="text-danger text-center">Please
+                enter a valid password</div>
+        </div>
+
+        <!-- Emails don't match alert -->
+        <div ng-hide="register.validatePassword === register.password || registerForm.validatePassword.$untouched || registerForm.password.$untouched "
+            class="alert alert-warning" role="alert">Passwords do not match</div>
+
+
+    </div>
+
+    <input type="submit" class="btn btn-primary" value="Register" ng-disabled="registerForm.$invalid || !isValidForm()" />
+    <a href="#!/login" class="btn btn-default">Log In</a>
+</form>

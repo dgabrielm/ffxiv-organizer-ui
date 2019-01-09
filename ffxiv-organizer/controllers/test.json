@@ -1,0 +1,17 @@
+[
+    {
+        "name": "Dario",
+        "age": 27,
+        "working": true
+    },
+    {
+        "name": "Qilian",
+        "age": 28,
+        "working": true
+    },
+    {
+        "name": "Michael",
+        "age": 80,
+        "working": false
+    }
+]

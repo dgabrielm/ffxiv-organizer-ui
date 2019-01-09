@@ -2,12 +2,12 @@
   "name": "ffxiv-organizer-ui",
   "version": "0.1.0-SNAPSHOT",
   "description": "User Interface for ffxiv-organizer.app",
-  "main": "app.js",
+  "main": "server.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "start": "node app",
+    "start": "node server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

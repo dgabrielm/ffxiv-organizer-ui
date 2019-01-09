@@ -1,0 +1,46 @@
+<html lang="en">
+
+<head>
+
+   <base href="/" />
+   <title>FFXIV-Organizer APP</title>
+
+   <!-- Metadata -->
+   <meta charset="utf-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+   <!-- Angular Imports-->
+   <script src="js/angular.min.js"></script>
+   <script src="js/angular-route.min.js"></script>
+   <script src="js/angular-animate.min.js"></script>
+   <script src="app.js"></script>
+   <script src="controllers/test.controller.js"></script>
+   <script src="controllers/account.controller.js"></script>
+   <script src="controllers/register.controller.js"></script>
+   <script src="directives/test.directive.js"></script>
+
+   <!-- Stylesheet imports -->
+   <link rel="stylesheet" href="css/bootstrap.min.css" />
+   <link rel="stylesheet" href="css/styles.css" />
+
+</head>
+
+<body ng-app="ffxivOrganizer" ng-controller="appController">
+
+   <!-- Navigation -->
+   <header ng-include="'partials/header.html'"></header>
+
+   <!-- Jumbotron -->
+   <ng-include src="'partials/jumbotron.html'"></ng-include>
+
+   <!-- View -->
+   <main ng-view class="container text-center"></main>
+
+   <!-- JavaScript imports -->
+   <script src="js/jquery.min.js"></script>
+   <script src="js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

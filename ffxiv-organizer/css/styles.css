@@ -1,0 +1,56 @@
+.navbar {
+    margin-bottom:0;
+    border-radius:0;
+  }
+/* 
+.jumbotron {
+    background-color: #fdfabf;
+} */
+
+
+
+/* ANIMATIONS */
+
+/* View fade in transition */
+main.ng-enter {
+    transition: 0.5s linear all;
+    opacity: 0;
+}
+
+main.ng-enter.ng-enter-active {
+    opacity: 1;
+}
+
+input.ng-invalid.ng-touched {
+    border: 2px solid red;
+}
+
+/* Person table list item fades in and moves up from 30px below */
+#people-list tr.ng-enter {
+    transition: 0.2s linear all;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+#people-list tr.ng-enter.ng-enter-active {
+    opacity: 1;
+    transform: translateY(0px);
+}
+
+/* Person table list item out when you delete item */
+#people-list tr.ng-leave {
+    transition: 0.2s linear all;
+    opacity: 1;
+    transform: translateX(0px);
+}
+
+#people-list tr.ng-leave.ng-leave-active {
+    opacity: 0;
+    transform: translateX(-100%);
+}
+
+/* Stagger animation */
+#people-list tr.ng-leave-stagger {
+    transition-delay: 0.1s;
+    transition-duration: 0;
+}

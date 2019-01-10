@@ -3,7 +3,11 @@ const app = express();
 const path = require ('path');
 
 // sets root directory to 'public'
-app.use(express.static(path.join(__dirname, 'ffxiv-organizer')));
+app.use(express.static(path.join(__dirname, 'public')));
+
+// app.get('/*', (req, res) => {
+//    res.sendFile('index.html', { root: 'public/'});
+// });
 
 app.get('/', (req, res) => {
    res.sendFile('index.html');
@@ -12,4 +16,3 @@ app.get('/', (req, res) => {
 app.listen(8888, () => {
    console.log('app has started successfully');
 });
-

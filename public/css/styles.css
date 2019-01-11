@@ -19,6 +19,8 @@ input.ng-invalid.ng-touched {
     border: 2px solid red;
 }
 
+
+
 /* Person table list item fades in and moves up from 30px below */
 #people-list tr.ng-enter {
     transition: 0.2s linear all;

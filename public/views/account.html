@@ -4,18 +4,86 @@
     enim velit saepe aut, quia molestiae corrupti vitae! Neque quod cupiditate quidem id perspiciatis. Lorem ipsum
     dolor sit, amet consectetur adipisicing elit. Laudantium officiis rerum aliquam laboriosam, ad excepturi explicabo
     quos maxime nam ea. Repellat, distinctio incidunt. Veniam aliquam deserunt quo placeat velit alias.</p>
+<form ng-submit="update()" name="updateAccountForm" novalidate>
+    <table class="table">
+        <tbody>
+            <tr>
+                <th scope="row">First Name</th>
+                <td ng-hide="editMode">{{user.first_name}}</td>
+                <td ng-show="editMode"><input type="text" name="first_name" class="form-control" placeholder="{{user.first_name}}"
+                        ng-model="userUpdate.first_name" /></td>
+            </tr>
+            <tr>
+                <th scope="row">Last Name</th>
+                <td ng-hide="editMode">{{user.last_name}}</td>
+                <td ng-show="editMode"><input type="text" name="last_name" class="form-control" placeholder="{{user.last_name}}"
+                        ng-model="userUpdate.last_name" /></td>
+            </tr>
+            <tr>
+                <th scope="row">Character Name</th>
+                <td ng-hide="editMode">{{user.character_name}}</td>
+                <td ng-show="editMode"><input type="text" name="character_name" class="form-control" placeholder="{{user.character_name}}"
+                        ng-model="userUpdate.character_name" /></td>
+            </tr>
+            <tr>
+                <th scope="row">Email Address</th>
+                <td ng-hide="editMode">{{user.email_address}}</td>
+                <td ng-show="editMode"><input type="email" name="email_address" class="form-control" placeholder="{{user.email_address}}"
+                        ng-model="userUpdate.email_address" /></td>
+                <!-- Email Error Message -->
+                <div ng-show="updateAccountForm.email_address.$touched && updateAccountForm.email_address.$invalid"
+                    class="text-danger text-center">Please
+                    enter a valid email address. </div>
+            </tr>
+            <tr>
+                <th scope="row">Username</th>
+                <td ng-hide="editMode">{{user.username}}</td>
+                <td ng-show="editMode"><input type="text" name="username" class="form-control" placeholder="{{user.username}}"
+                        ng-model="userUpdate.username" ng-minlength="4" ng-maxlength="20" /></td>
+                <!-- Username Error Message -->
+                <div ng-show="updateAccountForm.username.$touched && updateAccountForm.username.$invalid" class="text-danger text-center">Please
+                    enter a valid username. Usernames must be between 4 - 20 characters </div>
+            </tr>
+            <tr ng-show="editMode">
+                <th scope="row">Current Password</th>
+                <td><input type="password" name="password" class="form-control" placeholder="Required" ng-model="userUpdate.current_passsword"
+                        ng-required="true" ng-minlength="6" ng-maxlength="10" /></td>
+            </tr>
+            <tr ng-show="editMode">
+                <th scope="row">New Password</th>
+                <td><input type="password" name="new_password" class="form-control" placeholder="Optional" ng-model="userUpdate.new_password"
+                        ng-minlength="6" ng-maxlength="10" /></td>
+                <!-- Password Error Message -->
+                <div ng-show="updateAccountForm.new_password.$touched && updateAccountForm.new_password.$invalid" class="text-danger text-center">Please
+                    enter a valid password. Passwords must be between 6 - 10 characters</div>
+            </tr>
+            <tr ng-show="editMode">
+                <th scope="row">Confirm New Password</th>
+                <td><input type="password" name="new_password_confirm" class="form-control" placeholder="Optional"
+                        ng-model="userUpdate.new_password_confirm" ng-minlength="6" ng-maxlength="10" /></td>
+            </tr>
+        </tbody>
+    </table>
 
-<table class="table">
-    <tbody>
-        <tr ng-repeat="(field, contents) in user">
-            <th scope="row">{{contents.display}}</th>
-            <td ng-hide="editMode">{{contents.value}}</td>
-            <td ng-show="editMode"><input type="text" class="form-control" placeholder="{{contents.value}}" ng-model="userNew[field]"></td>
-        </tr>
-    </tbody>
-</table>
-<!--Needs to have a log out method and an 'are you sure' confirmation. Implementation of log out will depend on the structure of the angular app so I need to think about it more carefully-->
+    <!-- Passwords don't match alert -->
+    <div ng-hide="userUpdate.new_password_confirm === userUpdate.new_password || updateAccountForm.new_password_confirm.$untouched || updateAccountForm.new_password.$untouched "
+        class="alert alert-warning" role="alert">Passwords do not match</div>
+
+    <!-- Buttons -->
+    <input ng-show="editMode" type="submit" class="btn btn-primary" value="Confirm" ng-disabled="updateAccountForm.$invalid || !newPasswordsMatch()" />
+    <button ng-show="editMode" ng-click="cancelUpdate()" class="btn btn-default">Cancel</button>
+
+</form>
 <button ng-hide="editMode" ng-click="toggleEditMode()" class="btn btn-default">Edit</button>
-<button ng-hide="editMode" ng-click="" class="btn btn-default">Log Out</button>
-<button ng-show="editMode" ng-click="update()" class="btn btn-default">Confirm</button>
-<button ng-show="editMode" ng-click="cancelUpdate()" class="btn btn-default">Cancel</button>
+
+<br /><br />
+<!-- Data Saved Confirmation -->
+<div ng-show="dataSaved" class="alert alert-success alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+    Account details successfully changed
+</div>
+<!-- Data Not Saved Alert -->
+<div ng-show="dataNotSaved" class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+    There was a problem and your account changes were not saved. Please check your password and try again. 
+</div>

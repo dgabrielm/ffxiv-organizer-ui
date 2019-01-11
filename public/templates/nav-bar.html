@@ -1,54 +1,56 @@
-<nav class="navbar navbar-inverse">
-   <div class="container-fluid">
-      <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="navbar-header">
-         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
-            aria-expanded="false">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-         </button>
-         <a href="#"><img class="navbar-brand" src="img/book-logo.png" /></a>
-         <a href="#"><img class="navbar-brand" src="img/dark-logo.png" /></a>
-      </div>
+<div>
+   <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+         <!-- Brand and toggle get grouped for better mobile display -->
+         <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+               aria-expanded="false">
+               <span class="sr-only">Toggle navigation</span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+            </button>
+            <a href="#"><img class="navbar-brand" src="img/book-logo.png" /></a>
+            <a href="#"><img class="navbar-brand" src="img/dark-logo.png" /></a>
+         </div>
 
-      <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-         <ul ng-show="true" class="nav navbar-nav">
-            <li class="active"><a href="/dashboard">Dashboard <span class="sr-only">(current)</span></a></li>
-            <li><a href="/database">Database</a></li>
-            <li><a href="/lists">Lists</a></li>
-            <li><a href="/inventory">Inventory</a></li>
-         </ul>
-         <ul class="nav navbar-nav navbar-right">
-            <li ng-show="true" class="dropdown">
-               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                  aria-expanded="false">username <span class="caret"></span></a>
-               <ul class="dropdown-menu">
-                  <li><a href="/account">Account</a></li>
-                  <li role="separator" class="divider"></li>
-                  <li><a href="#" ng-click="">log out</a></li>
-               </ul>
-            </li>
-            <li ng-hide="false" class="dropdown">
-               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                  aria-expanded="false">Not Logged In<span class="caret"></span></a>
-               <ul class="dropdown-menu">
-                  <form ng-submit="login()">
-                     <div class="form-group container-fluid">
-                        <input type="text" class="form-control" placeholder="Username">
-                     </div>
-                     <div class="form-group container-fluid">
-                        <input type="password" class="form-control" placeholder="Password">
-                     </div>
-                  </form>
-                  <li><a type="submit" href="">Log In</a></li>
-                  <li role="separator" class="divider"></li>
-                  <li><a href="/register">Register</a></li>
-               </ul>
-            </li>
-         </ul>
-      </div><!-- /.navbar-collapse -->
-   </div><!-- /.container-fluid -->
-</nav>
+         <!-- Collect the nav links, forms, and other content for toggling -->
+         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul ng-show="loggedIn" class="nav navbar-nav">
+               <li class="active"><a href="/dashboard">Dashboard <span class="sr-only">(current)</span></a></li>
+               <li><a href="/database">Database</a></li>
+               <li><a href="/lists">Lists</a></li>
+               <li><a href="/inventory">Inventory {{loggedIn}}</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+               <li ng-show="loggedIn" class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                     aria-expanded="false">username <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                     <li><a href="/account">Account</a></li>
+                     <li role="separator" class="divider"></li>
+                     <li><a href="#" ng-click="logout()">log out</a></li>
+                  </ul>
+               </li>
+               <li ng-hide="loggedIn" class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                     aria-expanded="false">Not Logged In<span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                     <form>
+                        <div class="form-group container-fluid">
+                           <input type="text" class="form-control" placeholder="Username">
+                        </div>
+                        <div class="form-group container-fluid">
+                           <input type="password" class="form-control" placeholder="Password">
+                        </div>
+                     </form>
+                     <li><a ng-click="login()" href="">Log In</a></li>
+                     <li role="separator" class="divider"></li>
+                     <li><a href="/register">Register</a></li>
+                  </ul>
+               </li>
+            </ul>
+         </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+   </nav>
+</div>

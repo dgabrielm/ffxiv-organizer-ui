@@ -31,18 +31,22 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
             controller: 'inventoryController'
         })
         .otherwise({
-            templateUrl: '/dashboard'
+            redirectTo: '/register'
         });
 
 }]);
 
 // while application runs
-// app.run(['$rootScope', '$location', function ($rootScope, $location) {
+app.run(['$location', 'sessionService', function ($location, sessionService) {
 
-//     $rootScope.$on("$locationChangeStart", function (event, next, current) {
-//         if ($rootScope.loggedIn === false) {
-//             $location.path('login');
-//         }
-//     });
+    // $rootScope.$on("$locationChangeStart", function (event, next, current) {
+    //     if ($rootScope.loggedIn === false) {
+    //         $location.path('login');
+    //     }
+    // });
 
-// }]);
+    // sessionService.$on("$locationChangeStart", function(event, next, current) {
+
+    // });
+
+}]);

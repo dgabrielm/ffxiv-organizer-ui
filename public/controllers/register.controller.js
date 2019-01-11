@@ -1,4 +1,16 @@
-app.controller('registerController', ['$scope', '$http', function ($scope, $http) {
+app.controller('registerController', ['$scope', '$http', 'sessionService', '$location', function ($scope, $http, sessionService, $location) {
+
+    // $scope.login = function() {
+    //     sessionService.login();
+    //     $location.path('/dashboard');
+    //     $scope.loggedIn = sessionService.loggedIn;
+    // };
+
+    $scope.logInMode = true;
+
+    $scope.toggleLogInMode = function() {
+        $scope.logInMode = !$scope.logInMode;
+    };
 
     $scope.isValidForm = function() {
         return $scope.register.validateEmail === $scope.register.email_address && $scope.register.password === $scope.register.validatePassword;

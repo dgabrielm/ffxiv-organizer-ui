@@ -1,12 +1,16 @@
-app.controller('appController', ['$scope', '$location', function ($scope, $location) {
+app.controller('appController', ['$scope', '$location', 'sessionService', '$window', function ($scope, $location, sessionService, $window) {
 
-    // $scope.user = {};
+    $scope.loggedIn = sessionService.loggedIn;
 
-    // $scope.loggedIn = false;
+    $scope.login = function() {
+        sessionService.login();
+        $location.path('/dashboard');
+        $scope.loggedIn = sessionService.loggedIn;
+    };
 
-    // $scope.login = function() {
-    //     $scope.loggedIn = true;
-    //     $location.path('dashboard');
-    // };
+    $scope.logout = function() {
+        sessionService.logout();
+        $window.location.href = '/';
+    };
 
 }]);

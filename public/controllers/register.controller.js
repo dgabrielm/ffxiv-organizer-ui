@@ -1,15 +1,15 @@
 app.controller('registerController', ['$scope', '$http', 'sessionService', '$location', function ($scope, $http, sessionService, $location) {
 
-    // $scope.login = function() {
-    //     sessionService.login();
-    //     $location.path('/dashboard');
-    //     $scope.loggedIn = sessionService.loggedIn;
-    // };
-
     $scope.logInMode = true;
 
     $scope.toggleLogInMode = function() {
         $scope.logInMode = !$scope.logInMode;
+    };
+
+    $scope.login = function() {
+        sessionService.login();
+        $location.path('/database');
+        $scope.loggedIn = sessionService.loggedIn;
     };
 
     $scope.isValidForm = function() {

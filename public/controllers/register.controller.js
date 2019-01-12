@@ -1,25 +1,42 @@
-app.controller('registerController', ['$scope', '$http', 'userService', function ($scope, $http, userService) {
+app.controller('registerController', ['$scope', '$http', 'userAuthService', function ($scope, $http, userAuthService) {
 
-    $scope.logInMode = true;
+    $scope.loginMode = true;
 
-    $scope.toggleLogInMode = function() {
-        $scope.logInMode = !$scope.logInMode;
-    };
+    $scope.toggleLoginMode = function () {
+        $scope.loginMode = !$scope.loginMode;
+    }
 
-    $scope.login = userService.login;
+    $scope.login = userAuthService.login;
 
-    $scope.isValidForm = function() {
+    $scope.registerFailed = false;
+    $scope.registerSuccessful = false;
+
+    $scope.isValidForm = function () {
         return $scope.register.validateEmail === $scope.register.email_address && $scope.register.password === $scope.register.validatePassword;
     };
 
     // need to implement this to check db for username
     // should cache a list of users on the api so that response can be fast!
-    $scope.usernameIsAvailable = function() {
+    $scope.usernameIsAvailable = function () {
         return true;
     };
 
-    // need to implement to create user on db
-    $scope.registerUser = function() {
+    $scope.registerUser = function () {
+
+        // reset user feedback variables
+        $scope.registerFailed = false;
+        $scope.registerSuccessful = false;
+
+        $http.post('http://192.168.0.4:9876/users/', $scope.register)
+            .then(function (response) {
+                if (response.data !== null) {
+                    console.log(response);
+                    $scope.loginMode = true;
+                    $scope.registerSuccessful = true;
+                } else {
+                    $scope.registerFailed = false;
+                }
+            });
 
     };
 

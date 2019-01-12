@@ -1,5 +1,6 @@
-app.controller('accountController', ['$scope', 'userService', function ($scope, userService) {
+app.controller('accountController', ['$scope', 'userService', '$http', function ($scope, userService, $http) {
 
+    $scope.user = userService.user;
     $scope.editMode = false;
 
     $scope.dataSaved = false;
@@ -13,55 +14,32 @@ app.controller('accountController', ['$scope', 'userService', function ($scope, 
         return $scope.userUpdate.new_password === $scope.userUpdate.new_password_confirm;
     };
 
-    // need to implement cancelUpdate()
+    $scope.cancelUpdate = function() {
+        $scope.userUpdate = {};
+        $scope.toggleEditMode();
+        $scope.dataNotSaved = true;
+    }
 
-    $scope.update = function () {
+    $scope.updateUser = function () {
 
         // Reset user feedback variables
         $scope.dataSaved = false;
         $scope.dataNotSaved = false;
 
-        // update local user object (updates each field only if new information has been passed)
-        $scope.user = {
-            first_name: $scope.userUpdate.first_name === undefined || $scope.userUpdate.first_name === '' ? userService.first_name : $scope.userUpdate.first_name,
-            last_name: $scope.userUpdate.last_name === undefined || $scope.userUpdate.last_name === '' ? userService.last_name : $scope.userUpdate.last_name,
-            email_address: $scope.userUpdate.email_address === undefined || $scope.userUpdate.email_address === '' ? userService.email_address : $scope.userUpdate.email_address,
-            character_name: $scope.userUpdate.character_name === undefined || $scope.userUpdate.character_name === '' ? userService.character_name : $scope.userUpdate.character_name,
-            username: $scope.userUpdate.username === undefined || $scope.userUpdate.username === '' ? userService.username : $scope.userUpdate.username,
-            new_password: $scope.userUpdate.new_password === undefined || $scope.userUpdate.new_password === '' ? undefined : $scope.userUpdate.new_password
-        }
+        // Assign new password
+        $scope.userUpdate.password = $scope.userUpdate.new_password;
 
-        // verify password
-        if (userService.validatePassword($scope.username, $scope.userUpdate.current_passsword)) {
-            // pass this user object to the db
-            userService.updateUserDatabase($scope.username, $scope.userUpdate.current_passsword, $scope.user);
+        $http.post('http://192.168.0.4:9876/users/' + $scope.user.username + '/' + $scope.userUpdate.current_password, $scope.userUpdate)
+            .then(function (response) {
+                $scope.userUpdate = {};
+                if (response.data !== null) {
+                    $scope.loginMode = true;
+                    $scope.dataSaved = true;
+                } else {
+                    $scope.dataNotSaved = true;
+                }
+            });
 
-            // confirm success
-            $scope.dataSaved = true;
-        } else {
-            // reset user object
-            $scope.user = $scope.getUser();
-
-            //confirm failure
-            $scope.dataNotSaved = true;
-        }
-        // clear input data
-        $scope.userUpdate = {};
-
-        // return to 
-        $scope.toggleEditMode();
     }
-
-    $scope.getUser = function() {
-        return {
-            first_name: userService.first_name,
-            last_name: userService.last_name,
-            email_address: userService.email_address,
-            character_name: userService.character_name,
-            username: userService.username
-        };
-    }
-
-    $scope.user = $scope.getUser();
 
 }])

@@ -3,12 +3,12 @@
 
     <form>
         <div class="form-group">
-            <input type="text" class="form-control" placeholder="Username">
+            <input type="text" class="form-control" placeholder="Username" ng-model="loginDetails.usr">
         </div>
         <div class="form-group">
-            <input type="password" class="form-control" placeholder="Password">
+            <input type="password" class="form-control" placeholder="Password" ng-model="loginDetails.pwd">
         </div>
-        <button class="btn btn-primary" ng-click="login()">Log In</button>
-        <button class="btn btn-default" ng-click="toggleLogInMode()">Register</button>
+        <button class="btn btn-primary" ng-click="login(loginDetails.usr, loginDetails.pwd)">Log In</button>
+        <button class="btn btn-default" ng-click="setRegister()">Register</button>
     </form>
 </div>

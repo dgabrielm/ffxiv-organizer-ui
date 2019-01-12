@@ -1,4 +1,4 @@
-app.controller('registerController', ['$scope', '$http', 'sessionService', '$location', function ($scope, $http, sessionService, $location) {
+app.controller('registerController', ['$scope', '$http', 'userService', function ($scope, $http, userService) {
 
     $scope.logInMode = true;
 
@@ -6,11 +6,7 @@ app.controller('registerController', ['$scope', '$http', 'sessionService', '$loc
         $scope.logInMode = !$scope.logInMode;
     };
 
-    $scope.login = function() {
-        sessionService.login();
-        $location.path('/database');
-        $scope.loggedIn = sessionService.loggedIn;
-    };
+    $scope.login = userService.login;
 
     $scope.isValidForm = function() {
         return $scope.register.validateEmail === $scope.register.email_address && $scope.register.password === $scope.register.validatePassword;

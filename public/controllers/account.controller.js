@@ -13,7 +13,8 @@ app.controller('accountController', ['$scope', 'userService', function ($scope, 
         return $scope.userUpdate.new_password === $scope.userUpdate.new_password_confirm;
     };
 
-    // need to implement
+    // need to implement cancelUpdate()
+
     $scope.update = function () {
 
         // Reset user feedback variables

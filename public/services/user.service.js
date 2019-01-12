@@ -1,4 +1,4 @@
-app.factory('userService', ['$http', function ($http) {
+app.factory('userService', ['$http', '$location', '$window', function ($http, $location, $window) {
 
     // example get request
     // $http.get("controllers/test.json")
@@ -6,10 +6,14 @@ app.factory('userService', ['$http', function ($http) {
     //         rtn.people = response.data;
     //     });
 
+    var name = 'Dario';
+
     // Starting with example data;
-    var user = {
+    var rtn = {
+        user: undefined,
         _id: '1',
-        first_name: 'Dario',
+        // leave this in temporarily so we don't break the account page... / register page
+        first_name: name,
         last_name: 'Mincioni',
         email_address: 'dgm726@student.bham.ac.uk',
         character_name: 'Rufus Mao',
@@ -22,15 +26,19 @@ app.factory('userService', ['$http', function ($http) {
         updateUserDatabase: function(usr, pwd, newUser) {
 
         },
-        getUser: function() {
-            
-        }
+        login: function() {
+            // need to implement
+            this.loggedIn = true;
+            $location.path('/dashboard');
+        },
+        logout: function() {
+            // need to implement
+            this.loggedIn = false;
+            $window.location.href = '/';
+        },
+        loggedIn: false
     };
 
-    var UserLogIn = function() {
-
-    };
-
-    return user;
+    return rtn;
 
 }]);

@@ -5,30 +5,19 @@ app.directive('navBar', [function() {
         templateUrl: 'templates/nav-bar.html',
         transclude: true,
         replace: true,
-        controller: function($scope, sessionService, $location, $window) {
-            $scope.loggedIn = sessionService.loggedIn;
+        controller: function($scope, userService) {
+            
+            $scope.loggedIn = userService.loggedIn;
 
             $scope.$watch(function(){
-                return sessionService.loggedIn;
+                return userService.loggedIn;
              }, function(newValue, oldValue){
-                $scope.loggedIn = sessionService.loggedIn;
+                $scope.loggedIn = userService.loggedIn;
              });
 
-            $scope.login = function() {
-                sessionService.login();
-                $location.path('/database');
-                // $scope.loggedIn = sessionService.loggedIn;
-            };
-        
-            $scope.logout = function() {
-                sessionService.logout();
-                $window.location.href = '/';
-            };
-        },
-        link: function(scope, element, attrs) {
-            scope.$watch("loggedIn",function(newValue,oldValue) {
-                //This gets called when data changes.
-            });
-         }
+            $scope.login = userService.login;
+            $scope.logout = userService.logout;
+
+        }
     };
 }]);

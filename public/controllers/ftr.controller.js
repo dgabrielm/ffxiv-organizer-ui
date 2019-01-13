@@ -1,0 +1,4 @@
+app.controller('ftrController', [function () {
+
+
+}]);

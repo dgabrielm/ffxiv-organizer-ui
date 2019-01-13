@@ -1,7 +1,4 @@
-app.factory('searchResultsService',[function() {
+app.service('searchResultsService',[function() {
 
-    return {
-
-    };
 
 }]);

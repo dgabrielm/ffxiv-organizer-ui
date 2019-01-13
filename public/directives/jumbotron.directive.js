@@ -5,8 +5,6 @@ app.directive('jumbotron', [function() {
         templateUrl: 'templates/jumbotron.html',
         transclude: true,
         replace: true,
-        controller: function() {
-            
-        }
+        controller: 'jumbotronController'
     };
 }]);

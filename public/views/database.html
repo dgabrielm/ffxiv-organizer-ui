@@ -6,17 +6,13 @@
     <div class="row">
         <div class="col-md-11 col-sm-11">
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Search the FFXIV items database" ng-model="searchQuery">
+                <input type="text" class="form-control" placeholder="Search the FFXIV items database" ng-model="searchQuery" />
             </div>
         </div>
         <div class="col-md-1 col-sm-1">
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>
     </div>
-
-    <!-- <ul>
-        <li ng-repeat="result in results">{{result.name}}</li>
-    </ul> -->
 
     <table class="table table-striped table-bordered table-hover table-condensed">
         <tr ng-repeat="result in results">
@@ -25,21 +21,90 @@
                     <div class="col-md-1 align-middle">
                         <img ng-src="https://xivapi.com/i2/{{result._id}}.png" />
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <h4>{{result.name}}</h4>
                         <small>{{result.description}}</small>
                     </div>
-                    <div class="col-md-1">
-                        <ul class="list-inline">
-                            <li ng-repeat="(craft, recipe) in result.ingredients" ng-if="recipe.length != 0"><img ng-src="img/craft-icons/{{craft}}.png" /></li>
+                    <div class="col-md-4">
+
+                        <br />
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <button class="btn btn-default btn-sm" type="button">Inventory</button>
+                            </div>
+                            <div class="col-md-4">
+                                <input class="form-control input-sm" type="number" placeholder="0" />
+                            </div>
+                            <div class="col-md-4">
+                                <button class="btn btn-default input-sm">Update</button>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="dropdown">
+                                    <button class="btn btn-default dropdown-toggle btn-sm" type="button" data-toggle="dropdown">Craft-Lists
+                                        <span class="caret"></span></button>
+                                    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Craft List 1</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <input class="form-control input-sm" type="number" placeholder="0" />
+                            </div>
+                            <div class="col-md-4">
+                                <button class="btn btn-default input-sm">Update</button>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="dropdown">
+                                    <button class="btn btn-default dropdown-toggle btn-sm" type="button" data-toggle="dropdown">Obtain-Lists
+                                        <span class="caret"></span></button>
+                                    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">List 1</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <input class="form-control input-sm" type="number" placeholder="0" />
+                            </div>
+                            <div class="col-md-4">
+                                <button class="btn btn-default input-sm">Update</button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-2">
+                        <ul ng-if="result.ingredients != null" class="list-inline align-middle">
+                            <h5>Crafting Class</h5>
+                            <li ng-repeat="(craft, recipe) in result.ingredients track by $index" ng-if="recipe.length != 0">
+                                <img class="btn-default" ng-src="img/craft-icons/{{craft}}.png" ng-click="result.displayMode = craft " />
+                            </li>
                         </ul>
                     </div>
                     <div class="col-md-3">
+                        <h5 class="text-capitalize">{{result.displayMode}}</h5>
+                        <ul class="list-unstyled" ng-if="result.ingredients != null">
+                            <li class="row" ng-repeat="item in result.ingredients[result.displayMode] track by $index">
+                                <div ng-if="$index % 4 == 0 || $index == 0" class="ingredient">
+                                    <div class="col-md-2">
+                                        <img ng-src="https://xivapi.com/i/{{convertIcon(result.ingredients[result.displayMode][$index + 3])}}.png"
+                                            width="20" height="20" />
+                                    </div>
+                                    <div class="col-md-8">
+                                        <small>{{result.ingredients[result.displayMode][$index + 2]}}</small>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <small>{{result.ingredients[result.displayMode][$index + 1]}}</small>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
-                    <div class="col-md-4">
-
-                    </div>
-
                 </td>
             </div>
         </tr>

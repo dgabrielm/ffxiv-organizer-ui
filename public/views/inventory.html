@@ -1,1 +1,18 @@
 <h1>Inventory App</h1>
+
+<br /><br />
+
+<div ng-show="hasInventory">
+    <div class="col-md-8">
+        <ul class="list-group">
+            <li ng-repeat="(item, qty) in inventory" class="list-group-item">{{item}}</li>
+        </ul>
+    </div>
+    <div class="col-md-4">
+        IMPORT
+    </div>
+</div>
+
+<div ng-hide="hasInventory">
+    <button>Create Inventory</button>
+</div>

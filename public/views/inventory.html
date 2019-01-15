@@ -2,7 +2,7 @@
 
 <br /><br />
 
-<div ng-show="hasInventory">
+<div ng-if="hasInventory">
     <div class="col-md-8">
         <ul class="list-group">
             <li ng-repeat="(item, qty) in inventory" class="list-group-item">{{item}}</li>
@@ -13,6 +13,6 @@
     </div>
 </div>
 
-<div ng-hide="hasInventory">
+<div ng-if="!hasInventory">
     <button>Create Inventory</button>
 </div>

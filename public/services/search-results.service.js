@@ -1,6 +1,6 @@
 app.service('searchResultsService',[function() {
 
-    this.results = {};
+    this.results = [];
     this.dbCache = {};
 
 }]);

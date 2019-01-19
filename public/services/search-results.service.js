@@ -1,6 +1,6 @@
-app.service('searchResultsService',[function() {
+app.service('searchResultsService', ['$http', function($http) {
 
-    this.results = [];
-    this.dbCache = {};
+    this.results = []; 
+    // this.categories = [];
 
 }]);

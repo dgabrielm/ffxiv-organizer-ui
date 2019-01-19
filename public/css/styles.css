@@ -7,6 +7,20 @@
     margin: 1px;
 }
 
+.padding-zero {
+    padding: 0;
+}
+
+/* .margin-zero {
+    margin: 0;
+} */
+
+.scrollable-menu {
+    height: auto;
+    max-height: 200px;
+    overflow-x: hidden;
+}
+
 /* .row-bottom-margin { 
     margin: 0px;
     border: 1px black;

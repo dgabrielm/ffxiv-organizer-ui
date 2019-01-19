@@ -5,6 +5,7 @@ app.controller('databaseController', ['$scope', '$http', 'searchResultsService',
     $scope.results = searchResultsService.results;
     $scope.categories = searchResultsService.categories;
     $scope.resultsPerPage = 50;
+    $scope.craftableOnly = true;
 
     $scope.$watch(function () {
         return searchResultsService.results;
@@ -31,14 +32,37 @@ app.controller('databaseController', ['$scope', '$http', 'searchResultsService',
         $http.get('http://192.168.0.4:6789/items/category/' + category)
             .then(function (response) {
                 if (response.data.length !== 0) {
-                    
                     $scope.processResults(response.data);
+
+                    if (searchResultsService.results[0].length < 1) {
+                        $scope.noCategoryResults = true;
+                    }
 
                 } else {
                     // // need to use this variable to provide some visual feedback
                     $scope.noCategoryResults = true;
                 }
+                $scope.searchNameQuery = category;
+            });
 
+    };
+
+    $scope.searchDatabaseById = function (id, name) {
+
+        $scope.resetVariables();
+
+        // in the case where the user clicks on an ingredient - that ingredient might not be craftable and so should not be hidden
+        $scope.craftableOnly = false;
+
+        $http.get('http://192.168.0.4:6789/items/id/' + id)
+            .then(function (response) {
+                if (response.data.length !== 0) {
+                    $scope.processResults(response.data);
+                } else {
+                    // // need to use this variable to provide some visual feedback
+                    $scope.noResults = true;
+                }
+                $scope.searchNameQuery = name;
             });
 
     };
@@ -52,6 +76,10 @@ app.controller('databaseController', ['$scope', '$http', 'searchResultsService',
                 if (response.data.length !== 0) {
                     
                     $scope.processResults(response.data);
+
+                    if (searchResultsService.results[0].length < 1) {
+                        $scope.noResults = true;
+                    }
 
                 } else {
                     // // need to use this variable to provide some visual feedback
@@ -67,6 +95,7 @@ app.controller('databaseController', ['$scope', '$http', 'searchResultsService',
         var item = 0;
 
         results.forEach(result => {
+            item++;
             if (result.ingredients != null) {
                 if (result.ingredients.carpenter.length != 0) { result.displayMode = 'carpenter'; }
                 else if (result.ingredients.blacksmith.length != 0) { result.displayMode = 'blacksmith'; }
@@ -76,9 +105,14 @@ app.controller('databaseController', ['$scope', '$http', 'searchResultsService',
                 else if (result.ingredients.weaver.length != 0) { result.displayMode = 'weaver'; }
                 else if (result.ingredients.alchemist.length != 0) { result.displayMode = 'alchemist'; }
                 else if (result.ingredients.culinarian.length != 0) { result.displayMode = 'culinarian'; }
+                searchResultsService.results[page].push(result);
+            } else { // else: there is no ingredient information for this data
+                // only push non-craftable items if cratable only mode equals false
+                if ($scope.craftableOnly === false) {
+                    searchResultsService.results[page].push(result);
+                }
             }
-            item++;
-            searchResultsService.results[page].push(result);
+
             if (item == $scope.resultsPerPage) {
                 page++;
                 $scope.numberOfPages.push(page);

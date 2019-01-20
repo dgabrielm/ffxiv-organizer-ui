@@ -13,7 +13,7 @@
             <div class="panel-heading">
                 <h3 class="panel-title">Inventory</h3>
             </div>
-            <div class="panel-body">
+            <div class="panel-body inventory-panel">
                 <table class="table table-hover table-condensed margin-zero padding-zero">
                     <tr>
                         <th>Icon</th>
@@ -24,12 +24,12 @@
                         <th></th>
                     </tr>
                     <tr ng-repeat="item in inventory | orderBy: 'name' | filter: search ">
-                        <td><img ng-src="https://xivapi.com/i/{{convertIcon(item.icon_id)}}.png" width="20" height="20" /></td>
+                        <td><img ng-src="https://xivapi.com/i/{{convertIcon(item.icon_id)}}.png" width="28" height="28" /></td>
+                        <td>{{item.name}}</td>
+                        <td><input novalidate ng-required="true" ng-min="1" class="form-control input-sm" type="number" ng-model="item.qty" placeholder="0" ng-change="updateQty(item._id,item.qty); setUnsaved()" /></td>
                         <td>{{item.name}}</td>
                         <td>{{item.name}}</td>
-                        <td>{{item.qty}}</td>
-                        <td>{{item.name}}</td>
-                        <td>remove</td>
+                        <td><button class="btn btn-danger btn-sm delete-padding">x</button></td>
                     </tr>
                 </table>
             </div>
@@ -38,7 +38,42 @@
 
     </div>
     <div class="col-md-4">
-        IMPORT
+        <div ng-if="unsavedChanges" class="alert alert-warning" role="alert">
+            <h3>Save Changes</h3>
+            <br />
+            <p>You have unsaved changes to your inventory which will not be saved if you navigate away from FFXIV-Organizer. Please save or cancel changes below</p>
+            <br />
+            <button ng-click="persistChanges()" class="btn btn-primary">Save Changes</button>
+            <button ng-click="cancelChanges()" class="btn btn-danger">Cancel Changes</button>
+            <br />
+        </div>
+        <h3>Import Inventory</h3>
+        <br />
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est eius quas quia natus dolore nemo iste ab, illo
+            a. Laborum quos beatae ea perferendis ipsa. At accusamus architecto vitae assumenda?</p>
+        <br /><br />
+        <div class="well">
+            <div class="form-group">
+                <label>Upload CSV Representing Inventory</label>
+                <input type="file">
+                <p class="help-block">CSV files only</p>
+            </div>
+        </div>
+        <hr />
+        <div class="well">
+            <div class="form-group">
+                <label>Upload PDF downloaded from Lodestone</label>
+                <input type="file">
+                <p class="help-block">Coming Soon</p>
+            </div>
+        </div>
+        <hr />
+        <h3>Export Inventory</h3>
+        <br />
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est eius quas quia natus dolore nemo iste ab, illo
+            a. Laborum quos beatae ea perferendis ipsa. At accusamus architecto vitae assumenda?</p>
+        <br />
+        <button ng-click="downloadInventory()" class="btn btn-default">Download Inventory as CSV</button>
     </div>
 </div>
 

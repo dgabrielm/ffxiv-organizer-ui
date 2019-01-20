@@ -20,7 +20,7 @@
                <li class="active"><a href="/dashboard">Dashboard <span class="sr-only">(current)</span></a></li>
                <li><a href="/database">Database</a></li>
                <li><a href="/lists">Lists</a></li>
-               <li><a href="/inventory">Inventory</a></li>
+               <li><a href="/inventory">Inventory <span ng-if="inventoryChanges" class="label label-warning text-black">!</span></a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                <li ng-if="loggedIn" class="dropdown">

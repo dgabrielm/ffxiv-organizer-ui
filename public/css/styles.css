@@ -21,6 +21,24 @@
     overflow-x: hidden;
 }
 
+.inventory-panel {
+    height: auto;
+    max-height: 75%;
+    overflow-x: hidden;
+}
+
+.delete-padding {
+    padding: 0px 5px;
+}
+
+.text-black {
+    color: black;
+} 
+
+/* .default-cursor {
+    cursor: default;
+} */
+
 /* .row-bottom-margin { 
     margin: 0px;
     border: 1px black;

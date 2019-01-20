@@ -92,10 +92,10 @@
                                 <button class="btn btn-default btn-sm" type="button">Inventory</button>
                             </div>
                             <div class="col-md-4">
-                                <input class="form-control input-sm" type="number" placeholder="0" />
+                                <input class="form-control input-sm" type="number" ng-model="result.qty" placeholder="{{inventory[result._id].qty == undefined ? '0' : inventory[result._id].qty}}" />
                             </div>
                             <div class="col-md-4">
-                                <button class="btn btn-default input-sm">Update</button>
+                                <button type="button" class="btn btn-default btn-sm" ng-click="updateQtyOrAdd(result.name,result._id,result.icon_id,result.qty)" >Update</button>
                             </div>
                         </div>
 
@@ -113,7 +113,7 @@
                                 <input class="form-control input-sm" type="number" placeholder="0" />
                             </div>
                             <div class="col-md-4">
-                                <button class="btn btn-default input-sm">Update</button>
+                                <button type="button" class="btn btn-default btn-sm">Update</button>
                             </div>
                         </div>
 
@@ -131,7 +131,7 @@
                                 <input class="form-control input-sm" type="number" placeholder="0" />
                             </div>
                             <div class="col-md-4">
-                                <button class="btn btn-default input-sm">Update</button>
+                                <button type="button" class="btn btn-default btn-sm">Update</button>
                             </div>
                         </div>
 

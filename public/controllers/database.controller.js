@@ -1,4 +1,4 @@
-app.controller('databaseController', ['$scope', '$http', 'searchResultsService', '$window', 'iconService', function ($scope, $http, searchResultsService, $window, iconService) {
+app.controller('databaseController', ['$scope', '$http', 'searchResultsService', '$window', 'iconService', 'inventoryService', function ($scope, $http, searchResultsService, $window, iconService, inventoryService) {
 
     $scope.noResults = false;
     $scope.noCategoryResults = false;
@@ -6,6 +6,7 @@ app.controller('databaseController', ['$scope', '$http', 'searchResultsService',
     $scope.categories = searchResultsService.categories;
     $scope.resultsPerPage = 50;
     $scope.craftableOnly = true;
+    $scope.inventory = inventoryService.inventory;
 
     $scope.$watch(function () {
         return searchResultsService.results;
@@ -148,6 +149,33 @@ app.controller('databaseController', ['$scope', '$http', 'searchResultsService',
         $window.scrollTo(0, 0);
     }
 
+    $scope.updateQtyOrAdd = function(name, _id, icon_id, qty) {
+        if (qty !== 0 && qty !== null && qty !== undefined && qty != '') {
+            if (inventoryService.inventory[_id] !== undefined) {
+                inventoryService.inventory[_id].qty = qty;
+            } else {
+                inventoryService.inventory[_id] = {
+                    "name": name,
+                    "icon_id": icon_id,
+                    "qty": qty
+                };
+            }
+            inventoryService.unsavedChanges = true;
+        }
+    };
+
     $scope.convertIcon = iconService.convertIcon;
+
+    // $scope.createInventoryData = function() {
+    //     var obj = {};
+    //     $scope.results[0].forEach(item => {
+    //         obj[item._id] = {
+    //             name: item.name,
+    //             icon_id: item.icon_id,
+    //             qty: 1
+    //         };
+    //     });
+    //     $scope.inventoryData = obj;
+    // };
 
 }]);

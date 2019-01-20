@@ -1,105 +1,20 @@
 app.service('inventoryService', [function () {
 
-    this.inventory = {
-        '4201': {
-            name: 'Moogle Earrings',
-            icon_id: '48580',
-            qty: 1
-        },
-        '74350': {
-            name: 'Moogle Flooring',
-            icon_id: '60161',
-            qty: 200
-        },
-        '2653533': {
-            name: 'Moogle Cap',
-            icon_id: '40110',
-            qty: 5
-        },
-        '425351': {
-            name: 'Moogle Earrings',
-            icon_id: '48580',
-            qty: 1
-        },
-        '713550': {
-            name: 'Moogle Flooring',
-            icon_id: '60161',
-            qty: 200
-        },
-        '26533533': {
-            name: 'Moogle Cap',
-            icon_id: '40110',
-            qty: 5
-        },
-        '4235531': {
-            name: 'Moogle Earrings',
-            icon_id: '48580',
-            qty: 1
-        },
-        '7664336': {
-            name: 'Moogle Flooring',
-            icon_id: '60161',
-            qty: 200
-        },
-        '26634633': {
-            name: 'Moogle Cap',
-            icon_id: '40110',
-            qty: 5
-        },
-        '466436201': {
-            name: 'Moogle Earrings',
-            icon_id: '48580',
-            qty: 1
-        },
-        '76346650': {
-            name: 'Moogle Flooring',
-            icon_id: '60161',
-            qty: 200
-        },
-        '2663363': {
-            name: 'Moogle Cap',
-            icon_id: '40110',
-            qty: 5
-        },
-        '426366': {
-            name: 'Moogle Earrings',
-            icon_id: '48580',
-            qty: 1
-        },
-        '736663': {
-            name: 'Moogle Flooring',
-            icon_id: '60161',
-            qty: 200
-        },
-        '264364333': {
-            name: 'Moogle Cap',
-            icon_id: '40110',
-            qty: 5
-        },
-        '426466401': {
-            name: 'Moogle Earrings',
-            icon_id: '48580',
-            qty: 1
-        },
-        '716464350': {
-            name: 'Moogle Flooring',
-            icon_id: '60161',
-            qty: 200
-        },
-        '266463433': {
-            name: 'Moogle Cap',
-            icon_id: '40110',
-            qty: 5
-        },
-        '263446373': {
-            name: 'Angel Cap',
-            icon_id: '40110',
-            qty: 5
-        }
+    // t = this;
+
+    this.unsavedChanges = false;
+    // this.changes = function(bool) {
+    //    this.unsavedChanges = bool;
+    // };
+    this.persistChanges = function() {
+        // implement
     };
 
-    // this.inventoryArray = function() {
+    this.restoreInventory = function() {
+        this.inventory = this.backupInventory;
+    };
 
-    // };
+    this.inventory = {"5056":{"name":"Bronze Ingot","icon_id":"20803","qty":1},"5057":{"name":"Iron Ingot","icon_id":"20801","qty":1},"5058":{"name":"Steel Ingot","icon_id":"20802","qty":1},"5059":{"name":"Cobalt Ingot","icon_id":"20802","qty":1},"5060":{"name":"Darksteel Ingot","icon_id":"20804","qty":1},"5062":{"name":"Copper Ingot","icon_id":"20813","qty":1},"5063":{"name":"Brass Ingot","icon_id":"20815","qty":1},"5064":{"name":"Silver Ingot","icon_id":"20810","qty":1},"5065":{"name":"Mythril Ingot","icon_id":"20811","qty":1},"5066":{"name":"Electrum Ingot","icon_id":"20812","qty":1},"5067":{"name":"Rose Gold Ingot","icon_id":"20814","qty":1},"5069":{"name":"Gold Ingot","icon_id":"20809","qty":1},"7607":{"name":"Wolfram Ingot","icon_id":"20801","qty":1},"9358":{"name":"Wootz Ingot","icon_id":"20803","qty":1},"9360":{"name":"Platinum Ingot","icon_id":"20810","qty":1},"12519":{"name":"Mythrite Ingot","icon_id":"20824","qty":1},"12521":{"name":"Hardsilver Ingot","icon_id":"20826","qty":1},"12523":{"name":"Aurum Regis Ingot","icon_id":"20828","qty":1},"12525":{"name":"Titanium Ingot","icon_id":"20830","qty":1},"12527":{"name":"Adamantite Ingot","icon_id":"20832","qty":1},"13019":{"name":"Forgemaster's Redingote","icon_id":"42427","qty":1},"13747":{"name":"Titanium Alloy Ingot","icon_id":"20801","qty":1},"14146":{"name":"High Mythrite Ingot","icon_id":"20824","qty":1},"14149":{"name":"Eikon Iron Ingot","icon_id":"20815","qty":1},"16705":{"name":"Heavy Metal Ingot","icon_id":"20830","qty":1},"16706":{"name":"Scintillant Ingot","icon_id":"20809","qty":1},"17567":{"name":"Cloud Mythril Ingot","icon_id":"20833","qty":1},"19940":{"name":"Koppranickel Ingot","icon_id":"20810","qty":1},"19941":{"name":"High Steel Ingot","icon_id":"20803","qty":1},"19943":{"name":"Oroshigane Ingot","icon_id":"20801","qty":1},"19944":{"name":"Durium Ingot","icon_id":"20835","qty":1},"19945":{"name":"Tama-hagane Ingot","icon_id":"20802","qty":1},"19947":{"name":"Molybdenum Ingot","icon_id":"20830","qty":1},"19948":{"name":"Palladium Ingot","icon_id":"20812","qty":1},"19949":{"name":"Chromite Ingot","icon_id":"20804","qty":1},"22427":{"name":"Nightsteel Ingot","icon_id":"20804","qty":1},"22428":{"name":"Silvergrace Ingot","icon_id":"20826","qty":1},"24250":{"name":"Chigusa Ingot","icon_id":"20801","qty":1},"24251":{"name":"Evergleam Ingot","icon_id":"20826","qty":1}};
+    this.backupInventory = {"5056":{"name":"Bronze Ingot","icon_id":"20803","qty":1},"5057":{"name":"Iron Ingot","icon_id":"20801","qty":1},"5058":{"name":"Steel Ingot","icon_id":"20802","qty":1},"5059":{"name":"Cobalt Ingot","icon_id":"20802","qty":1},"5060":{"name":"Darksteel Ingot","icon_id":"20804","qty":1},"5062":{"name":"Copper Ingot","icon_id":"20813","qty":1},"5063":{"name":"Brass Ingot","icon_id":"20815","qty":1},"5064":{"name":"Silver Ingot","icon_id":"20810","qty":1},"5065":{"name":"Mythril Ingot","icon_id":"20811","qty":1},"5066":{"name":"Electrum Ingot","icon_id":"20812","qty":1},"5067":{"name":"Rose Gold Ingot","icon_id":"20814","qty":1},"5069":{"name":"Gold Ingot","icon_id":"20809","qty":1},"7607":{"name":"Wolfram Ingot","icon_id":"20801","qty":1},"9358":{"name":"Wootz Ingot","icon_id":"20803","qty":1},"9360":{"name":"Platinum Ingot","icon_id":"20810","qty":1},"12519":{"name":"Mythrite Ingot","icon_id":"20824","qty":1},"12521":{"name":"Hardsilver Ingot","icon_id":"20826","qty":1},"12523":{"name":"Aurum Regis Ingot","icon_id":"20828","qty":1},"12525":{"name":"Titanium Ingot","icon_id":"20830","qty":1},"12527":{"name":"Adamantite Ingot","icon_id":"20832","qty":1},"13019":{"name":"Forgemaster's Redingote","icon_id":"42427","qty":1},"13747":{"name":"Titanium Alloy Ingot","icon_id":"20801","qty":1},"14146":{"name":"High Mythrite Ingot","icon_id":"20824","qty":1},"14149":{"name":"Eikon Iron Ingot","icon_id":"20815","qty":1},"16705":{"name":"Heavy Metal Ingot","icon_id":"20830","qty":1},"16706":{"name":"Scintillant Ingot","icon_id":"20809","qty":1},"17567":{"name":"Cloud Mythril Ingot","icon_id":"20833","qty":1},"19940":{"name":"Koppranickel Ingot","icon_id":"20810","qty":1},"19941":{"name":"High Steel Ingot","icon_id":"20803","qty":1},"19943":{"name":"Oroshigane Ingot","icon_id":"20801","qty":1},"19944":{"name":"Durium Ingot","icon_id":"20835","qty":1},"19945":{"name":"Tama-hagane Ingot","icon_id":"20802","qty":1},"19947":{"name":"Molybdenum Ingot","icon_id":"20830","qty":1},"19948":{"name":"Palladium Ingot","icon_id":"20812","qty":1},"19949":{"name":"Chromite Ingot","icon_id":"20804","qty":1},"22427":{"name":"Nightsteel Ingot","icon_id":"20804","qty":1},"22428":{"name":"Silvergrace Ingot","icon_id":"20826","qty":1},"24250":{"name":"Chigusa Ingot","icon_id":"20801","qty":1},"24251":{"name":"Evergleam Ingot","icon_id":"20826","qty":1}};
 
 }]);

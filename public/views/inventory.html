@@ -14,7 +14,7 @@
                 <h3 class="panel-title">Inventory</h3>
             </div>
             <div class="panel-body inventory-panel">
-                <table class="table table-hover table-condensed margin-zero padding-zero">
+                <table class="table table-hover table-condensed margin-zero padding-zero" id="item-list">
                     <tr>
                         <th>Icon</th>
                         <th>Item</th>
@@ -29,7 +29,7 @@
                         <td><input novalidate ng-required="true" ng-min="1" class="form-control input-sm" type="number" ng-model="item.qty" placeholder="0" ng-change="updateQty(item._id,item.qty); setUnsaved()" /></td>
                         <td>{{item.name}}</td>
                         <td>{{item.name}}</td>
-                        <td><button class="btn btn-danger btn-sm delete-padding">x</button></td>
+                        <td><button type="button" class="btn btn-danger btn-sm delete-padding " ng-click="removeItem(item)">x</button></td>
                     </tr>
                 </table>
             </div>
@@ -43,8 +43,8 @@
             <br />
             <p>You have unsaved changes to your inventory which will not be saved if you navigate away from FFXIV-Organizer. Please save or cancel changes below</p>
             <br />
-            <button ng-click="persistChanges()" class="btn btn-primary">Save Changes</button>
-            <button ng-click="cancelChanges()" class="btn btn-danger">Cancel Changes</button>
+            <button type="button" ng-click="persistChanges()" class="btn btn-primary">Save Changes</button>
+            <button type="button" ng-click="cancelChanges()" class="btn btn-danger">Cancel Changes</button>
             <br />
         </div>
         <h3>Import Inventory</h3>
@@ -73,12 +73,14 @@
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est eius quas quia natus dolore nemo iste ab, illo
             a. Laborum quos beatae ea perferendis ipsa. At accusamus architecto vitae assumenda?</p>
         <br />
-        <button ng-click="downloadInventory()" class="btn btn-default">Download Inventory as CSV</button>
+        <button type="button" ng-click="downloadInventory()" class="btn btn-default">Download Inventory as CSV</button>
+        <hr />
+        <button type="button" ng-click="removeAllItems()" class="btn btn-danger">Delete all items from inventory</button>
     </div>
 </div>
 
 <div ng-if="!hasInventory">
     <h3>You do not currently have an inventory</h3>
     <br /><br />
-    <button class="btn btn-primary" ng-click="createInventory()">Create Inventory</button>
+    <button type="button" class="btn btn-primary" ng-click="createInventory()">Create Inventory</button>
 </div>

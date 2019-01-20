@@ -1,4 +1,4 @@
-app.controller('databaseController', ['$scope', '$http', 'searchResultsService', '$window', function ($scope, $http, searchResultsService, $window) {
+app.controller('databaseController', ['$scope', '$http', 'searchResultsService', '$window', 'iconService', function ($scope, $http, searchResultsService, $window, iconService) {
 
     $scope.noResults = false;
     $scope.noCategoryResults = false;
@@ -148,14 +148,6 @@ app.controller('databaseController', ['$scope', '$http', 'searchResultsService',
         $window.scrollTo(0, 0);
     }
 
-    $scope.convertIcon = function (icon) {
-        var path = icon;
-
-        if (icon.length < 6) {
-            path = '0' + icon;
-        }
-
-        return path.charAt(0) + path.charAt(1) + path.charAt(2) + '000/' + path;
-    }
+    $scope.convertIcon = iconService.convertIcon;
 
 }]);

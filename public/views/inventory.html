@@ -4,9 +4,38 @@
 
 <div ng-if="hasInventory">
     <div class="col-md-8">
-        <ul class="list-group">
-            <li ng-repeat="(item, qty) in inventory" class="list-group-item">{{item}}</li>
-        </ul>
+
+        <div class="form-group">
+            <input type="text" ng-model="search" class="form-control" placeholder="Find item in inventory" />
+        </div>
+
+        <div class="panel panel-primary text-left">
+            <div class="panel-heading">
+                <h3 class="panel-title">Inventory</h3>
+            </div>
+            <div class="panel-body">
+                <table class="table table-hover table-condensed margin-zero padding-zero">
+                    <tr>
+                        <th>Icon</th>
+                        <th>Item</th>
+                        <th>Qty</th>
+                        <td>{{item.name}}</td>
+                        <td>{{item.name}}</td>
+                        <th></th>
+                    </tr>
+                    <tr ng-repeat="item in inventory | orderBy: 'name' | filter: search ">
+                        <td><img ng-src="https://xivapi.com/i/{{convertIcon(item.icon_id)}}.png" width="20" height="20" /></td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.qty}}</td>
+                        <td>{{item.name}}</td>
+                        <td>remove</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="panel-footer"><a href="" ng-click="top()">Top</a></div>
+        </div>
+
     </div>
     <div class="col-md-4">
         IMPORT
@@ -14,5 +43,7 @@
 </div>
 
 <div ng-if="!hasInventory">
-    <button>Create Inventory</button>
+    <h3>You do not currently have an inventory</h3>
+    <br /><br />
+    <button class="btn btn-primary" ng-click="createInventory()">Create Inventory</button>
 </div>

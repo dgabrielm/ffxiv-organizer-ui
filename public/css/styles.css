@@ -56,7 +56,6 @@
 
 /* ANIMATIONS */
 
-/* View fade in transition */
 main.ng-enter {
     transition: 0.5s linear all;
     opacity: 0;
@@ -70,7 +69,6 @@ input.ng-invalid.ng-touched {
     border: 2px solid red;
 }
 
-/* Person table list item fades in and moves up from 30px below */
 #item-list tr.ng-enter {
     transition: 0.2s linear all;
     opacity: 0;
@@ -82,12 +80,11 @@ input.ng-invalid.ng-touched {
     transform: translateY(0px);
 }
 
-#item-list tr.ng-enter-stagger {
+/* #item-list tr.ng-enter-stagger {
     transition-delay: 0.03s;
     transition-duration: 0;
-}
+} */
 
-/* Person table list item out when you delete item */
 #item-list tr.ng-leave {
     transition: 0.2s linear all;
     opacity: 1;
@@ -98,9 +95,8 @@ input.ng-invalid.ng-touched {
     opacity: 0;
     transform: translateX(-100%);
 }
-
-/* Stagger animation */
+/* 
 #item-list tr.ng-leave-stagger {
     transition-delay: 0.03s;
     transition-duration: 0;
-}
+} */

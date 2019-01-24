@@ -67,6 +67,9 @@ app.controller('inventoryController', ['$scope', 'inventoryService', 'iconServic
 
     $scope.persistChanges = inventoryService.persistChanges;
 
-    populateInventory();
+    if ($scope.inventory != undefined && $scope.inventory != null) {
+        populateInventory();
+    }
+
 
 }]);

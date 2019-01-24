@@ -1,4 +1,4 @@
-app.service('userService', ['$http', '$location', '$window', function ($http, $location, $window) {
+app.service('userService', ['$http', '$location', '$window', 'inventoryService', function ($http, $location, $window, inventoryService) {
     
     var self = this;
 
@@ -12,6 +12,7 @@ app.service('userService', ['$http', '$location', '$window', function ($http, $l
                     self.user = response.data;
                     self.loggedIn = true;
                     $location.path('/dashboard');
+                    inventoryService.getInventory(self.user._id);
                 } else {
                     // need to use this variable to provide some visual feedback
                     self.loginFailed = true;

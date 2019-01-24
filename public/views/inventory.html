@@ -2,85 +2,95 @@
 
 <br /><br />
 
-<div ng-if="hasInventory">
-    <div class="col-md-8">
+<div class="col-md-8">
 
-        <div class="form-group">
-            <input type="text" ng-model="search" class="form-control" placeholder="Find item in inventory" />
-        </div>
-
-        <div class="panel panel-primary text-left">
-            <div class="panel-heading">
-                <h3 class="panel-title">Inventory</h3>
-            </div>
-            <div class="panel-body inventory-panel">
-                <table class="table table-hover table-condensed margin-zero padding-zero" id="item-list">
-                    <tr>
-                        <th>Icon</th>
-                        <th>Item</th>
-                        <th>Qty</th>
-                        <td>{{item.name}}</td>
-                        <td>{{item.name}}</td>
-                        <th></th>
-                    </tr>
-                    <tr ng-repeat="item in inventory | orderBy: 'name' | filter: search ">
-                        <td><img ng-src="https://xivapi.com/i/{{convertIcon(item.icon_id)}}.png" width="28" height="28" /></td>
-                        <td>{{item.name}}</td>
-                        <td><input novalidate ng-required="true" ng-min="1" class="form-control input-sm" type="number" ng-model="item.qty" placeholder="0" ng-change="updateQty(item._id,item.qty); setUnsaved()" /></td>
-                        <td>{{item.name}}</td>
-                        <td>{{item.name}}</td>
-                        <td><button type="button" class="btn btn-danger btn-sm delete-padding " ng-click="removeItem(item)">x</button></td>
-                    </tr>
-                </table>
-            </div>
-            <div class="panel-footer"><a href="" ng-click="top()">Top</a></div>
-        </div>
-
+    <div class="form-group">
+        <input type="text" ng-model="search" class="form-control" placeholder="Find item in inventory" />
     </div>
-    <div class="col-md-4">
-        <div ng-if="unsavedChanges" class="alert alert-warning" role="alert">
-            <h3>Save Changes</h3>
-            <br />
-            <p>You have unsaved changes to your inventory which will not be saved if you navigate away from FFXIV-Organizer. Please save or cancel changes below</p>
-            <br />
-            <button type="button" ng-click="persistChanges()" class="btn btn-primary">Save Changes</button>
-            <button type="button" ng-click="cancelChanges()" class="btn btn-danger">Cancel Changes</button>
-            <br />
+
+    <div class="panel panel-primary text-left">
+        <div class="panel-heading">
+            <h3 class="panel-title">Inventory</h3>
         </div>
-        <h3>Import Inventory</h3>
-        <br />
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est eius quas quia natus dolore nemo iste ab, illo
-            a. Laborum quos beatae ea perferendis ipsa. At accusamus architecto vitae assumenda?</p>
-        <br /><br />
-        <div class="well">
-            <div class="form-group">
-                <label>Upload CSV Representing Inventory</label>
-                <input type="file">
-                <p class="help-block">CSV files only</p>
-            </div>
+        <div class="panel-body inventory-panel">
+            <table class="table table-hover table-condensed margin-zero padding-zero" id="item-list">
+                <tr>
+                    <th>Icon</th>
+                    <th>Item</th>
+                    <th>Qty</th>
+                    <td>{{item.name}}</td>
+                    <td>{{item.name}}</td>
+                    <th></th>
+                </tr>
+                <tr ng-repeat="item in inventory | orderBy: 'name' | filter: search ">
+                    <td><img ng-src="https://xivapi.com/i/{{convertIcon(item.icon_id)}}.png" width="28" height="28" /></td>
+                    <td>{{item.name}}</td>
+                    <td><input novalidate ng-required="true" ng-min="1" class="form-control input-sm" type="number"
+                            ng-model="item.qty" placeholder="0" ng-change="updateQty(item._id,item.qty); setUnsaved()" /></td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.name}}</td>
+                    <td><button type="button" class="btn btn-danger btn-sm delete-padding " ng-click="removeItem(item)">x</button></td>
+                </tr>
+            </table>
         </div>
-        <hr />
-        <div class="well">
-            <div class="form-group">
-                <label>Upload PDF downloaded from Lodestone</label>
-                <input type="file">
-                <p class="help-block">Coming Soon</p>
-            </div>
-        </div>
-        <hr />
-        <h3>Export Inventory</h3>
-        <br />
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est eius quas quia natus dolore nemo iste ab, illo
-            a. Laborum quos beatae ea perferendis ipsa. At accusamus architecto vitae assumenda?</p>
-        <br />
-        <button type="button" ng-click="downloadInventory()" class="btn btn-default">Download Inventory as CSV</button>
-        <hr />
-        <button type="button" ng-click="removeAllItems()" class="btn btn-danger">Delete all items from inventory</button>
+        <div class="panel-footer"><a href="" ng-click="top()">Top</a></div>
     </div>
+
 </div>
-
-<div ng-if="!hasInventory">
-    <h3>You do not currently have an inventory</h3>
+<div class="col-md-4">
+    <div ng-if="unsavedChanges" class="alert alert-warning" role="alert">
+        <h3>Save Changes</h3>
+        <br />
+        <p>You have unsaved changes to your inventory which will not be saved if you navigate away from
+            FFXIV-Organizer. Please save or cancel changes below</p>
+        <br />
+        <button type="button" ng-click="persistChanges()" class="btn btn-primary">Save Changes</button>
+        <button type="button" ng-click="cancelChanges()" class="btn btn-danger">Cancel Changes</button>
+        <br />
+    </div>
+    <div ng-if="unregisteredInventory" class="alert alert-warning" role="alert">
+        <h3>Create Inventory</h3>
+        <br />
+        <p>You are currently not signed up to the inventory app. Please create an inventory to retain your changes</p>
+        <br />
+    </div>
+    <div ng-class="{'well':!unregisteredInventory && !hasInventory}">
+        <div ng-if="!unregisteredInventory && !hasInventory">
+            <h3>Create Inventory</h3>
+            <p>In order to keep a record of your items you first have to create an inventory</p>
+            <br />
+        </div>
+        <div ng-if="!hasInventory">
+            <button type="button" ng-click="createInventory()" class="btn btn-primary">Create Inventory</button>
+        </div>
+    </div>
+    <h3>Import Inventory</h3>
+    <br />
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est eius quas quia natus dolore nemo iste ab, illo
+        a. Laborum quos beatae ea perferendis ipsa. At accusamus architecto vitae assumenda?</p>
     <br /><br />
-    <button type="button" class="btn btn-primary" ng-click="createInventory()">Create Inventory</button>
+    <div class="well">
+        <div class="form-group">
+            <label>Upload CSV Representing Inventory</label>
+            <input type="file">
+            <p class="help-block">CSV files only</p>
+        </div>
+    </div>
+    <hr />
+    <div class="well">
+        <div class="form-group">
+            <label>Upload PDF downloaded from Lodestone</label>
+            <input type="file">
+            <p class="help-block">Coming Soon</p>
+        </div>
+    </div>
+    <hr />
+    <h3>Export Inventory</h3>
+    <br />
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est eius quas quia natus dolore nemo iste ab, illo
+        a. Laborum quos beatae ea perferendis ipsa. At accusamus architecto vitae assumenda?</p>
+    <br />
+    <button type="button" ng-click="downloadInventory()" class="btn btn-default">Download Inventory as CSV</button>
+    <hr />
+    <button type="button" ng-click="removeAllItems()" class="btn btn-danger">Delete all items from inventory</button>
 </div>

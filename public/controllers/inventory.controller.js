@@ -1,15 +1,32 @@
-app.controller('inventoryController', ['$scope', 'inventoryService', 'iconService', '$window', function ($scope, inventoryService, iconService, $window) {
+app.controller('inventoryController', ['$scope', 'inventoryService', 'iconService', '$window', 'userService', function ($scope, inventoryService, iconService, $window, userService) {
 
-    $scope.hasInventory = true;
+    $scope.hasInventory = inventoryService.hasInventory;
+    $scope.$watch(function () {
+        return inventoryService.hasInventory;
+    }, function (newValue, oldValue) {
+        $scope.hasInventory = inventoryService.hasInventory;
+    });
+
+    $scope.unregisteredInventory = inventoryService.unregisteredInventory;
+    $scope.$watch(function () {
+        return inventoryService.unregisteredInventory;
+    }, function (newValue, oldValue) {
+        $scope.unregisteredInventory = inventoryService.unregisteredInventory;
+    });
+
     $scope.unsavedChanges = inventoryService.unsavedChanges;
-
     $scope.$watch(function () {
         return inventoryService.unsavedChanges;
     }, function (newValue, oldValue) {
         $scope.unsavedChanges = inventoryService.unsavedChanges;
     });
 
-    $scope.setUnsaved = function() {
+    $scope.createInventory = function () {
+        // implement
+        inventoryService.createInventory(userService.user._id);
+    };
+
+    $scope.setUnsaved = function () {
         inventoryService.unsavedChanges = true;
     };
 
@@ -39,27 +56,27 @@ app.controller('inventoryController', ['$scope', 'inventoryService', 'iconServic
         $window.scrollTo(0, 0);
     }
 
-    $scope.cancelChanges = function() {
+    $scope.cancelChanges = function () {
         inventoryService.restoreInventory();
         inventoryService.unsavedChanges = false;
         populateInventory();
     };
 
-    $scope.updateQty = function(id, qty) {
+    $scope.updateQty = function (id, qty) {
         if (qty !== 0 && qty !== null && qty !== undefined && qty != '') {
             inventoryService.inventory[id].qty = qty;
         }
     };
 
-    $scope.removeItem = function(item) {
+    $scope.removeItem = function (item) {
         // controller level deletion to trigger correct animation
-        $scope.inventory.splice($scope.inventory.indexOf(item),1);
+        $scope.inventory.splice($scope.inventory.indexOf(item), 1);
         // service level deletion
         delete inventoryService.inventory[item._id];
         $scope.setUnsaved();
     };
 
-    $scope.removeAllItems = function(item) {
+    $scope.removeAllItems = function (item) {
         $scope.inventory = [];
         inventoryService.inventory = {};
         $scope.setUnsaved();
@@ -67,9 +84,9 @@ app.controller('inventoryController', ['$scope', 'inventoryService', 'iconServic
 
     $scope.persistChanges = inventoryService.persistChanges;
 
-    if ($scope.inventory != undefined && $scope.inventory != null) {
-        populateInventory();
-    }
+    try {populateInventory();} catch (error) {}
+
+
 
 
 }]);

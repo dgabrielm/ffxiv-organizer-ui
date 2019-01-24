@@ -13,6 +13,7 @@ app.service('userService', ['$http', '$location', '$window', 'inventoryService',
                     self.loggedIn = true;
                     $location.path('/dashboard');
                     inventoryService.getInventory(self.user._id);
+                    // inventoryService.getInventory('0');
                 } else {
                     // need to use this variable to provide some visual feedback
                     self.loginFailed = true;

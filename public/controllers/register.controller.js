@@ -1,4 +1,4 @@
-app.controller('registerController', ['$scope', '$http', 'userAuthService', function ($scope, $http, userAuthService) {
+app.controller('registerController', ['$scope', '$http', 'userService', function ($scope, $http, userService) {
 
     $scope.loginMode = true;
 
@@ -6,7 +6,7 @@ app.controller('registerController', ['$scope', '$http', 'userAuthService', func
         $scope.loginMode = !$scope.loginMode;
     }
 
-    $scope.login = userAuthService.login;
+    $scope.login = userService.login;
 
     $scope.registerFailed = false;
     $scope.registerSuccessful = false;

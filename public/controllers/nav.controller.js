@@ -1,4 +1,4 @@
-app.controller('navController', ['$scope', 'userService', 'userAuthService', 'inventoryService', function ($scope, userService, userAuthService, inventoryService) {
+app.controller('navController', ['$scope', 'userService', 'inventoryService', function ($scope, userService, inventoryService) {
             
     // loggedIn status watched from user service
     $scope.loggedIn = userService.loggedIn;
@@ -15,8 +15,8 @@ app.controller('navController', ['$scope', 'userService', 'userAuthService', 'in
         $scope.username = userService.getUsername();
     });
 
-    $scope.login = userAuthService.login;
-    $scope.logout = userAuthService.logout;
+    $scope.login = userService.login;
+    $scope.logout = userService.logout;
 
     $scope.inventoryChanges = inventoryService.unsavedChanges;
     $scope.$watch(function () {

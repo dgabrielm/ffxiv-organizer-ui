@@ -95,11 +95,11 @@
                                 <input class="form-control input-sm" type="number" ng-model="result.qty" placeholder="{{inventory[result._id].qty == undefined ? '0' : inventory[result._id].qty}}" />
                             </div>
                             <div class="col-md-4">
-                                <button type="button" class="btn btn-default btn-sm" ng-click="updateQtyOrAdd(result.name,result._id,result.icon_id,result.qty)">Update</button>
+                                <button type="button" class="btn btn-default btn-sm" ng-click="updateQtyOrAdd(result)">Update</button>
                             </div>
                         </div>
 
-                        <div class="row">
+                        <div class="row" ng-if="result.ingredients != null">
                             <div class="col-md-4">
                                 <div class="dropdown">
                                     <button class="btn btn-default dropdown-toggle btn-sm" type="button" data-toggle="dropdown">Craft-Lists
@@ -117,7 +117,7 @@
                             </div>
                         </div>
 
-                        <div class="row">
+                        <!-- <div class="row">
                             <div class="col-md-4">
                                 <div class="dropdown">
                                     <button class="btn btn-default dropdown-toggle btn-sm" type="button" data-toggle="dropdown">Obtain-Lists
@@ -133,13 +133,13 @@
                             <div class="col-md-4">
                                 <button type="button" class="btn btn-default btn-sm">Update</button>
                             </div>
-                        </div>
+                        </div> -->
 
                     </div>
 
                     <!-- Recipe type -->
-                    <div class="col-md-2">
-                        <ul ng-if="result.ingredients != null" class="list-inline align-middle">
+                    <div class="col-md-2" ng-if="result.ingredients != null">
+                        <ul class="list-inline align-middle">
                             <h5>Crafting Class</h5>
                             <li ng-repeat="(craft, recipe) in result.ingredients track by $index" ng-if="recipe.length != 0">
                                 <img class="btn-default" ng-src="img/craft-icons/{{craft}}.png" ng-click="result.displayMode = craft " />

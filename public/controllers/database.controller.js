@@ -149,15 +149,15 @@ app.controller('databaseController', ['$scope', '$http', 'searchResultsService',
         $window.scrollTo(0, 0);
     }
 
-    $scope.updateQtyOrAdd = function(name, _id, icon_id, qty) {
-        if (qty !== 0 && qty !== null && qty !== undefined && qty != '') {
-            if (inventoryService.inventory[_id] !== undefined) {
-                inventoryService.inventory[_id].qty = qty;
+    $scope.updateQtyOrAdd = function(item) {
+        if (item.qty !== 0 && item.qty !== null && item.qty !== undefined && item.qty != '') {
+            if (inventoryService.inventory[item._id] !== undefined) {
+                inventoryService.inventory[item._id].qty = item.qty;
             } else {
-                inventoryService.inventory[_id] = {
-                    "name": name,
-                    "icon_id": icon_id,
-                    "qty": qty
+                inventoryService.inventory[item._id] = {
+                    "name": item.name,
+                    "icon_id": item.icon_id,
+                    "qty": item.qty
                 };
             }
             inventoryService.unsavedChanges = true;

@@ -2,7 +2,10 @@
 
 <br /><br />
 
-{{actualInv}}
+
+INVENTORY: {{inventory}}
+<br /><br />
+BACKUP: {{backupInventory}}
 
 <div class="col-md-8">
 
@@ -24,15 +27,17 @@
                     <td>{{item.name}}</td>
                     <th></th>
                 </tr>
-                <tr ng-repeat="item in inventory | orderBy: 'name' | filter: search ">
-                <!-- <tr ng-repeat="(id, item) in inventory"> -->
+                <!-- <tr ng-repeat="item in inventory | orderBy: 'name' | filter: search "> -->
+                <tr ng-repeat="(id, item) in inventory track by item.name">
                     <td><img ng-src="https://xivapi.com/i/{{convertIcon(item.icon_id)}}.png" width="28" height="28" /></td>
                     <td>{{item.name}}</td>
+                    <!-- <td><input novalidate ng-required="true" ng-min="1" class="form-control input-sm" type="number"
+                            ng-model="item.qty" placeholder="0" ng-change="updateQty(id,item.qty)" /></td> -->
                     <td><input novalidate ng-required="true" ng-min="1" class="form-control input-sm" type="number"
-                            ng-model="item.qty" placeholder="0" ng-change="updateQty(item._id,item.qty); setUnsaved()" /></td>
+                            ng-model="item.qty" ng-change="setUnsaved()" placeholder="0" /></td>
                     <td>{{item.name}}</td>
                     <td>{{item.name}}</td>
-                    <td><button type="button" class="btn btn-danger btn-sm delete-padding " ng-click="removeItem(item)">x</button></td>
+                    <td><button type="button" class="btn btn-danger btn-sm delete-padding " ng-click="removeItem(id); setUnsaved()">x</button></td>
                 </tr>
             </table>
         </div>
@@ -41,7 +46,9 @@
 
 </div>
 <div class="col-md-4">
-    <div ng-if="unsavedChanges" class="alert alert-warning" role="alert">
+
+    <!-- Alert for unsaved changes -->
+    <div ng-if="unsavedChanges && hasInventory" class="alert alert-warning" role="alert">
         <h3>Save Changes</h3>
         <br />
         <p>You have unsaved changes to your inventory which will not be saved if you navigate away from
@@ -51,22 +58,31 @@
         <button type="button" ng-click="cancelChanges()" class="btn btn-danger">Cancel Changes</button>
         <br />
     </div>
-    <div ng-if="unregisteredInventory" class="alert alert-warning" role="alert">
-        <h3>Create Inventory</h3>
-        <br />
-        <p>You are currently not signed up to the inventory app. Please create an inventory to retain your changes</p>
-        <br />
-    </div>
-    <div ng-if="!hasInventory" ng-class="{'well':unregisteredInventory}">
+
+    <!-- General create inventory message for users without a local or remote inventory -->
+    <div ng-if="!hasInventory && !unsavedChanges" class="well">
         <div>
             <h3>Create Inventory</h3>
-            <p>In order to keep a record of your items you first have to create an inventory</p>
+            <p>You are not signed up to the inventory app. Please create an inventory</p>
             <br />
         </div>
         <div>
             <button type="button" ng-click="createInventory()" class="btn btn-primary">Create Inventory</button>
         </div>
     </div>
+
+    <!-- Alert for unregistered inventory -->
+    <div ng-if="!hasInventory && unsavedChanges" class="alert alert-warning" role="alert">
+        <h3>Create Inventory</h3>
+        <br />
+        <p>You are currently not signed up to the inventory app. In order to keep your changes after you log out,
+            please create an inventory</p>
+        <br />
+        <div>
+            <button type="button" ng-click="createInventory()" class="btn btn-primary">Create Inventory</button>
+        </div>
+    </div>
+
     <h3>Import Inventory</h3>
     <br />
     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est eius quas quia natus dolore nemo iste ab, illo

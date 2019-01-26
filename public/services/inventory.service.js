@@ -2,32 +2,29 @@ app.service('inventoryService', ['$http', function ($http) {
 
     var $this = this;
 
-    this.alert = false;
     this.unsavedChanges = false;
-    this.unregisteredInventory = false;
-
     this.restoreInventory = function () {
         $this.inventory = JSON.parse(JSON.stringify($this.backupInventory));
     };
 
-    this.deleteItem = function(item) {
-        delete $this.inventory[item._id];
+    this.deleteItem = function (id) {
+        delete $this.inventory[id];
     };
 
-    this.inventoryToArray = function() {
-        let obj = $this.inventory;
-        let array = [];
-        Object.keys(obj).forEach((key) => {
-            array.push(
-                {
-                    _id: key,
-                    name: $this.inventory[key].name,
-                    icon_id: $this.inventory[key].icon_id,
-                    qty: $this.inventory[key].qty
-                }
-            );
+    this.persistChanges = function(id) {
+        var inv = {};
+        inv.inventory = $this.inventory;
+        console.log(inv);
+        $http.post('http://192.168.0.4:5678/inventories/' + id, inv)
+        .then(function (response) {
+            if (response.data !== null) {
+                $this.unsavedChanges = false;
+                $this.backupInventory = $this.inventory;
+                // add user feedback variables: saveSuccess or something
+            } else {
+                // add user feedback variable: saveFailed or something
+            }
         });
-        return array;
     };
 
     this.getInventory = function (id) {
@@ -39,6 +36,7 @@ app.service('inventoryService', ['$http', function ($http) {
                     $this.hasInventory = true;
                 } else {
                     $this.inventory = {};
+                    $this.backupInventory = {};
                     $this.hasInventory = false;
                 }
             });
@@ -56,7 +54,10 @@ app.service('inventoryService', ['$http', function ($http) {
                 if (response.data !== null) {
                     $this.hasInventory = true;
                     $this.unsavedChanges = false;
-                    $this.unregisteredInventory = false;
+                    // $this.unregisteredInventory = false;
+                    if (response.data.inventory != undefined) {
+                        $this.backupInventory = response.data.inventory;
+                    }
                 } else {
                     $this.hasInventory = false;
                 }

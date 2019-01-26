@@ -160,12 +160,7 @@ app.controller('databaseController', ['$scope', '$http', 'searchResultsService',
                     "qty": qty
                 };
             }
-            if (inventoryService.hasInventory) {
-                inventoryService.unsavedChanges = true;
-            } else {
-                inventoryService.unregisteredInventory = true;
-            }
-            inventoryService.alert = true;
+            inventoryService.unsavedChanges = true;
         }
     };
 

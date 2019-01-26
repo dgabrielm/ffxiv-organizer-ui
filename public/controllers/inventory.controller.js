@@ -1,32 +1,29 @@
 app.controller('inventoryController', ['$scope', 'inventoryService', 'iconService', '$window', 'userService', function ($scope, inventoryService, iconService, $window, userService) {
 
-    $scope.inventory = inventoryService.inventory;
+    $scope.$watch(function () {
+        return inventoryService.inventory;
+    }, function (newValue, oldValue) {
+        $scope.inventory = inventoryService.inventory;
+    });
 
-    // $scope.inventory = inventoryService.inventoryToArray();
-    // $scope.$watch(function () {
-    //     return inventoryService.inventory;
-    // }, function (newValue, oldValue) {
-    //     console.log(oldValue);
-    //     console.log(newValue);
-    //     $scope.inventory = inventoryService.inventoryToArray();
-    //     $scope.actualInv = inventoryService.inventory;
-    // });
-    
-    // $scope.hasInventory = inventoryService.hasInventory;
+    $scope.$watch(function () {
+        return inventoryService.backupInventory;
+    }, function (newValue, oldValue) {
+        $scope.backupInventory = inventoryService.backupInventory;
+    });
+
     $scope.$watch(function () {
         return inventoryService.hasInventory;
     }, function (newValue, oldValue) {
         $scope.hasInventory = inventoryService.hasInventory;
     });
 
-    // $scope.unregisteredInventory = inventoryService.unregisteredInventory;
-    $scope.$watch(function () {
-        return inventoryService.unregisteredInventory;
-    }, function (newValue, oldValue) {
-        $scope.unregisteredInventory = inventoryService.unregisteredInventory;
-    });
+    // $scope.$watch(function () {
+    //     return inventoryService.unregisteredInventory;
+    // }, function (newValue, oldValue) {
+    //     $scope.unregisteredInventory = inventoryService.unregisteredInventory;
+    // });
 
-    // $scope.unsavedChanges = inventoryService.unsavedChanges;
     $scope.$watch(function () {
         return inventoryService.unsavedChanges;
     }, function (newValue, oldValue) {
@@ -35,7 +32,6 @@ app.controller('inventoryController', ['$scope', 'inventoryService', 'iconServic
 
     $scope.createInventory = function () {
         inventoryService.createInventory(userService.user._id);
-        // should we call get inventory?
     };
 
     $scope.setUnsaved = function () {
@@ -63,22 +59,33 @@ app.controller('inventoryController', ['$scope', 'inventoryService', 'iconServic
         }
     };
 
-    $scope.removeItem = function (item) {
+    // $scope.removeItem = function (item) {
+    //     // controller level deletion to trigger correct animation
+    //     // $scope.inventory.splice($scope.inventory.indexOf(item), 1);
+    //     // service level deletion
+    //     inventoryService.deleteItem(item);
+    //     // $scope.inventory = inventoryService.inventoryToArray();
+    //     $scope.setUnsaved();
+    // };
+
+    $scope.removeItem = function (id) {
         // controller level deletion to trigger correct animation
         // $scope.inventory.splice($scope.inventory.indexOf(item), 1);
         // service level deletion
-        inventoryService.deleteItem(item);
+        inventoryService.deleteItem(id);
         // $scope.inventory = inventoryService.inventoryToArray();
-        $scope.setUnsaved();
     };
 
     $scope.removeAllItems = function (item) {
         // $scope.inventory = [];
         inventoryService.inventory = {};
         // $scope.inventory = inventoryService.inventoryToArray();
-        $scope.setUnsaved();
     };
 
-    $scope.persistChanges = inventoryService.persistChanges;
+    $scope.persistChanges = function() {
+        inventoryService.persistChanges(userService.user._id);
+    };
+    
+
 
 }]);

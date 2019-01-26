@@ -18,11 +18,10 @@ app.controller('navController', ['$scope', 'userService', 'inventoryService', fu
     $scope.login = userService.login;
     $scope.logout = userService.logout;
 
-    $scope.inventoryChanges = inventoryService.alert;
     $scope.$watch(function () {
-        return inventoryService.alert;
+        return inventoryService.unsavedChanges;
     }, function (newValue, oldValue) {
-        $scope.inventoryChanges = inventoryService.alert;
+        $scope.inventoryChanges = inventoryService.unsavedChanges;
     });
 
 }]);

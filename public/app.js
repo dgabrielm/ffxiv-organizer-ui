@@ -1,4 +1,4 @@
-const app = angular.module('ffxivOrganizer', ['ngRoute', 'ngAnimate', 'ngtweet']);
+const app = angular.module('ffxivOrganizer', ['ngRoute', 'ngAnimate', 'ngtweet', 'angular-toArrayFilter']);
 
 // before application runs
 app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {

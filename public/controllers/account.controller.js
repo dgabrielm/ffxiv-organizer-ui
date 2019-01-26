@@ -29,6 +29,10 @@ app.controller('accountController', ['$scope', 'userService', '$http', function 
         // Assign new password
         $scope.userUpdate.password = $scope.userUpdate.new_password;
 
+        // Fix for corrupt data: construct new object which only takes info from $scope.userUpdate if it's valid and not empty.
+        // fields which won't be updated are left undefined.  
+        var usr = {};
+
         $http.post('http://192.168.0.4:9876/users/' + $scope.user.username + '/' + $scope.userUpdate.current_password, $scope.userUpdate)
             .then(function (response) {
                 $scope.userUpdate = {};

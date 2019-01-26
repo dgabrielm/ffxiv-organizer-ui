@@ -2,11 +2,6 @@
 
 <br /><br />
 
-
-INVENTORY: {{inventory}}
-<br /><br />
-BACKUP: {{backupInventory}}
-
 <div class="col-md-8">
 
     <div class="form-group">
@@ -23,21 +18,18 @@ BACKUP: {{backupInventory}}
                     <th>Icon</th>
                     <th>Item</th>
                     <th>Qty</th>
-                    <td>{{item.name}}</td>
-                    <td>{{item.name}}</td>
+                    <td></td>
+                    <td></td>
                     <th></th>
                 </tr>
-                <!-- <tr ng-repeat="item in inventory | orderBy: 'name' | filter: search "> -->
-                <tr ng-repeat="(id, item) in inventory track by item.name">
+                <tr ng-repeat="(id, item) in inventory | toArray | orderBy: 'name' | filter: search ">
                     <td><img ng-src="https://xivapi.com/i/{{convertIcon(item.icon_id)}}.png" width="28" height="28" /></td>
                     <td>{{item.name}}</td>
-                    <!-- <td><input novalidate ng-required="true" ng-min="1" class="form-control input-sm" type="number"
-                            ng-model="item.qty" placeholder="0" ng-change="updateQty(id,item.qty)" /></td> -->
-                    <td><input novalidate ng-required="true" ng-min="1" class="form-control input-sm" type="number"
-                            ng-model="item.qty" ng-change="setUnsaved()" placeholder="0" /></td>
-                    <td>{{item.name}}</td>
-                    <td>{{item.name}}</td>
-                    <td><button type="button" class="btn btn-danger btn-sm delete-padding " ng-click="removeItem(id); setUnsaved()">x</button></td>
+                    <td><input novalidate class="col-md-3 col-sm-3" ng-required="true" ng-min="1" class="form-control input-sm" type="number"
+                            ng-model="item.qty" ng-change="setUnsaved(); checkValid(item.$key)" placeholder="0" /></td>
+                    <td></td>
+                    <td></td>
+                    <td><button type="button" class="btn btn-danger btn-sm delete-padding " ng-click="removeItem(item.$key); setUnsaved()">x</button></td>
                 </tr>
             </table>
         </div>
@@ -111,5 +103,5 @@ BACKUP: {{backupInventory}}
     <br />
     <button type="button" ng-click="downloadInventory()" class="btn btn-default">Download Inventory as CSV</button>
     <hr />
-    <button type="button" ng-click="removeAllItems()" class="btn btn-danger">Delete all items from inventory</button>
+    <button type="button" ng-click="removeAllItems(); setUnsaved()" class="btn btn-danger">Delete all items from inventory</button>
 </div>

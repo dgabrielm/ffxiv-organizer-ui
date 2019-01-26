@@ -31,7 +31,6 @@ app.controller('registerController', ['$scope', '$http', 'userService', function
         $http.post('http://192.168.0.4:9876/users/', $scope.register)
             .then(function (response) {
                 if (response.data !== null) {
-                    console.log(response);
                     $scope.loginMode = true;
                     $scope.registerSuccessful = true;
                 } else {

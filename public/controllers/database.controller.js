@@ -166,16 +166,4 @@ app.controller('databaseController', ['$scope', '$http', 'searchResultsService',
 
     $scope.convertIcon = iconService.convertIcon;
 
-    // $scope.createInventoryData = function() {
-    //     var obj = {};
-    //     $scope.results[0].forEach(item => {
-    //         obj[item._id] = {
-    //             name: item.name,
-    //             icon_id: item.icon_id,
-    //             qty: 1
-    //         };
-    //     });
-    //     $scope.inventoryData = obj;
-    // };
-
 }]);

@@ -18,12 +18,6 @@ app.controller('inventoryController', ['$scope', 'inventoryService', 'iconServic
         $scope.hasInventory = inventoryService.hasInventory;
     });
 
-    // $scope.$watch(function () {
-    //     return inventoryService.unregisteredInventory;
-    // }, function (newValue, oldValue) {
-    //     $scope.unregisteredInventory = inventoryService.unregisteredInventory;
-    // });
-
     $scope.$watch(function () {
         return inventoryService.unsavedChanges;
     }, function (newValue, oldValue) {
@@ -59,33 +53,22 @@ app.controller('inventoryController', ['$scope', 'inventoryService', 'iconServic
         }
     };
 
-    // $scope.removeItem = function (item) {
-    //     // controller level deletion to trigger correct animation
-    //     // $scope.inventory.splice($scope.inventory.indexOf(item), 1);
-    //     // service level deletion
-    //     inventoryService.deleteItem(item);
-    //     // $scope.inventory = inventoryService.inventoryToArray();
-    //     $scope.setUnsaved();
-    // };
-
-    $scope.removeItem = function (id) {
-        // controller level deletion to trigger correct animation
-        // $scope.inventory.splice($scope.inventory.indexOf(item), 1);
-        // service level deletion
-        inventoryService.deleteItem(id);
-        // $scope.inventory = inventoryService.inventoryToArray();
+    $scope.checkValid = function(id) {
+        if (inventoryService.inventory[id].qty == undefined || inventoryService.inventory[id].qty < 1) {
+            inventoryService.inventory[id].qty = 1;
+        }
     };
 
-    $scope.removeAllItems = function (item) {
-        // $scope.inventory = [];
-        inventoryService.inventory = {};
-        // $scope.inventory = inventoryService.inventoryToArray();
+    $scope.removeItem = function (id) {
+        inventoryService.deleteItem(id);
+    };
+
+    $scope.removeAllItems = function () {
+        inventoryService.clearInventory();
     };
 
     $scope.persistChanges = function() {
         inventoryService.persistChanges(userService.user._id);
     };
-    
-
 
 }]);

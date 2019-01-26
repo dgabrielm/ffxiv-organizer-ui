@@ -46,13 +46,14 @@
 
 /* Play around with these later! */
 
-/* .jumbotron {
-    background-image: url("../img/bg.jpg")
+.jumbotron {
+    background-image: url("../img/bg.jpg");
 }
 
 .back {
-    background-color: grey;
-} */
+    /* background-color: #d0cfb9; */
+    /* background-image: url("../img/tex-bg-2.png"); */
+}
 
 /* ANIMATIONS */
 

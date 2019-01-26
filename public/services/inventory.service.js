@@ -11,10 +11,13 @@ app.service('inventoryService', ['$http', function ($http) {
         delete $this.inventory[id];
     };
 
+    this.clearInventory = function() {
+        $this.inventory = {};
+    };
+
     this.persistChanges = function(id) {
         var inv = {};
         inv.inventory = $this.inventory;
-        console.log(inv);
         $http.post('http://192.168.0.4:5678/inventories/' + id, inv)
         .then(function (response) {
             if (response.data !== null) {
@@ -31,8 +34,13 @@ app.service('inventoryService', ['$http', function ($http) {
         $http.get('http://192.168.0.4:5678/inventories/' + id)
             .then(function (response) {
                 if (response.data !== null) {
-                    $this.inventory = JSON.parse(JSON.stringify(response.data.inventory));
-                    $this.backupInventory = JSON.parse(JSON.stringify(response.data.inventory));
+                    if (response.data.inventory != undefined) {
+                        $this.inventory = JSON.parse(JSON.stringify(response.data.inventory));
+                        $this.backupInventory = JSON.parse(JSON.stringify(response.data.inventory));
+                    } else {
+                        $this.inventory = {};
+                        $this.backupInventory = {}
+                    }
                     $this.hasInventory = true;
                 } else {
                     $this.inventory = {};
@@ -41,8 +49,6 @@ app.service('inventoryService', ['$http', function ($http) {
                 }
             });
     };
-
-    // INVENTORY CREATION WORKS - there is just one issue where the first time you create your inventory it is not automatically displayed properly, but it's there on next login
 
     this.createInventory = function (id) {
         let inv = {};

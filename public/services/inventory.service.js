@@ -1,25 +1,45 @@
 app.service('inventoryService', ['$http', function ($http) {
 
-    var self = this;
+    var $this = this;
 
     this.alert = false;
     this.unsavedChanges = false;
     this.unregisteredInventory = false;
 
     this.restoreInventory = function () {
-        this.inventory = JSON.parse(JSON.stringify(this.backupInventory));
+        $this.inventory = JSON.parse(JSON.stringify($this.backupInventory));
+    };
+
+    this.deleteItem = function(item) {
+        delete $this.inventory[item._id];
+    };
+
+    this.inventoryToArray = function() {
+        let obj = $this.inventory;
+        let array = [];
+        Object.keys(obj).forEach((key) => {
+            array.push(
+                {
+                    _id: key,
+                    name: $this.inventory[key].name,
+                    icon_id: $this.inventory[key].icon_id,
+                    qty: $this.inventory[key].qty
+                }
+            );
+        });
+        return array;
     };
 
     this.getInventory = function (id) {
         $http.get('http://192.168.0.4:5678/inventories/' + id)
             .then(function (response) {
                 if (response.data !== null) {
-                    self.inventory = response.data.inventory;
-                    self.backupInventory = response.data.inventory;
-                    self.hasInventory = true;
+                    $this.inventory = JSON.parse(JSON.stringify(response.data.inventory));
+                    $this.backupInventory = JSON.parse(JSON.stringify(response.data.inventory));
+                    $this.hasInventory = true;
                 } else {
-                    self.inventory = {};
-                    self.hasInventory = false;
+                    $this.inventory = {};
+                    $this.hasInventory = false;
                 }
             });
     };
@@ -29,19 +49,16 @@ app.service('inventoryService', ['$http', function ($http) {
     this.createInventory = function (id) {
         let inv = {};
         inv.user_id = id;
-        inv.inventory = self.inventory;
+        inv.inventory = $this.inventory;
 
-        // $http.post('http://192.168.0.4:5678/inventories/', {user_id: id, inventory: self.inventory})
         $http.post('http://192.168.0.4:5678/inventories/', inv)
             .then(function (response) {
                 if (response.data !== null) {
-                    self.getInventory();
-                    self.hasInventory = true;
-                    self.unsavedChanges = false;
-                    self.unregisteredInventory = false;
+                    $this.hasInventory = true;
+                    $this.unsavedChanges = false;
+                    $this.unregisteredInventory = false;
                 } else {
-                    // need to use this variable to provide some visual feedback
-                    // self.hasInventory = false;
+                    $this.hasInventory = false;
                 }
             });
     };

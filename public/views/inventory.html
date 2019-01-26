@@ -2,6 +2,8 @@
 
 <br /><br />
 
+{{actualInv}}
+
 <div class="col-md-8">
 
     <div class="form-group">
@@ -23,6 +25,7 @@
                     <th></th>
                 </tr>
                 <tr ng-repeat="item in inventory | orderBy: 'name' | filter: search ">
+                <!-- <tr ng-repeat="(id, item) in inventory"> -->
                     <td><img ng-src="https://xivapi.com/i/{{convertIcon(item.icon_id)}}.png" width="28" height="28" /></td>
                     <td>{{item.name}}</td>
                     <td><input novalidate ng-required="true" ng-min="1" class="form-control input-sm" type="number"
@@ -54,13 +57,13 @@
         <p>You are currently not signed up to the inventory app. Please create an inventory to retain your changes</p>
         <br />
     </div>
-    <div ng-class="{'well':!unregisteredInventory && !hasInventory}">
-        <div ng-if="!unregisteredInventory && !hasInventory">
+    <div ng-if="!hasInventory" ng-class="{'well':unregisteredInventory}">
+        <div>
             <h3>Create Inventory</h3>
             <p>In order to keep a record of your items you first have to create an inventory</p>
             <br />
         </div>
-        <div ng-if="!hasInventory">
+        <div>
             <button type="button" ng-click="createInventory()" class="btn btn-primary">Create Inventory</button>
         </div>
     </div>

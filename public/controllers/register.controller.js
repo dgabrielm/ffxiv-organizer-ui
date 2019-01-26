@@ -1,6 +1,7 @@
 app.controller('registerController', ['$scope', '$http', 'userService', function ($scope, $http, userService) {
 
     $scope.loginMode = true;
+    $scope.register = {};
 
     $scope.toggleLoginMode = function () {
         $scope.loginMode = !$scope.loginMode;

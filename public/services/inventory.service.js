@@ -60,7 +60,6 @@ app.service('inventoryService', ['$http', function ($http) {
                 if (response.data !== null) {
                     $this.hasInventory = true;
                     $this.unsavedChanges = false;
-                    // $this.unregisteredInventory = false;
                     if (response.data.inventory != undefined) {
                         $this.backupInventory = response.data.inventory;
                     }

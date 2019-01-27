@@ -21,13 +21,13 @@
     overflow-x: hidden;
 }
 
-.inventory-panel {
+.panel-formatter {
     height: auto;
     max-height: 75%;
     overflow-x: hidden;
 }
 
-.delete-padding {
+.button-padding {
     padding: 0px 5px;
 }
 

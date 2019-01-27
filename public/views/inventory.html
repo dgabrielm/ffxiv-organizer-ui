@@ -12,7 +12,7 @@
         <div class="panel-heading">
             <h3 class="panel-title">Inventory</h3>
         </div>
-        <div class="panel-body inventory-panel">
+        <div class="panel-body panel-formatter">
             <table class="table table-hover table-condensed margin-zero padding-zero" id="item-list">
                 <tr>
                     <th>Icon</th>
@@ -29,7 +29,7 @@
                             ng-model="item.qty" ng-change="setUnsaved(); checkValid(item.$key)" placeholder="0" /></td>
                     <td></td>
                     <td></td>
-                    <td><button type="button" class="btn btn-danger btn-sm delete-padding " ng-click="removeItem(item.$key); setUnsaved()">x</button></td>
+                    <td><button type="button" class="btn btn-danger btn-sm button-padding" ng-click="removeItem(item.$key); setUnsaved()">x</button></td>
                 </tr>
             </table>
         </div>

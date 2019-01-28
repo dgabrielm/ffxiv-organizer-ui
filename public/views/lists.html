@@ -3,75 +3,104 @@
 <br /><br />
 
 <!-- Craft Lists -->
-<div class="col-md-6 col-sm-12">
+<div class="col-md-7 col-sm-12">
 
-<div class="panel panel-primary">
-    <div class="panel-heading">
-        <h3 class="panel-title">Craft Lists</h3>
-    </div>
-    <div class="panel-body panel-formatter text-left">
-        <table class="table table-hover table-condensed margin-zero padding-zero" id="item-list">
-            <tr ng-repeat="item in currentCraftList | orderBy: 'name' ">
-                <td><img ng-src="https://xivapi.com/i/{{convertIcon(item.icon_id)}}.png" width="28" height="28" /></td>
-                <td>{{item.name}} ({{item.craft_type}})</td>
-                <td>
-                    <input novalidate ng-required="true" ng-min="1" class="form-control input-sm" type="number"
-                        ng-model="item.qty" ng-change="" placeholder="0" />
-                    <input class="form-control input-sm" type="number" ng-model="inventory[item._id].qty" placeholder="{{inventory[item._id].qty == undefined ? '0' : inventory[item._id].qty}}" />
-                </td>
-                <td>
-                    <div class="dropdown">
-                        <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">ingredients
-                            <span class="caret"></span></button>
-                        <ul class="dropdown-menu scrollable-menu list-unstyled">
-                            <li class="row" ng-repeat="ingredient in item.ingredients track by $index">
-                                <div ng-if="$index % 4 == 0 || $index == 0" class="ingredient">
-                                    <span class="col-md-2 col-sm-2">
-                                        <img ng-src="https://xivapi.com/i/{{convertIcon(item.ingredients[$index + 3])}}.png"
-                                            width="20" height="20" />
-                                    </span>
-                                    <span class="col-md-8 col-sm-8">
-                                        <small>{{item.ingredients[$index + 2]}}</small>
-                                    </span>
-                                    <span class="col-md-2 col-sm-2">
-                                        <small>{{item.ingredients[$index + 1]}}</small>
-                                    </span>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </td>
-                <td><button type="button" class="btn btn-success btn-sm button-padding " ng-click="removeItem(item.$key); setUnsaved()">√</button></td>
-                <td><button type="button" class="btn btn-danger btn-sm button-padding " ng-click="removeItem(item.$key); setUnsaved()">x</button></td>
-            </tr>
-        </table>
-    </div>
-    <div class="panel-footer">Panel Footer</div>
-</div>
-
-</div>
-
-<!-- Obtain Lists -->
-<div class="col-md-3 col-sm-12">
-    <div class="panel panel-default">
+    <div class="panel panel-primary">
         <div class="panel-heading">
-            <h3 class="panel-title">Obtain Lists</h3>
+            <h3 class="panel-title">Craft Lists</h3>
         </div>
-        <div class="panel-body">
-            Panel content
+        <div class="panel-body panel-formatter text-left">
+            <br /><br /><br />
+            <table class="table table-hover table-condensed margin-zero padding-zero" id="item-list">
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th>
+                        <h5>Qty:</h5>
+                    </th>
+                    <th>
+                        <h5>Inventory:</h5>
+                    </th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                <tr ng-repeat="item in currentCraftList | orderBy: 'name' ">
+                    <td><img ng-src="https://xivapi.com/i/{{convertIcon(item.icon_id)}}.png" width="28" height="28" /></td>
+                    <td><small>{{item.name}} ({{item.craft_type}})</small></td>
+                    <td>
+                        <input novalidate ng-required="true" ng-min="1" class="form-control input-sm" type="number"
+                            ng-model="item.qty" ng-change="" placeholder="0" />
+                    </td>
+                    <td>
+                        <input class="form-control input-sm" type="number" ng-model="inventory[item._id].qty" ng-change="setUnsavedInv()"
+                            placeholder="{{inventory[item._id].qty == undefined ? '0' : inventory[item._id].qty}}" />
+                    </td>
+                    <td>
+                        <div class="dropup">
+                            <button class="btn btn-default btn-sm dropdown-toggle" type="button" id="ing" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                Ingredients
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu list-unstyled" aria-labelledby="about-us">
+                                <li class="row" ng-repeat="ingredient in item.ingredients track by $index">
+                                    <div ng-if="$index % 4 == 0 || $index == 0" class="ing">
+                                        <span class="col-md-1 col-sm-1">
+                                            <img ng-src="https://xivapi.com/i/{{convertIcon(item.ingredients[$index + 3])}}.png"
+                                                width="20" height="20" />
+                                        </span>
+                                        <span class="col-md-7 col-sm-7">
+                                            <small>{{item.ingredients[$index + 2]}}</small>
+                                        </span>
+                                        <span class="col-md-1 col-sm-1">
+                                            <small>{{item.ingredients[$index + 1]}}</small>
+                                        </span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                    <td><button type="button" class="btn btn-success btn-sm button-padding " ng-click="removeItem(item.$key); setUnsaved()">✓</button></td>
+                    <td><button type="button" class="btn btn-danger btn-sm button-padding " ng-click="removeItem(item.$key); setUnsaved()">x</button></td>
+                </tr>
+            </table>
         </div>
         <div class="panel-footer">Panel Footer</div>
     </div>
+
 </div>
 
-<!-- Master Obtain List -->
-<div class="col-md-3 col-sm-12">
-    <div class="panel panel-success">
+<!-- Required Ingredients Lists -->
+<div class="col-md-5 col-sm-12">
+    <div class="panel" ng-class="{'panel-success':hasIngredients.currentCraftList, 'panel-danger':!hasIngredients.currentCraftList}">
         <div class="panel-heading">
-            <h3 class="panel-title">Master List</h3>
+            <h3 class="panel-title">Required Ingredients Lists</h3>
         </div>
-        <div class="panel-body">
-            Panel content
+        <div class="panel-body panel-formatter text-left">
+            <table class="table table-hover table-condensed margin-zero padding-zero" id="item-list">
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th>
+                        <h5>Qty:</h5>
+                    </th>
+                    <th>
+                        <h5>Inventory:</h5>
+                    </th>
+                </tr>
+                <tr ng-repeat="ingredient in requiredIngredients | toArray | orderBy: 'name' ">
+                    <td><img ng-src="https://xivapi.com/i/{{convertIcon(ingredient.icon_id)}}.png" width="28" height="28" /></td>
+                    <td><small>{{ingredient.name}}</small></td>
+                    <td>
+                        <span><small>{{ingredient.qty}}</small></span>
+                    </td>
+                    <td>
+                        <input class="form-control input-sm" type="number" ng-model="inventory[ingredient.$key].qty"
+                            ng-change="setUnsavedInv()" placeholder="{{inventory[ingredient.$key].qty == undefined ? '0' : inventory[ingredient.$key].qty}}" />
+                    </td>
+                </tr>
+            </table>
         </div>
         <div class="panel-footer">Panel Footer</div>
     </div>

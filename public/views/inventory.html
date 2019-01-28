@@ -22,10 +22,10 @@
                     <td></td>
                     <th></th>
                 </tr>
-                <tr ng-repeat="(id, item) in inventory | toArray | orderBy: 'name' | filter: search ">
+                <tr ng-repeat="item in inventory | toArray | orderBy: 'name' | filter: search ">
                     <td><img ng-src="https://xivapi.com/i/{{convertIcon(item.icon_id)}}.png" width="28" height="28" /></td>
                     <td>{{item.name}}</td>
-                    <td><input novalidate class="col-md-3 col-sm-3" ng-required="true" ng-min="1" class="form-control input-sm" type="number"
+                    <td><input novalidate class="col-md-3 col-sm-3 form-control input-sm" ng-required="true" ng-min="1" type="number"
                             ng-model="item.qty" ng-change="setUnsaved(); checkValid(item.$key)" placeholder="0" /></td>
                     <td></td>
                     <td></td>

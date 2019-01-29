@@ -22,7 +22,7 @@ app.service('inventoryService', ['$http', function ($http) {
         .then(function (response) {
             if (response.data !== null) {
                 $this.unsavedChanges = false;
-                $this.backupInventory = $this.inventory;
+                $this.backupInventory = JSON.parse(JSON.stringify($this.inventory));
                 // add user feedback variables: saveSuccess or something
             } else {
                 // add user feedback variable: saveFailed or something

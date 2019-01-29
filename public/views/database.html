@@ -154,12 +154,12 @@
                             <li class="row" ng-repeat="item in result.ingredients[result.displayMode] track by $index">
                                 <div ng-if="$index % 4 == 0 || $index == 0" class="ingredient">
                                     <div class="col-md-2">
-                                        <img ng-click="searchDatabaseById(result.ingredients[result.displayMode][$index], result.ingredients[result.displayMode][$index + 2])"
-                                            ng-src="https://xivapi.com/i/{{convertIcon(result.ingredients[result.displayMode][$index + 3])}}.png"
+                                        <img ng-src="https://xivapi.com/i/{{convertIcon(result.ingredients[result.displayMode][$index + 3])}}.png"
                                             width="20" height="20" />
                                     </div>
                                     <div class="col-md-8">
-                                        <small>{{result.ingredients[result.displayMode][$index + 2]}}</small>
+                                        <a href="" ng-click="searchDatabaseById(result.ingredients[result.displayMode][$index], result.ingredients[result.displayMode][$index + 2])"><small>{{result.ingredients[result.displayMode][$index
+                                                + 2]}}</small></a>
                                     </div>
                                     <div class="col-md-2">
                                         <small>{{result.ingredients[result.displayMode][$index + 1]}}</small>

@@ -81,10 +81,10 @@ input.ng-invalid.ng-touched {
     transform: translateY(0px);
 }
 
-/* #item-list tr.ng-enter-stagger {
+#item-list tr.ng-enter-stagger {
     transition-delay: 0.03s;
     transition-duration: 0;
-} */
+}
 
 #item-list tr.ng-leave {
     transition: 0.2s linear all;
@@ -96,8 +96,8 @@ input.ng-invalid.ng-touched {
     opacity: 0;
     transform: translateX(-100%);
 }
-/* 
+
 #item-list tr.ng-leave-stagger {
     transition-delay: 0.03s;
     transition-duration: 0;
-} */
+}

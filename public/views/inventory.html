@@ -29,7 +29,7 @@
                             ng-model="item.qty" ng-change="setUnsaved(); checkValid(item.$key)" placeholder="0" /></td>
                     <td></td>
                     <td></td>
-                    <td><button type="button" class="btn btn-danger btn-sm button-padding" ng-click="removeItem(item.$key); setUnsaved()">x</button></td>
+                    <td><button type="button" class="close" ng-click="removeItem(item.$key); setUnsaved()" aria-label="Close"><span aria-hidden="true">&times;</span></button></td>
                 </tr>
             </table>
         </div>

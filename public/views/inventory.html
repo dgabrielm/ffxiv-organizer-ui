@@ -8,8 +8,8 @@
         <input type="text" ng-model="search" class="form-control" placeholder="Find item in inventory" />
     </div>
 
-    <div class="panel panel-primary text-left">
-        <div class="panel-heading">
+    <div class="panel panel-primary">
+        <div class="panel-heading text-left">
             <h3 class="panel-title">Inventory</h3>
         </div>
         <div class="panel-body panel-formatter">
@@ -33,7 +33,7 @@
                 </tr>
             </table>
         </div>
-        <div class="panel-footer"><a href="" ng-click="top()">Top</a></div>
+        <div class="panel-footer"><button type="button" ng-click="removeAllItems(); setUnsaved()" class="btn btn-danger">Delete all items from inventory</button></div>
     </div>
 
 </div>
@@ -102,6 +102,4 @@
         a. Laborum quos beatae ea perferendis ipsa. At accusamus architecto vitae assumenda?</p>
     <br />
     <button type="button" ng-click="downloadInventory()" class="btn btn-default">Download Inventory as CSV</button>
-    <hr />
-    <button type="button" ng-click="removeAllItems(); setUnsaved()" class="btn btn-danger">Delete all items from inventory</button>
 </div>

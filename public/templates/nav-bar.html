@@ -19,7 +19,7 @@
             <ul ng-if="loggedIn" class="nav navbar-nav">
                <li ng-class="{'active':switch.dashboard}" ng-click="switch = {dashboard: true}"><a href="/dashboard">Dashboard</a></li>
                <li ng-class="{'active':switch.database}" ng-click="switch = {database: true}"><a href="/database">Database</a></li>
-               <li ng-class="{'active':switch.lists}" ng-click="switch = {lists: true}"><a href="/lists">Lists<span ng-if="listsChanges" class="label label-warning text-black">!</span></a></li>
+               <li ng-class="{'active':switch.lists}" ng-click="switch = {lists: true}"><a href="/lists">Lists <span ng-if="listsChanges" class="label label-warning text-black">!</span></a></li>
                <li ng-class="{'active':switch.inventory}" ng-click="switch = {inventory: true}"><a href="/inventory">Inventory <span ng-if="inventoryChanges" class="label label-warning text-black">!</span></a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">

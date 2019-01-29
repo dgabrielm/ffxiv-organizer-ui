@@ -62,6 +62,10 @@ app.controller('listsController', ['$scope', 'listsService', 'iconService', 'inv
         listsService.unsavedChanges = true;
     };
 
+    $scope.removeItem = function (id) {
+        listsService.deleteItem(id);
+    };
+
     listsService.generateRequiredIngredients();
 
 }]);

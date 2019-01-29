@@ -51,6 +51,11 @@ app.service('listsService', ['$http', function ($http) {
             });
     };
 
+    this.deleteItem = function (item) {
+        var itemToRemove = $this.lists.craft_lists[$this.currentCraftList].indexOf(item);
+        $this.lists.craft_lists[$this.currentCraftList].splice(itemToRemove, 1);
+    };
+
     this.persistChanges = function (id) {
         var lst = {};
         lst.lists = $this.lists;

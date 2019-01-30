@@ -1,17 +1,17 @@
-app.controller('databaseController', ['$scope', '$http', 'searchResultsService', '$window', 'iconService', 'inventoryService', function ($scope, $http, searchResultsService, $window, iconService, inventoryService) {
+app.controller('databaseController', ['$scope', '$http', 'databaseService', '$window', 'iconService', 'inventoryService', function ($scope, $http, databaseService, $window, iconService, inventoryService) {
 
     $scope.noResults = false;
     $scope.noCategoryResults = false;
-    $scope.results = searchResultsService.results;
-    $scope.categories = searchResultsService.categories;
+    $scope.results = databaseService.results;
+    $scope.categories = databaseService.categories;
     $scope.resultsPerPage = 50;
     $scope.craftableOnly = true;
     $scope.inventory = inventoryService.inventory;
 
     $scope.$watch(function () {
-        return searchResultsService.results;
+        return databaseService.results;
     }, function (newValue, oldValue) {
-        $scope.results = searchResultsService.results;
+        $scope.results = databaseService.results;
     });
 
     $scope.getCategories = function () {
@@ -21,7 +21,7 @@ app.controller('databaseController', ['$scope', '$http', 'searchResultsService',
                     let array = response.data;
                     array.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
                     $scope.categories = array;
-                    searchResultsService.categories = array;
+                    databaseService.categories = array;
                 });
         }
     };
@@ -35,7 +35,7 @@ app.controller('databaseController', ['$scope', '$http', 'searchResultsService',
                 if (response.data.length !== 0) {
                     $scope.processResults(response.data);
 
-                    if (searchResultsService.results[0].length < 1) {
+                    if (databaseService.results[0].length < 1) {
                         $scope.noCategoryResults = true;
                     }
 
@@ -55,7 +55,7 @@ app.controller('databaseController', ['$scope', '$http', 'searchResultsService',
         // in the case where the user clicks on an ingredient - that ingredient might not be craftable and so should not be hidden
         $scope.craftableOnly = false;
 
-        $http.get('http://192.168.0.4:6789/items/id/' + id)
+        databaseService.getItemById(id)
             .then(function (response) {
                 if (response.data.length !== 0) {
                     $scope.processResults(response.data);
@@ -78,7 +78,7 @@ app.controller('databaseController', ['$scope', '$http', 'searchResultsService',
                     
                     $scope.processResults(response.data);
 
-                    if (searchResultsService.results[0].length < 1) {
+                    if (databaseService.results[0].length < 1) {
                         $scope.noResults = true;
                     }
 
@@ -91,7 +91,7 @@ app.controller('databaseController', ['$scope', '$http', 'searchResultsService',
     };
 
     $scope.processResults = function (results) {
-        searchResultsService.results[0] = [];
+        databaseService.results[0] = [];
         var page = 0;
         var item = 0;
 
@@ -106,27 +106,27 @@ app.controller('databaseController', ['$scope', '$http', 'searchResultsService',
                 else if (result.ingredients.weaver.length != 0) { result.displayMode = 'weaver'; }
                 else if (result.ingredients.alchemist.length != 0) { result.displayMode = 'alchemist'; }
                 else if (result.ingredients.culinarian.length != 0) { result.displayMode = 'culinarian'; }
-                searchResultsService.results[page].push(result);
+                databaseService.results[page].push(result);
             } else { // else: there is no ingredient information for this data
                 // only push non-craftable items if cratable only mode equals false
                 if ($scope.craftableOnly === false) {
-                    searchResultsService.results[page].push(result);
+                    databaseService.results[page].push(result);
                 }
             }
 
             if (item == $scope.resultsPerPage) {
                 page++;
                 $scope.numberOfPages.push(page);
-                searchResultsService.results[page] = [];
+                databaseService.results[page] = [];
                 item = 0;
             }
         });
 
-        $scope.numberOfResults = searchResultsService.results.length;
+        $scope.numberOfResults = databaseService.results.length;
     }
 
     $scope.resetVariables = function () {
-        searchResultsService.results = [];
+        databaseService.results = [];
 
         // Reset page indicator variables
         $scope.currentPage = 0;

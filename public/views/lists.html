@@ -58,7 +58,7 @@
                     <td>
                         <input novalidate ng-required="true" ng-min="1" class="form-control input-sm" type="number"
                             ng-model="item.qty" ng-change="setUnsaved()" placeholder="0" />
-                            <!-- ng-model="item.qty" ng-change="setUnsaved(); checkValid(item.$key)" placeholder="0" /> -->
+                        <!-- ng-model="item.qty" ng-change="setUnsaved(); checkValid(item.$key)" placeholder="0" /> -->
 
                     </td>
                     <td>
@@ -152,9 +152,9 @@
                     <th>
                         <div class="btn-group btn-toggle">
                             <button class="btn btn-sm btn-default" ng-class="{'btn-primary active':switch.current, 'btn-default':switch.master}"
-                                ng-click="switch = { current: true }">Current List</button>
+                                ng-click="flickSwitch('current')">Current List</button>
                             <button class="btn btn-sm btn-default" ng-class="{'btn-primary active':switch.master, 'btn-default':switch.current}"
-                                ng-click="switch = { master: true }">Master List</button>
+                                ng-click="flickSwitch('master')">Master List</button>
                         </div>
                     </th>
                     <th>
@@ -164,15 +164,21 @@
                         <h5>Inventory:</h5>
                     </th>
                 </tr>
-                <tr ng-repeat="ingredient in requiredIngredients | toArray | orderBy: 'name' ">
+                <tr ng-repeat="ingredient in requiredIngredients | toArray | orderBy: 'name' " ng-class="{'success':inventory[ingredient.$key].qty !== undefined && inventory[ingredient.$key].qty >= ingredient.qty}">
                     <td><img ng-src="https://xivapi.com/i/{{convertIcon(ingredient.icon_id)}}.png" width="28" height="28" /></td>
                     <td><small>{{ingredient.name}}</small></td>
                     <td>
                         <span><small>{{ingredient.qty}}</small></span>
                     </td>
-                    <td>
+                    <td ng-if="inventory[ingredient.$key] == undefined">
+                        <input class="form-control input-sm" type="number" ng-model="quantity[ingredient.$key]"
+                            ng-change="setUnsavedInv(); inventoryUpdater(ingredient.$key, quantity[ingredient.$key], ingredient)"
+                            placeholder="0" />
+                    </td>
+                    <td ng-if="inventory[ingredient.$key] != undefined">
                         <input class="form-control input-sm" type="number" ng-model="inventory[ingredient.$key].qty"
-                            ng-change="setUnsavedInv()" placeholder="{{inventory[ingredient.$key].qty == undefined ? '0' : inventory[ingredient.$key].qty}}" />
+                            ng-change="setUnsavedInv()"
+                            placeholder="{{inventory[ingredient.$key].qty}}" />
                     </td>
                 </tr>
             </table>

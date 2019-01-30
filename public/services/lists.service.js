@@ -4,14 +4,29 @@ app.service('listsService', ['$http', function ($http) {
 
     this.currentCraftList = "general";
     this.unsavedChanges = false;
+    this.switch = { current: true };
     this.restoreLists = function () {
         $this.lists = JSON.parse(JSON.stringify($this.backupLists));
     };
 
+    this.assessInventory = function () {
+
+    };
+
     this.generateRequiredIngredients = function () {
         var rtn = {};
+        var lst = [];
+
+        if ($this.switch.current === true) {
+            lst = $this.lists.craft_lists[$this.currentCraftList];
+        } else {
+            Object.keys($this.lists.craft_lists).forEach(function (key, index) {
+                lst = lst.concat($this.lists.craft_lists[key]);
+            });
+        }
+
         // iterate over items in current list (array inside obj inside obj)
-        $this.lists.craft_lists[$this.currentCraftList].forEach(itemToCraft => {
+        lst.forEach(itemToCraft => {
             // iterate over each item's ingredients (array of strings [id, qty, name, icon_id, id, qty, etc...])
             for (i = 0; i < itemToCraft.ingredients.length; i++) {
                 // Jump every entries
@@ -20,8 +35,8 @@ app.service('listsService', ['$http', function ($http) {
                     if (rtn[itemToCraft.ingredients[i]] == undefined) {
                         rtn[itemToCraft.ingredients[i]] = {
                             name: itemToCraft.ingredients[i + 2],
-                            qty: parseInt(itemToCraft.ingredients[i + 1]) * parseInt(itemToCraft.qty),
-                            icon_id: itemToCraft.ingredients[i + 3]
+                            icon_id: itemToCraft.ingredients[i + 3],
+                            qty: parseInt(itemToCraft.ingredients[i + 1]) * parseInt(itemToCraft.qty)
                         };
                     } else { // otherwise just add to its qty property
                         rtn[itemToCraft.ingredients[i]].qty += parseInt(itemToCraft.ingredients[i + 1]) * parseInt(itemToCraft.qty);

@@ -1,10 +1,30 @@
-app.controller('listsController', ['$scope', 'listsService', 'iconService', 'inventoryService', 'userService', function ($scope, listsService, iconService, inventoryService, userService) {
+app.controller('listsController', ['$scope', 'listsService', 'iconService', 'inventoryService', 'userService', 'databaseService', function ($scope, listsService, iconService, inventoryService, userService, databaseService) {
 
     $scope.$watch(function () {
         return listsService.lists;
     }, function (newValue, oldValue) {
         $scope.lists = listsService.lists;
     });
+
+    $scope.assessQty = function (lstQty, invQty) {
+        if (invQty == undefined) {
+            return false;
+        } else {
+            if (lstQty <= invQty) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    };
+
+    $scope.inventoryUpdater = function (id, quantity, item) {
+        inventoryService.inventory[id] = {
+            name: item.name,
+            icon_id: item.icon_id,
+            qty: quantity
+        };
+    };
 
     $scope.currentCraftList = listsService.currentCraftList;
 
@@ -13,7 +33,19 @@ app.controller('listsController', ['$scope', 'listsService', 'iconService', 'inv
     $scope.inventory = inventoryService.inventory;
 
     $scope.hasIngredients = { currentCraftList: false };
-    $scope.switch = { current: true };
+
+    $scope.$watch(function () {
+        return listsService.switch;
+    }, function (newValue, oldValue) {
+        $scope.switch = listsService.switch;
+    });
+
+    $scope.flickSwitch = function (position) {
+        var obj = {};
+        obj[position] = true
+        listsService.switch = obj;
+        listsService.generateRequiredIngredients();
+    };
 
     $scope.generateRequiredIngredients = listsService.generateRequiredIngredients;
 

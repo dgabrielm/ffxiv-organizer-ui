@@ -102,22 +102,40 @@
                         <div class="row" ng-if="result.ingredients != null">
                             <div class="col-md-4">
                                 <div class="dropdown">
-                                    <button class="btn btn-default dropdown-toggle btn-sm" type="button" data-toggle="dropdown">Craft-Lists
+                                    <button class="btn btn-default dropdown-toggle btn-sm" type="button" data-toggle="dropdown">{{currentCraftList}}
                                         <span class="caret"></span></button>
-                                    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Craft List 1</a></li>
+                                    <ul ng-repeat="(id, list) in lists.craft_lists" class="dropdown-menu" role="menu"
+                                        aria-labelledby="menu1">
+                                        <li role="presentation"><a ng-click="changeList(id)" role="menuitem" tabindex="-1"
+                                                href="#">{{id}}</a></li>
                                     </ul>
                                 </div>
                             </div>
+
+                            <!-- IS THIS PART TOO SLOW?? CHECK ON LOCAL CONNECTION!!!! -->
+                            <!-- I THINK CRAFT_LISTS NEED TO BECOME AN OBJECT OF OBJECTS!  (So I can quickly see if item exists in list) -->
+
                             <div class="col-md-4">
-                                <input class="form-control input-sm" type="number" placeholder="0" />
+                                <input class="form-control input-sm" type="number" ng-model="result.listQty"
+                                    placeholder="{{assessLists(lists.craft_lists[currentCraftList], result._id)}}" />
                             </div>
+
                             <div class="col-md-4">
                                 <button type="button" class="btn btn-default btn-sm">Update</button>
                             </div>
                         </div>
 
-                        <!-- <div class="row">
+                        <!-- EXAMPLE FROM LISTS APP OF HOW TO CONDITIONALLY DISPLAY 0 or NUMBER AND ADD TO LISTS -->
+                <!-- <td ng-if="inventory[ingredient.$key] == undefined">
+                    <input class="form-control input-sm" type="number" ng-model="quantity[ingredient.$key]" ng-change="setUnsavedInv(); inventoryUpdater(ingredient.$key, quantity[ingredient.$key], ingredient)"
+                        placeholder="0" />
+                </td>
+                <td ng-if="inventory[ingredient.$key] != undefined">
+                    <input class="form-control input-sm" type="number" ng-model="inventory[ingredient.$key].qty"
+                        ng-change="setUnsavedInv()" placeholder="{{inventory[ingredient.$key].qty}}" />
+                </td> -->
+
+                <!-- <div class="row">
                             <div class="col-md-4">
                                 <div class="dropdown">
                                     <button class="btn btn-default dropdown-toggle btn-sm" type="button" data-toggle="dropdown">Obtain-Lists
@@ -135,40 +153,40 @@
                             </div>
                         </div> -->
 
-                    </div>
+            </div>
 
-                    <!-- Recipe type -->
-                    <div class="col-md-2" ng-if="result.ingredients != null">
-                        <ul class="list-inline align-middle">
-                            <h5>Crafting Class</h5>
-                            <li ng-repeat="(craft, recipe) in result.ingredients track by $index" ng-if="recipe.length != 0">
-                                <img class="btn-default" ng-src="img/craft-icons/{{craft}}.png" ng-click="result.displayMode = craft " />
-                            </li>
-                        </ul>
-                    </div>
+            <!-- Recipe type -->
+            <div class="col-md-2" ng-if="result.ingredients != null">
+                <ul class="list-inline align-middle">
+                    <h5>Crafting Class</h5>
+                    <li ng-repeat="(craft, recipe) in result.ingredients track by $index" ng-if="recipe.length != 0">
+                        <img class="btn-default" ng-src="img/craft-icons/{{craft}}.png" ng-click="result.displayMode = craft " />
+                    </li>
+                </ul>
+            </div>
 
-                    <!-- Recipes -->
-                    <div class="col-md-3">
-                        <h5 class="text-capitalize">{{result.displayMode}}</h5>
-                        <ul class="list-unstyled" ng-if="result.ingredients != null">
-                            <li class="row" ng-repeat="item in result.ingredients[result.displayMode] track by $index">
-                                <div ng-if="$index % 4 == 0 || $index == 0" class="ingredient">
-                                    <div class="col-md-2">
-                                        <img ng-src="https://xivapi.com/i/{{convertIcon(result.ingredients[result.displayMode][$index + 3])}}.png"
-                                            width="20" height="20" />
-                                    </div>
-                                    <div class="col-md-8">
-                                        <a href="" ng-click="searchDatabaseById(result.ingredients[result.displayMode][$index], result.ingredients[result.displayMode][$index + 2])"><small>{{result.ingredients[result.displayMode][$index
-                                                + 2]}}</small></a>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <small>{{result.ingredients[result.displayMode][$index + 1]}}</small>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </td>
+            <!-- Recipes -->
+            <div class="col-md-3">
+                <h5 class="text-capitalize">{{result.displayMode}}</h5>
+                <ul class="list-unstyled" ng-if="result.ingredients != null">
+                    <li class="row" ng-repeat="item in result.ingredients[result.displayMode] track by $index">
+                        <div ng-if="$index % 4 == 0 || $index == 0" class="ingredient">
+                            <div class="col-md-2">
+                                <img ng-src="https://xivapi.com/i/{{convertIcon(result.ingredients[result.displayMode][$index + 3])}}.png"
+                                    width="20" height="20" />
+                            </div>
+                            <div class="col-md-8">
+                                <a href="" ng-click="searchDatabaseById(result.ingredients[result.displayMode][$index], result.ingredients[result.displayMode][$index + 2])"><small>{{result.ingredients[result.displayMode][$index
+                                        + 2]}}</small></a>
+                            </div>
+                            <div class="col-md-2">
+                                <small>{{result.ingredients[result.displayMode][$index + 1]}}</small>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            </td>
             </div>
         </tr>
 

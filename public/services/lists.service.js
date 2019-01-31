@@ -1,4 +1,4 @@
-app.service('listsService', ['$http', function ($http) {
+app.service('listsService', ['$http', 'LISTS_CONFIG', function ($http, LISTS_CONFIG) {
 
     var $this = this;
 
@@ -52,7 +52,7 @@ app.service('listsService', ['$http', function ($http) {
         lst.user_id = id;
         lst.lists = $this.lists;
 
-        $http.post('http://192.168.0.4:8765/lists/', lst)
+        $http.post(LISTS_CONFIG.location + ':' + LISTS_CONFIG.port + '/lists/', lst)
             .then(function (response) {
                 if (response.data !== null) {
                     $this.hasLists = true;
@@ -74,7 +74,7 @@ app.service('listsService', ['$http', function ($http) {
     this.persistChanges = function (id) {
         var lst = {};
         lst.lists = $this.lists;
-        $http.post('http://192.168.0.4:8765/lists/' + id, lst)
+        $http.post(LISTS_CONFIG.location + ':' + LISTS_CONFIG.port + '/lists/' + id, lst)
             .then(function (response) {
                 if (response.data !== null) {
                     $this.unsavedChanges = false;
@@ -87,7 +87,7 @@ app.service('listsService', ['$http', function ($http) {
     };
 
     this.getLists = function (id) {
-        $http.get('http://192.168.0.4:8765/lists/' + id)
+        $http.get(LISTS_CONFIG.location + ':' + LISTS_CONFIG.port + '/lists/' + id)
             .then(function (response) {
                 if (response.data !== null) {
                     if (response.data.lists != undefined) {

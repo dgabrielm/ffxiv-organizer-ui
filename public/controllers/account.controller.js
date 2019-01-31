@@ -1,4 +1,4 @@
-app.controller('accountController', ['$scope', 'userService', '$http', function ($scope, userService, $http) {
+app.controller('accountController', ['$scope', 'userService', '$http', 'USERS_CONFIG', function ($scope, userService, $http, USERS_CONFIG) {
 
     $scope.user = userService.user;
     $scope.editMode = false;
@@ -33,7 +33,7 @@ app.controller('accountController', ['$scope', 'userService', '$http', function 
         // fields which won't be updated are left undefined.  
         var usr = {};
 
-        $http.post('http://192.168.0.4:9876/users/' + $scope.user.username + '/' + $scope.userUpdate.current_password, $scope.userUpdate)
+        $http.post(USERS_CONFIG.location + ':' + USERS_CONFIG.port + '/users/' + $scope.user.username + '/' + $scope.userUpdate.current_password, $scope.userUpdate)
             .then(function (response) {
                 $scope.userUpdate = {};
                 if (response.data !== null) {

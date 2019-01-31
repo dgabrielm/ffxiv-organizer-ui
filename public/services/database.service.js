@@ -1,9 +1,9 @@
-app.service('databaseService', ['$http', function($http) {
-
+app.service('databaseService', ['$http', 'ITEMS_CONFIG', function($http, ITEMS_CONFIG) {
+    
     this.results = []; 
 
     this.getItemById = function (id) {
-        return $http.get('http://192.168.0.4:6789/items/id/' + id);
+        return $http.get(ITEMS_CONFIG.location + ':' + ITEMS_CONFIG.port + '/items/id/' + id);
     };
 
-}]);
+}])

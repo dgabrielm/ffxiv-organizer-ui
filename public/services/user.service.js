@@ -1,4 +1,4 @@
-app.service('userService', ['$http', '$location', '$window', 'inventoryService', 'listsService', function ($http, $location, $window, inventoryService, listsService) {
+app.service('userService', ['$http', '$location', '$window', 'inventoryService', 'listsService', 'USERS_CONFIG', function ($http, $location, $window, inventoryService, listsService, USERS_CONFIG) {
     
     var self = this;
 
@@ -6,7 +6,7 @@ app.service('userService', ['$http', '$location', '$window', 'inventoryService',
         // reset user feedback variable
         self.loginFailed = false;
 
-        $http.get('http://192.168.0.4:9876/users/' + usr + '/' + pwd)
+        $http.get(USERS_CONFIG.location + ':' + USERS_CONFIG.port + '/users/' + usr + '/' + pwd)
             .then(function (response) {
                 if (response.data !== null) {
                     self.user = response.data;

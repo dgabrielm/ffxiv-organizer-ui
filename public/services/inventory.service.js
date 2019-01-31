@@ -1,4 +1,4 @@
-app.service('inventoryService', ['$http', function ($http) {
+app.service('inventoryService', ['$http', 'INVENTORIES_CONFIG', function ($http, INVENTORIES_CONFIG) {
 
     var $this = this;
 
@@ -18,7 +18,7 @@ app.service('inventoryService', ['$http', function ($http) {
     this.persistChanges = function(id) {
         var inv = {};
         inv.inventory = $this.inventory;
-        $http.post('http://192.168.0.4:5678/inventories/' + id, inv)
+        $http.post(INVENTORIES_CONFIG.location + ':' + INVENTORIES_CONFIG.port + '/inventories/' + id, inv)
         .then(function (response) {
             if (response.data !== null) {
                 $this.unsavedChanges = false;
@@ -31,7 +31,7 @@ app.service('inventoryService', ['$http', function ($http) {
     };
 
     this.getInventory = function (id) {
-        $http.get('http://192.168.0.4:5678/inventories/' + id)
+        $http.get(INVENTORIES_CONFIG.location + ':' + INVENTORIES_CONFIG.port + '/inventories/' + id)
             .then(function (response) {
                 if (response.data !== null) {
                     if (response.data.inventory != undefined) {
@@ -55,7 +55,7 @@ app.service('inventoryService', ['$http', function ($http) {
         inv.user_id = id;
         inv.inventory = $this.inventory;
 
-        $http.post('http://192.168.0.4:5678/inventories/', inv)
+        $http.post(INVENTORIES_CONFIG.location + ':' + INVENTORIES_CONFIG.port + '/inventories/', inv)
             .then(function (response) {
                 if (response.data !== null) {
                     $this.hasInventory = true;

@@ -1,4 +1,4 @@
-app.controller('registerController', ['$scope', '$http', 'userService', function ($scope, $http, userService) {
+app.controller('registerController', ['$scope', '$http', 'userService', 'USERS_CONFIG', function ($scope, $http, userService, USERS_CONFIG) {
 
     $scope.loginMode = true;
     $scope.register = {};
@@ -28,7 +28,7 @@ app.controller('registerController', ['$scope', '$http', 'userService', function
         $scope.registerFailed = false;
         $scope.registerSuccessful = false;
 
-        $http.post('http://192.168.0.4:9876/users/', $scope.register)
+        $http.post(USERS_CONFIG.location + ':' + USERS_CONFIG.port + '/users/', $scope.register)
             .then(function (response) {
                 if (response.data !== null) {
                     $scope.loginMode = true;

@@ -1,4 +1,4 @@
-app.controller('databaseController', ['$scope', '$http', 'databaseService', '$window', 'iconService', 'inventoryService', function ($scope, $http, databaseService, $window, iconService, inventoryService) {
+app.controller('databaseController', ['$scope', '$http', 'databaseService', '$window', 'iconService', 'inventoryService', 'ITEMS_CONFIG', 'listsService', function ($scope, $http, databaseService, $window, iconService, inventoryService, ITEMS_CONFIG, listsService) {
 
     $scope.noResults = false;
     $scope.noCategoryResults = false;
@@ -7,6 +7,25 @@ app.controller('databaseController', ['$scope', '$http', 'databaseService', '$wi
     $scope.resultsPerPage = 50;
     $scope.craftableOnly = true;
     $scope.inventory = inventoryService.inventory;
+    $scope.lists = listsService.lists;
+
+    $scope.$watch(function () {
+        return listsService.currentCraftList;
+    }, function (newValue, oldValue) {
+        $scope.currentCraftList = listsService.currentCraftList;
+    });
+
+    $scope.assessLists = function (list, id) {
+        if (list.find(it => it._id == id) !== undefined) {
+            return list.find(it => it._id == id).qty;
+        } else {
+            return '0';
+        }
+    };
+
+    $scope.changeList = function (list) {
+        listsService.currentCraftList = list;
+    };
 
     $scope.$watch(function () {
         return databaseService.results;
@@ -16,7 +35,7 @@ app.controller('databaseController', ['$scope', '$http', 'databaseService', '$wi
 
     $scope.getCategories = function () {
         if ($scope.categories === undefined) {
-            $http.get('http://192.168.0.4:6789/categories')
+            $http.get(ITEMS_CONFIG.location + ':' + ITEMS_CONFIG.port + '/categories')
                 .then(function (response) {
                     let array = response.data;
                     array.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
@@ -30,7 +49,7 @@ app.controller('databaseController', ['$scope', '$http', 'databaseService', '$wi
 
         $scope.resetVariables();
 
-        $http.get('http://192.168.0.4:6789/items/category/' + category)
+        $http.get(ITEMS_CONFIG.location + ':' + ITEMS_CONFIG.port + '/items/category/' + category)
             .then(function (response) {
                 if (response.data.length !== 0) {
                     $scope.processResults(response.data);
@@ -72,10 +91,10 @@ app.controller('databaseController', ['$scope', '$http', 'databaseService', '$wi
 
         $scope.resetVariables();
 
-        $http.get('http://192.168.0.4:6789/items/name/' + $scope.searchNameQuery)
+        $http.get(ITEMS_CONFIG.location + ':' + ITEMS_CONFIG.port + '/items/name/' + $scope.searchNameQuery)
             .then(function (response) {
                 if (response.data.length !== 0) {
-                    
+
                     $scope.processResults(response.data);
 
                     if (databaseService.results[0].length < 1) {
@@ -141,7 +160,7 @@ app.controller('databaseController', ['$scope', '$http', 'databaseService', '$wi
         $scope.currentPage = pageNumber;
     };
 
-    $scope.changeResultsPerPage = function(number) {
+    $scope.changeResultsPerPage = function (number) {
         $scope.resultsPerPage = number;
     };
 
@@ -149,7 +168,7 @@ app.controller('databaseController', ['$scope', '$http', 'databaseService', '$wi
         $window.scrollTo(0, 0);
     }
 
-    $scope.updateQtyOrAdd = function(item) {
+    $scope.updateQtyOrAdd = function (item) {
         if (item.qty !== 0 && item.qty !== null && item.qty !== undefined && item.qty != '') {
             if (inventoryService.inventory[item._id] !== undefined) {
                 inventoryService.inventory[item._id].qty = item.qty;

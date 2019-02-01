@@ -13,15 +13,26 @@ app.controller('databaseController', ['$scope', '$http', 'databaseService', '$wi
         return listsService.currentCraftList;
     }, function (newValue, oldValue) {
         $scope.currentCraftList = listsService.currentCraftList;
+        $scope.getListsObject();
     });
 
-    $scope.assessLists = function (list, id) {
-        if (list.find(it => it._id == id) !== undefined) {
-            return list.find(it => it._id == id).qty;
-        } else {
-            return '0';
-        }
+    $scope.getListsObject = function () {
+        var obj = {};
+        listsService.lists.craft_lists[listsService.currentCraftList].forEach(item => {
+            obj[item._id + item.craft_type] = {
+                qty: item.qty
+            };
+        });
+        $scope.listsObj = obj;
     };
+
+    // $scope.assessLists = function (list, id) {
+    //     if (list.find(it => it._id == id) !== undefined) {
+    //         return list.find(it => it._id == id).qty;
+    //     } else {
+    //         return '0';
+    //     }
+    // };
 
     $scope.changeList = function (list) {
         listsService.currentCraftList = list;
@@ -117,14 +128,14 @@ app.controller('databaseController', ['$scope', '$http', 'databaseService', '$wi
         results.forEach(result => {
             item++;
             if (result.ingredients != null) {
-                if (result.ingredients.carpenter.length != 0) { result.displayMode = 'carpenter'; }
-                else if (result.ingredients.blacksmith.length != 0) { result.displayMode = 'blacksmith'; }
-                else if (result.ingredients.armorer.length != 0) { result.displayMode = 'armorer'; }
-                else if (result.ingredients.goldsmith.length != 0) { result.displayMode = 'goldsmith'; }
-                else if (result.ingredients.leatherworker.length != 0) { result.displayMode = 'leatherworker'; }
-                else if (result.ingredients.weaver.length != 0) { result.displayMode = 'weaver'; }
-                else if (result.ingredients.alchemist.length != 0) { result.displayMode = 'alchemist'; }
-                else if (result.ingredients.culinarian.length != 0) { result.displayMode = 'culinarian'; }
+                if (result.ingredients.carpenter.length != 0) { result.craft_type = 'carpenter'; }
+                else if (result.ingredients.blacksmith.length != 0) { result.craft_type = 'blacksmith'; }
+                else if (result.ingredients.armorer.length != 0) { result.craft_type = 'armorer'; }
+                else if (result.ingredients.goldsmith.length != 0) { result.craft_type = 'goldsmith'; }
+                else if (result.ingredients.leatherworker.length != 0) { result.craft_type = 'leatherworker'; }
+                else if (result.ingredients.weaver.length != 0) { result.craft_type = 'weaver'; }
+                else if (result.ingredients.alchemist.length != 0) { result.craft_type = 'alchemist'; }
+                else if (result.ingredients.culinarian.length != 0) { result.craft_type = 'culinarian'; }
                 databaseService.results[page].push(result);
             } else { // else: there is no ingredient information for this data
                 // only push non-craftable items if cratable only mode equals false
@@ -168,8 +179,8 @@ app.controller('databaseController', ['$scope', '$http', 'databaseService', '$wi
         $window.scrollTo(0, 0);
     }
 
-    $scope.updateQtyOrAdd = function (item) {
-        if (item.qty !== 0 && item.qty !== null && item.qty !== undefined && item.qty != '') {
+    $scope.updateQtyOrAddItemToInventory = function (item) {
+        if (item.qty > 0 && item.qty !== null && item.qty !== undefined && item.qty != '') {
             if (inventoryService.inventory[item._id] !== undefined) {
                 inventoryService.inventory[item._id].qty = item.qty;
             } else {
@@ -181,6 +192,26 @@ app.controller('databaseController', ['$scope', '$http', 'databaseService', '$wi
             }
             inventoryService.unsavedChanges = true;
         }
+    };
+
+    $scope.updateQtyOrAddItemToList = function (item) {
+        if (item.listQty > 0 && item.listQty !== null && item.listQty !== undefined && item.listQty != '') {
+            if ($scope.listsObj[item._id + item.craft_type] !== undefined) {
+                listsService.lists.craft_lists[listsService.currentCraftList].find(it => it._id + it.craft_type == item._id + item.craft_type).qty = item.listQty;
+            } else {
+                listsService.lists.craft_lists[listsService.currentCraftList].push({
+                    _id: item._id,
+                    name: item.name,
+                    craft_type: item.craft_type,
+                    icon_id: item.icon_id,
+                    qty: item.listQty,
+                    ingredients: item.ingredients[item.craft_type]
+                });
+            }
+            listsService.unsavedChanges = true;
+            $scope.getListsObject();
+        }
+
     };
 
     $scope.convertIcon = iconService.convertIcon;

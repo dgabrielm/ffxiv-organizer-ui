@@ -9,8 +9,8 @@ app.service('listsService', ['$http', 'LISTS_CONFIG', function ($http, LISTS_CON
         $this.lists = JSON.parse(JSON.stringify($this.backupLists));
     };
 
-    this.assessInventory = function () {
-
+    this.clearCurrentList = function () {
+        $this.lists.craft_lists[$this.currentCraftList] = [];
     };
 
     this.generateRequiredIngredients = function () {

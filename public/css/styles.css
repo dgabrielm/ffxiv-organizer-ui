@@ -11,6 +11,11 @@
     padding: 0;
 }
 
+.fixx {
+    position: static;
+    /* z-index: 10000; */
+}
+
 .margin-zero {
     margin: 0;
 }

@@ -4,6 +4,8 @@
 
 <!-- ADD DELETE ALL BUTTON TO FOOTER LIKE IN INVENTORY -->
 
+{{currentCraftList}}
+
 <!-- Craft Lists -->
 <div class="col-md-7 col-sm-12">
 
@@ -51,28 +53,33 @@
                     <th></th>
                     <th></th>
                     <th></th>
+                    <th></th>
                 </tr>
                 <tr ng-repeat="item in lists.craft_lists[currentCraftList] | orderBy: 'name' ">
                     <td><img ng-src="https://xivapi.com/i/{{convertIcon(item.icon_id)}}.png" width="28" height="28" /></td>
                     <td><small>{{item.name}} ({{item.craft_type}})</small></td>
                     <td>
                         <input novalidate ng-required="true" ng-min="1" class="form-control input-sm" type="number"
-                            ng-model="item.qty" ng-change="setUnsaved()" placeholder="0" />
+                            ng-model="item.qty" ng-change="setUnsaved(); checkIngredients()" placeholder="0" />
                         <!-- ng-model="item.qty" ng-change="setUnsaved(); checkValid(item.$key)" placeholder="0" /> -->
 
                     </td>
-                    <td>
+                    <td ng-if="inventory[item._id] == undefined">
+                        <input class="form-control input-sm" type="number" ng-model="quantity[item._id]" ng-change="setUnsavedInv(); inventoryUpdater(item._id, quantity[item._id], item); checkIngredients()"
+                            placeholder="0" />
+                    </td>
+                    <td ng-if="inventory[item._id] != undefined">
                         <input class="form-control input-sm" type="number" ng-model="inventory[item._id].qty" ng-change="setUnsavedInv()"
-                            placeholder="{{inventory[item._id].qty == undefined ? '0' : inventory[item._id].qty}}" />
+                            placeholder="{{inventory[item._id].qty}}" />
                     </td>
                     <td>
-                        <div class="dropup">
+                        <div class="drodown">
                             <button class="btn btn-default btn-sm dropdown-toggle" type="button" id="ing" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
                                 Ingredients
                                 <span class="caret"></span>
                             </button>
-                            <ul class="dropdown-menu list-unstyled" aria-labelledby="about-us">
+                            <ul class="dropdown-menu list-unstyled fixx" aria-labelledby="about-us">
                                 <li class="row" ng-repeat="ingredient in item.ingredients track by $index">
                                     <div ng-if="$index % 4 == 0 || $index == 0" class="ing">
                                         <span class="col-md-1 col-sm-1">
@@ -90,14 +97,21 @@
                             </ul>
                         </div>
                     </td>
-                    <!-- <td><button type="button" class="btn btn-success btn-sm button-padding " ng-click="removeItem(item.$key); setUnsaved()">✓</button></td> -->
-                    <!-- <td><button type="button" class="btn btn-danger btn-sm button-padding " >x</button></td> -->
+                    <td>
+                        <button type="button" class="btn btn-sm btn-success" ng-click="craftItem(item); setUnsaved(); setUnsavedInv(); setJustCrafted(true)"><small>Craft</small></button>
+                    </td>
                     <td><button type="button" class="close" ng-click="removeItem(item); setUnsaved()" aria-label="Close"><span
-                                aria-hidden="true">&times;</span></button></td>
+                                aria-hidden="true">&times;</span></button>
+                    </td>
                 </tr>
             </table>
         </div>
-        <div class="panel-footer">Panel Footer</div>
+        <div class="panel-footer">
+            <button type="button" ng-click="removeAllItems(); setUnsaved()" class="btn btn-danger">Delete all items
+                from list</button>
+            <button ng-if="hasIngredients && switch.current" type="button" ng-click="craftAllItems(); setUnsaved(); setUnsavedInv(); setJustCrafted(true)"
+                class="btn btn-success">Craft All Items</button>
+        </div>
     </div>
 
 </div>
@@ -111,8 +125,18 @@
         <p>You have unsaved changes to your lists which will not be saved if you navigate away from
             FFXIV-Organizer. Please save or cancel changes below</p>
         <br />
-        <button type="button" ng-click="persistChanges()" class="btn btn-primary">Save Changes</button>
-        <button type="button" ng-click="cancelChanges()" class="btn btn-danger">Cancel Changes</button>
+        <button type="button" ng-click="persistChanges(); setJustCrafted(false)" class="btn btn-primary">Save Changes</button>
+        <button type="button" ng-click="cancelChanges(); setJustCrafted(false)" class="btn btn-danger">Cancel Changes</button>
+        <div ng-show="justCrafted">
+            <br />
+            <button type="button" ng-click="cancelInventoryChanges(); cancelChanges(); setJustCrafted(false)" class="btn btn-lg btn-danger">Cancel
+                Changes to Lists and
+                Inventory!</button>
+            <br /><br />
+            <button type="button" ng-click="persistInventoryChanges(); persistChanges(); setJustCrafted(false)" class="btn btn-lg btn-success">Save
+                Changes to Lists and
+                Inventory!</button>
+        </div>
         <br />
     </div>
 
@@ -141,7 +165,7 @@
     </div>
 
     <!-- Required Ingredients Lists -->
-    <div class="panel" ng-class="{'panel-success':hasIngredients.currentCraftList, 'panel-danger':!hasIngredients.currentCraftList}">
+    <div class="panel" ng-class="{'panel-success':hasIngredients, 'panel-danger':!hasIngredients}">
         <div class="panel-heading">
             <h3 class="panel-title">Required Ingredients Lists</h3>
         </div>
@@ -172,13 +196,12 @@
                     </td>
                     <td ng-if="inventory[ingredient.$key] == undefined">
                         <input class="form-control input-sm" type="number" ng-model="quantity[ingredient.$key]"
-                            ng-change="setUnsavedInv(); inventoryUpdater(ingredient.$key, quantity[ingredient.$key], ingredient)"
+                            ng-change="setUnsavedInv(); inventoryUpdater(ingredient.$key, quantity[ingredient.$key], ingredient); checkIngredients()"
                             placeholder="0" />
                     </td>
                     <td ng-if="inventory[ingredient.$key] != undefined">
                         <input class="form-control input-sm" type="number" ng-model="inventory[ingredient.$key].qty"
-                            ng-change="setUnsavedInv()"
-                            placeholder="{{inventory[ingredient.$key].qty}}" />
+                            ng-change="setUnsavedInv(); checkIngredients()" placeholder="{{inventory[ingredient.$key].qty}}" />
                     </td>
                 </tr>
             </table>

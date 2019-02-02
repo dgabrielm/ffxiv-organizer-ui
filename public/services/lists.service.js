@@ -9,6 +9,16 @@ app.service('listsService', ['$http', 'LISTS_CONFIG', function ($http, LISTS_CON
         $this.lists = JSON.parse(JSON.stringify($this.backupLists));
     };
 
+    this.removeList = function (listToRemove) {
+        delete $this.lists.craft_lists[listToRemove];
+        $this.currentCraftList = 'general';
+    };
+
+    this.addList = function (listToAdd) {
+        $this.lists.craft_lists[listToAdd] = [];
+        $this.currentCraftList = listToAdd;
+    };
+
     this.clearCurrentList = function () {
         $this.lists.craft_lists[$this.currentCraftList] = [];
     };
@@ -43,8 +53,36 @@ app.service('listsService', ['$http', 'LISTS_CONFIG', function ($http, LISTS_CON
                     }
                 }
             }
+
+
+
         });
         $this.requiredIngredients = rtn;
+    };
+
+    this.assessListItems = function (inventory) {
+        // iterate over items in current craft list
+        $this.lists.craft_lists[$this.currentCraftList].forEach(craftListItem => {
+            // start off assuming inventory contains required items
+            craftListItem.hasItems = true;
+            // iterate over each item's ingredients
+            for (i = 0; i < craftListItem.ingredients.length; i++) {
+                // jump every 4 (land on id)
+                if (i == 0 || i % 4 == 0) {
+                    // if inventory has any of that item
+                    if (inventory[craftListItem.ingredients[i]] != undefined) {
+                        // if inventory's qty is less than required qty set condition to false
+                        if (inventory[craftListItem.ingredients[i]].qty < parseInt(craftListItem.ingredients[i + 1] * parseInt(craftListItem.qty))) {
+                            craftListItem.hasItems = false;
+                        }
+
+                    } else {
+                        craftListItem.hasItems = false;
+                    }
+
+                }
+            }
+        });
     };
 
     this.createListRecords = function (id) {

@@ -102,7 +102,7 @@ input.ng-invalid.ng-touched {
     transform: translateX(-100%);
 }
 
-#item-list tr.ng-leave-stagger {
+/* #item-list tr.ng-leave-stagger {
     transition-delay: 0.03s;
     transition-duration: 0;
-}
+} */

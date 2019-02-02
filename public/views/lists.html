@@ -2,10 +2,6 @@
 
 <br /><br />
 
-<!-- ADD DELETE ALL BUTTON TO FOOTER LIKE IN INVENTORY -->
-
-{{currentCraftList}}
-
 <!-- Craft Lists -->
 <div class="col-md-7 col-sm-12">
 
@@ -17,12 +13,13 @@
 
             <div class="row">
                 <div class="col-md-10 col-sm-10">
-                    <select class="form-control" ng-model="currentCraftList" ng-change="changeList(currentCraftList); generateRequiredIngredients(currentCraftList)">
+                    <select class="form-control" ng-model="currentCraftList" ng-change="changeList(currentCraftList); generateRequiredIngredients()">
                         <option ng-repeat="(id, list) in lists.craft_lists" value="{{id}}"><span ng-class="text-capitalize">{{id}}</span></option>
                     </select>
                 </div>
                 <div class="col-md-2 col-sm-2">
-                    <button type="button" class="btn btn-default margin-zero" data-toggle="collapse" data-target="#options">Opt
+                    <button type="button" class="btn btn-default margin-zero" data-toggle="collapse" data-target="#options"><img
+                            src="./img/settings.png" width="20" height="20" />
                         <span class="caret"></span>
                     </button>
                 </div>
@@ -30,12 +27,29 @@
 
             <br />
 
-            <div id="options" class="collapse row">
-                <div class="form-group col-md-9 col-sm-9">
-                    <input type="text" ng-model="search" class="form-control" placeholder="New Craft List Name..." />
+            <div id="options" class="collapse row text-center">
+                <hr />
+                <h4>Options:</h4>
+                <br />
+                <div class="row container-fluid">
+                    <div class="form-group col-md-10 col-sm-10">
+                        <input type="text" ng-model="listToCreate" class="form-control input-sm" placeholder="New Craft List Name... (5 - 20 chars)" />
+                    </div>
+                    <div class="col-md-2 col-sm-2">
+                        <button ng-disabled="listToCreate.length >= 20 || listToCreate.length &lt; 5 || listToCreate == null || listToCreate == '' "
+                            type="button" ng-click="createList(); setUnsaved()" class="btn btn-sm btn-success">Create</button>
+                    </div>
                 </div>
-                <div class="col-md-3 col-sm-3">
-                    <button type="button" ng-click="persistChanges()" class="btn btn-success">Create New List</button>
+                <div class="row container-fluid">
+                    <div class="form-group col-md-10 col-sm-10">
+                        <select class="form-control input-sm" ng-model="listToDelete">
+                            <option ng-repeat="(id, list) in lists.craft_lists" value="{{id}}"><span ng-class="text-capitalize">{{id}}</span></option>
+                        </select>
+                    </div>
+                    <div class="col-md-2 col-sm-2">
+                        <button ng-disabled="listToDelete == 'general' " type="button" ng-click="deleteList(); setUnsaved()"
+                            class="btn btn-sm btn-danger">Delete</button>
+                    </div>
                 </div>
             </div>
 
@@ -60,16 +74,15 @@
                     <td><small>{{item.name}} ({{item.craft_type}})</small></td>
                     <td>
                         <input novalidate ng-required="true" ng-min="1" class="form-control input-sm" type="number"
-                            ng-model="item.qty" ng-change="setUnsaved(); checkIngredients()" placeholder="0" />
-                        <!-- ng-model="item.qty" ng-change="setUnsaved(); checkValid(item.$key)" placeholder="0" /> -->
-
+                            ng-model="item.qty" ng-change="setUnsaved(); checkIngredients(); assessListItems(); checkValid(item)"
+                            placeholder="0" />
                     </td>
                     <td ng-if="inventory[item._id] == undefined">
-                        <input class="form-control input-sm" type="number" ng-model="quantity[item._id]" ng-change="setUnsavedInv(); inventoryUpdater(item._id, quantity[item._id], item); checkIngredients()"
+                        <input class="form-control input-sm" type="number" ng-model="quantity[item._id]" ng-change="setUnsavedInv(); inventoryUpdater(item._id, quantity[item._id], item); checkIngredients(); assessListItems()"
                             placeholder="0" />
                     </td>
                     <td ng-if="inventory[item._id] != undefined">
-                        <input class="form-control input-sm" type="number" ng-model="inventory[item._id].qty" ng-change="setUnsavedInv()"
+                        <input class="form-control input-sm" type="number" ng-model="inventory[item._id].qty" ng-change="setUnsavedInv(); assessListItems()"
                             placeholder="{{inventory[item._id].qty}}" />
                     </td>
                     <td>
@@ -98,7 +111,7 @@
                         </div>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-sm btn-success" ng-click="craftItem(item); setUnsaved(); setUnsavedInv(); setJustCrafted(true)"><small>Craft</small></button>
+                        <button ng-disabled="!item.hasItems" type="button" class="btn btn-sm btn-success" ng-click="craftItem(item); setUnsaved(); setUnsavedInv(); setJustCrafted(true)"><small>Craft</small></button>
                     </td>
                     <td><button type="button" class="close" ng-click="removeItem(item); setUnsaved()" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
@@ -109,8 +122,10 @@
         <div class="panel-footer">
             <button type="button" ng-click="removeAllItems(); setUnsaved()" class="btn btn-danger">Delete all items
                 from list</button>
-            <button ng-if="hasIngredients && switch.current" type="button" ng-click="craftAllItems(); setUnsaved(); setUnsavedInv(); setJustCrafted(true)"
-                class="btn btn-success">Craft All Items</button>
+            <button ng-disabled="!hasIngredients || !switch.current || lists.craft_lists[currentCraftList].length == 0"
+                type="button" ng-click="craftAllItems(); setUnsaved(); setUnsavedInv(); setJustCrafted(true)" class="btn btn-success">Craft
+                All Items</button>
+
         </div>
     </div>
 
@@ -129,11 +144,11 @@
         <button type="button" ng-click="cancelChanges(); setJustCrafted(false)" class="btn btn-danger">Cancel Changes</button>
         <div ng-show="justCrafted">
             <br />
-            <button type="button" ng-click="cancelInventoryChanges(); cancelChanges(); setJustCrafted(false)" class="btn btn-lg btn-danger">Cancel
+            <button type="button" ng-click="persistInventoryChanges(); persistChanges(); setJustCrafted(false)" class="btn btn-lg btn-success">Save
                 Changes to Lists and
                 Inventory!</button>
             <br /><br />
-            <button type="button" ng-click="persistInventoryChanges(); persistChanges(); setJustCrafted(false)" class="btn btn-lg btn-success">Save
+            <button type="button" ng-click="cancelInventoryChanges(); cancelChanges(); setJustCrafted(false)" class="btn btn-lg btn-danger">Cancel
                 Changes to Lists and
                 Inventory!</button>
         </div>
@@ -188,7 +203,8 @@
                         <h5>Inventory:</h5>
                     </th>
                 </tr>
-                <tr ng-repeat="ingredient in requiredIngredients | toArray | orderBy: 'name' " ng-class="{'success':inventory[ingredient.$key].qty !== undefined && inventory[ingredient.$key].qty >= ingredient.qty}">
+                <tr ng-hide="hideCrystals && ingredient.name.includes('Crystal') || hideCrystals && ingredient.name.includes('Shard') || hideCrystals && ingredient.name.includes('Cluster')"
+                    ng-repeat="ingredient in requiredIngredients | toArray | orderBy: 'name' " ng-class="{'success':inventory[ingredient.$key].qty !== undefined && inventory[ingredient.$key].qty >= ingredient.qty}">
                     <td><img ng-src="https://xivapi.com/i/{{convertIcon(ingredient.icon_id)}}.png" width="28" height="28" /></td>
                     <td><small>{{ingredient.name}}</small></td>
                     <td>
@@ -196,16 +212,20 @@
                     </td>
                     <td ng-if="inventory[ingredient.$key] == undefined">
                         <input class="form-control input-sm" type="number" ng-model="quantity[ingredient.$key]"
-                            ng-change="setUnsavedInv(); inventoryUpdater(ingredient.$key, quantity[ingredient.$key], ingredient); checkIngredients()"
+                            ng-change="setUnsavedInv(); inventoryUpdater(ingredient.$key, quantity[ingredient.$key], ingredient); checkIngredients(); assessListItems()"
                             placeholder="0" />
                     </td>
                     <td ng-if="inventory[ingredient.$key] != undefined">
                         <input class="form-control input-sm" type="number" ng-model="inventory[ingredient.$key].qty"
-                            ng-change="setUnsavedInv(); checkIngredients()" placeholder="{{inventory[ingredient.$key].qty}}" />
+                            ng-change="setUnsavedInv(); checkIngredients(); assessListItems()" placeholder="{{inventory[ingredient.$key].qty}}" />
                     </td>
                 </tr>
             </table>
         </div>
-        <div class="panel-footer">Panel Footer</div>
+        <div class="panel-footer">
+            <div class="checkbox">
+                <label><input type="checkbox" ng-model="hideCrystals">Hide Crystals</label>
+            </div>
+        </div>
     </div>
 </div>

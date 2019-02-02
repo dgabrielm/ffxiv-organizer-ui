@@ -1,33 +1,57 @@
-app.service('userService', ['$http', '$location', '$window', 'inventoryService', 'listsService', 'USERS_CONFIG', function ($http, $location, $window, inventoryService, listsService, USERS_CONFIG) {
-    
-    var self = this;
+app.service('userService', ['$http', '$location', '$window', 'inventoryService', 'listsService', 'USERS_CONFIG', 'INVENTORIES_CONFIG', 'LISTS_CONFIG', function ($http, $location, $window, inventoryService, listsService, USERS_CONFIG, INVENTORIES_CONFIG, LISTS_CONFIG) {
+
+    var $this = this;
 
     this.login = function (usr, pwd) {
         // reset user feedback variable
-        self.loginFailed = false;
+        $this.loginFailed = false;
 
         $http.get(USERS_CONFIG.location + ':' + USERS_CONFIG.port + '/users/' + usr + '/' + pwd)
             .then(function (response) {
                 if (response.data !== null) {
-                    self.user = response.data;
-                    self.loggedIn = true;
+                    $this.user = response.data;
+                    $this.loggedIn = true;
                     $location.path('/dashboard');
-                    inventoryService.getInventory(self.user._id);
-                    listsService.getLists(self.user._id);
+                    inventoryService.getInventory($this.user._id);
+                    listsService.getLists($this.user._id);
                 } else {
                     // need to use this variable to provide some visual feedback
-                    self.loginFailed = true;
+                    $this.loginFailed = true;
                 }
             });
     };
 
+    this.deleteAccount = function (password) {
+
+        $http.delete(USERS_CONFIG.location + ':' + USERS_CONFIG.port + '/users/' + $this.user.username + '/' + password)
+            .then(function (response) {
+                if (response.data.n == 0) {
+                    throw new Error;
+                }
+                $http.delete(INVENTORIES_CONFIG.location + ':' + INVENTORIES_CONFIG.port + '/inventories/' + $this.user._id);
+            })
+            .then(function () {
+                $http.delete(LISTS_CONFIG.location + ':' + LISTS_CONFIG.port + '/lists/' + $this.user._id);
+            })
+            .then(function () {
+                // set good feedback variable!
+                setTimeout(function () { $this.logout(); }, 2000);
+            })
+            .catch(function (error) {
+                // set wrong password feedback variable!
+                console.log(error);
+            });
+
+    };
+
     this.logout = function () {
-        self.loggedIn = false;
+        // remove this
+        $this.loggedIn = false;
         $window.location.href = '/';
     };
-    
+
     this.getUsername = function () {
-        if (self.user === undefined) {
+        if ($this.user === undefined) {
             return '';
         } else {
             return this.user.username;

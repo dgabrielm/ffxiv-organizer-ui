@@ -16,10 +16,6 @@ app.get('/*', (req, res) => {
    res.sendFile('index.html', { root: 'public/'});
 });
 
-// app.get('/', (req, res) => {
-//    res.sendFile('index.html');
-// });
-
 app.listen(config.app.port, () => {
    console.log('app has started successfully');
 });

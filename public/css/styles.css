@@ -13,7 +13,6 @@
 
 .fixx {
     position: static;
-    /* z-index: 10000; */
 }
 
 .margin-zero {
@@ -39,17 +38,6 @@
 .text-black {
     color: black;
 } 
-
-/* .default-cursor {
-    cursor: default;
-} */
-
-/* .row-bottom-margin { 
-    margin: 0px;
-    border: 1px black;
-} */
-
-/* Play around with these later! */
 
 .jumbotron {
     background-image: url("../img/bg.jpg");
@@ -101,8 +89,3 @@ input.ng-invalid.ng-touched {
     opacity: 0;
     transform: translateX(-100%);
 }
-
-/* #item-list tr.ng-leave-stagger {
-    transition-delay: 0.03s;
-    transition-duration: 0;
-} */

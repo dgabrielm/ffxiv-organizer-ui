@@ -1,6 +1,8 @@
 <h1 class="page-header">Account Page</h1>
 
-{{user}}
+USER: {{user}}
+
+USERUPDATE {{userUpdate}}
 
 <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt unde nulla earum totam nesciunt, beatae animi,
     enim velit saepe aut, quia molestiae corrupti vitae! Neque quod cupiditate quidem id perspiciatis. Lorem ipsum
@@ -72,20 +74,60 @@
         class="alert alert-warning" role="alert">Passwords do not match</div>
 
     <!-- Buttons -->
-    <input ng-show="editMode" type="submit" class="btn btn-primary" value="Confirm" ng-disabled="updateAccountForm.$invalid || !newPasswordsMatch()" />
+    <input ng-show="editMode" type="submit" class="btn btn-primary" value="Confirm" ng-disabled="updateAccountForm.$invalid || !newPasswordsMatch()"
+        data-toggle="modal" data-target="#datasaving" />
     <button ng-show="editMode" ng-click="cancelUpdate()" class="btn btn-default">Cancel</button>
 
 </form>
 <button ng-hide="editMode" ng-click="toggleEditMode()" class="btn btn-default">Edit</button>
+<button ng-hide="editMode" class="btn btn-danger" data-toggle="modal" data-target="#datadeleting">Delete Account</button>
 
 <br /><br />
-<!-- Data Saved Confirmation -->
-<div ng-show="dataSaved" class="alert alert-success alert-dismissible" role="alert">
-    <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
-    Account details successfully changed
+
+<!-- Data Saved/Not Saved Confirmation -->
+<div class="modal fade" id="datasaving" role="dialog">
+    <div class="modal-dialog">
+        <div ng-show="dataSaved" class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+            <h4>Account details successfully changed</h4>
+            <h5>Please Log in again to see changes</h5>
+        </div>
+        <div ng-show="dataNotSaved" class="alert alert-danger" role="alert">
+            <h4>Changes not saved</h4>
+            <h5>Please check your details and try again</h5>
+        </div>
+    </div>
 </div>
-<!-- Data Not Saved Alert -->
-<div ng-show="dataNotSaved" class="alert alert-danger alert-dismissible" role="alert">
-    <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
-    Changes not saved
-</div>
+
+<!-- Delete Account Modal -->
+<div class="modal fade" id="datadeleting" role="dialog">
+    <div class="modal-dialog">
+
+        <div class="alert alert-warning" role="alert">
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <br />
+                <h3>Are you sure you want to delete your account?</h3>
+                <br />
+                <p>You will not be able to recover your account once deleted. Are you sure you wish to continue?</p>
+                <br />
+                <div>
+                    <input type="password" class="form-control" placeholder="Enter your current password" ng-model="current_password" />
+                    <br />
+                    <button type="button" ng-click="deleteAccount()" class="btn btn-danger">Yes, delete my account!</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- SET THESE TO APPEAR WHEN YOU SUCCEED OR FAIL IN DELETING ACCOUNT -- SET VARIABLES IN SERVICE -->
+        <div ng-show="dataSaved" class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+            <h4>Account details successfully changed</h4>
+            <h5>Please Log in again to see changes</h5>
+        </div>
+        <div ng-show="dataNotSaved" class="alert alert-danger" role="alert">
+            <h4>Changes not saved</h4>
+            <h5>Please check your details and try again</h5>
+        </div>
+
+    </div>

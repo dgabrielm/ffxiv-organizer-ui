@@ -155,7 +155,7 @@ app.service('listsService', ['$http', 'LISTS_CONFIG', function ($http, LISTS_CON
                             general: []
                         }
                     };
-                    $this.hasLists = true;
+                    $this.hasLists = false;
                 }
             });
     };

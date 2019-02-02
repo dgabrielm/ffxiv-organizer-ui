@@ -74,6 +74,12 @@ app.controller('listsController', ['$scope', 'listsService', 'iconService', 'inv
         $scope.switch = listsService.switch;
     });
 
+    $scope.$watch(function () {
+        return inventoryService.hasInventory;
+    }, function (newValue, oldValue) {
+        $scope.hasInventory = inventoryService.hasInventory;
+    });
+
     $scope.flickSwitch = function (position) {
         var obj = {};
         obj[position] = true

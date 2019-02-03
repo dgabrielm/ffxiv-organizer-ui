@@ -1,7 +1,6 @@
 <div>
    <nav class="navbar navbar-inverse">
       <div class="container-fluid">
-         <!-- Brand and toggle get grouped for better mobile display -->
          <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
                aria-expanded="false">
@@ -13,16 +12,18 @@
             <a href="#" ng-click="getNewBg()"><img class="navbar-brand" src="img/book-logo.png" /></a>
             <a href="#" ng-click="getNewBg()"><img class="navbar-brand" src="img/dark-logo.png" /></a>
          </div>
-
-         <!-- Collect the nav links, forms, and other content for toggling -->
+         <!-- Main navbar (only available when logged in) -->
          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul ng-if="loggedIn" class="nav navbar-nav">
                <li ng-class="{'active':switch.dashboard}" ng-click="switch = {dashboard: true}"><a href="/dashboard">Dashboard</a></li>
                <li ng-class="{'active':switch.database}" ng-click="switch = {database: true}"><a href="/database">Database</a></li>
-               <li ng-class="{'active':switch.lists}" ng-click="switch = {lists: true}"><a href="/lists">Lists <span ng-if="listsChanges" class="label label-warning text-black">!</span></a></li>
-               <li ng-class="{'active':switch.inventory}" ng-click="switch = {inventory: true}"><a href="/inventory">Inventory <span ng-if="inventoryChanges" class="label label-warning text-black">!</span></a></li>
+               <li ng-class="{'active':switch.lists}" ng-click="switch = {lists: true}"><a href="/lists">Lists <span
+                        ng-if="listsChanges" class="label label-warning text-black">!</span></a></li>
+               <li ng-class="{'active':switch.inventory}" ng-click="switch = {inventory: true}"><a href="/inventory">Inventory
+                     <span ng-if="inventoryChanges" class="label label-warning text-black">!</span></a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
+               <!-- Not logged in right-navbar -->
                <li ng-if="loggedIn" class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                      aria-expanded="false">{{username}} <span class="caret"></span></a>
@@ -32,23 +33,31 @@
                      <li><a href="#" ng-click="logout()">log out</a></li>
                   </ul>
                </li>
+               <!-- Logged in right-navbar -->
                <li ng-if="!loggedIn" class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                      aria-expanded="false">Not Logged In<span class="caret"></span></a>
                   <form class="dropdown-menu bg-inverse" ng-submit="login(loginDetails.usr, loginDetails.pwd)">
                      <div class="form-group container-fluid">
-                        <input type="text" class="form-control" placeholder="Username" ng-model="loginDetails.usr">
+                        <input type="text" class="form-control" placeholder="Username" ng-model="loginDetails.usr"
+                           autocomplete="username" />
                      </div>
                      <div class="form-group container-fluid">
-                        <input type="password" class="form-control" placeholder="Password" ng-model="loginDetails.pwd">
+                        <input type="password" class="form-control" placeholder="Password" ng-model="loginDetails.pwd"
+                           autocomplete="password" />
                      </div>
                      <div class="container-fluid">
                         <button type="submit" class="btn btn-primary">Sign in</button>
                      </div>
+                     <!-- Login Failed Alert -->
+                     <div class="container-fluid" ng-if="loginFailed">
+                        <h5 class="alert alert-danger alert-dismissable" role="alert"><button type="button" class="close"
+                              data-dismiss="alert" ng-click="resetLoginFailed()"><span>&times;</span></button>Failed!</h5>
+                     </div>
                   </form>
                </li>
             </ul>
-         </div><!-- /.navbar-collapse -->
-      </div><!-- /.container-fluid -->
+         </div>
+      </div>
    </nav>
 </div>

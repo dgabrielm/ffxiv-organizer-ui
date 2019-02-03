@@ -1,6 +1,5 @@
 const app = angular.module('ffxivOrganizer', ['ngRoute', 'ngAnimate', 'angular-toArrayFilter', 'appConfig']);
 
-// before application runs
 app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
 
     $locationProvider.html5Mode(true);
@@ -36,32 +35,7 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
 
 }]);
 
-app.run(['$location', 'userService', '$rootScope', function ($location, userService, $rootScope) {
-
-    var backgrounds = function () {
-        
-        var backgrounds = [
-            'img/jumbotron-images/1.jpg',
-            'img/jumbotron-images/2.jpg',
-            'img/jumbotron-images/3.jpg',
-            'img/jumbotron-images/4.jpg',
-            'img/jumbotron-images/5.jpg',
-            'img/jumbotron-images/6.jpg',
-            'img/jumbotron-images/7.jpg',
-            'img/jumbotron-images/8.jpg',
-            'img/jumbotron-images/9.jpg',
-            'img/jumbotron-images/10.jpg'
-        ];
-
-        return backgrounds[Math.floor(Math.random() * backgrounds.length)];
-
-    };
-
-    $rootScope.getNewBg = function () {
-        $rootScope.bg = backgrounds();
-    };
-
-    $rootScope.bg = backgrounds();
+app.run(['$location', 'userService', function ($location, userService) {
 
     if (!userService.loggedIn && $location.$$path != '/register') {
         $location.path('register');

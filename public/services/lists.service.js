@@ -26,7 +26,6 @@ app.service('listsService', ['$http', 'LISTS_CONFIG', function ($http, LISTS_CON
     this.generateRequiredIngredients = function () {
         var rtn = {};
         var lst = [];
-
         if ($this.switch.current === true) {
             lst = $this.lists.craft_lists[$this.currentCraftList];
         } else {
@@ -34,7 +33,6 @@ app.service('listsService', ['$http', 'LISTS_CONFIG', function ($http, LISTS_CON
                 lst = lst.concat($this.lists.craft_lists[key]);
             });
         }
-
         // iterate over items in current list (array inside obj inside obj)
         lst.forEach(itemToCraft => {
             // iterate over each item's ingredients (array of strings [id, qty, name, icon_id, id, qty, etc...])
@@ -53,9 +51,6 @@ app.service('listsService', ['$http', 'LISTS_CONFIG', function ($http, LISTS_CON
                     }
                 }
             }
-
-
-
         });
         $this.requiredIngredients = rtn;
     };
@@ -75,11 +70,9 @@ app.service('listsService', ['$http', 'LISTS_CONFIG', function ($http, LISTS_CON
                         if (inventory[craftListItem.ingredients[i]].qty < parseInt(craftListItem.ingredients[i + 1] * parseInt(craftListItem.qty))) {
                             craftListItem.hasItems = false;
                         }
-
                     } else {
                         craftListItem.hasItems = false;
                     }
-
                 }
             }
         });
@@ -89,7 +82,6 @@ app.service('listsService', ['$http', 'LISTS_CONFIG', function ($http, LISTS_CON
         let lst = {};
         lst.user_id = id;
         lst.lists = $this.lists;
-
         $http.post(LISTS_CONFIG.location + ':' + LISTS_CONFIG.port + '/lists/', lst)
             .then(function (response) {
                 if (response.data !== null) {
@@ -117,9 +109,7 @@ app.service('listsService', ['$http', 'LISTS_CONFIG', function ($http, LISTS_CON
                 if (response.data !== null) {
                     $this.unsavedChanges = false;
                     $this.backupLists = JSON.parse(JSON.stringify($this.lists));
-                    // add user feedback variables: saveSuccess or something
                 } else {
-                    // add user feedback variable: saveFailed or something
                 }
             });
     };

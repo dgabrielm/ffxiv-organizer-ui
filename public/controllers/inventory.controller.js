@@ -32,15 +32,21 @@ app.controller('inventoryController', ['$scope', 'inventoryService', 'iconServic
         inventoryService.unsavedChanges = true;
     };
 
-    $scope.convertIcon = iconService.convertIcon;
+    $scope.convertIcon = function (icon) {
+        return iconService.convertIcon(icon);
+    };
 
     $scope.downloadInventory = function () {
-        // implement export of inventory to csv file
-    }
+        var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(inventoryService.inventory));
+        var dlAnchorElem = document.getElementById('downloadAnchorElem');
+        dlAnchorElem.setAttribute("href",     dataStr     );
+        dlAnchorElem.setAttribute("download", userService.user.username + "inventory.json");
+        dlAnchorElem.click();
+    };
 
     $scope.top = function () {
         $window.scrollTo(0, 0);
-    }
+    };
 
     $scope.cancelChanges = function () {
         inventoryService.restoreInventory();
@@ -53,7 +59,7 @@ app.controller('inventoryController', ['$scope', 'inventoryService', 'iconServic
         }
     };
 
-    $scope.checkValid = function(id) {
+    $scope.checkValid = function (id) {
         if (inventoryService.inventory[id].qty == undefined || inventoryService.inventory[id].qty < 1) {
             inventoryService.inventory[id].qty = 1;
         }
@@ -67,7 +73,7 @@ app.controller('inventoryController', ['$scope', 'inventoryService', 'iconServic
         inventoryService.clearInventory();
     };
 
-    $scope.persistChanges = function() {
+    $scope.persistChanges = function () {
         inventoryService.persistChanges(userService.user._id);
     };
 

@@ -27,6 +27,7 @@
 
             <br />
 
+            <!-- Create & Delete list methods -->
             <div id="options" class="collapse row text-center">
                 <hr />
                 <h4>Options:</h4>
@@ -53,7 +54,7 @@
                 </div>
             </div>
 
-
+            <!-- Current List display -->
             <table class="table table-hover table-condensed margin-zero padding-zero" id="item-list">
                 <tr>
                     <th></th>
@@ -142,7 +143,7 @@
         <br />
         <button type="button" ng-click="persistChanges(); setJustCrafted(false)" class="btn btn-primary">Save Changes</button>
         <button type="button" ng-click="cancelChanges(); setJustCrafted(false)" class="btn btn-danger">Cancel Changes</button>
-        <div ng-show="justCrafted && hasInventory">
+        <div ng-if="justCrafted && hasInventory">
             <br />
             <button type="button" ng-click="persistInventoryChanges(); persistChanges(); setJustCrafted(false)" class="btn btn-lg btn-success">Save
                 Changes to Lists and

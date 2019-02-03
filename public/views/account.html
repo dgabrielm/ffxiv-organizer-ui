@@ -1,13 +1,8 @@
 <h1 class="page-header">Account Page</h1>
 
-USER: {{user}}
-
-USERUPDATE {{userUpdate}}
-
-<p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt unde nulla earum totam nesciunt, beatae animi,
-    enim velit saepe aut, quia molestiae corrupti vitae! Neque quod cupiditate quidem id perspiciatis. Lorem ipsum
-    dolor sit, amet consectetur adipisicing elit. Laudantium officiis rerum aliquam laboriosam, ad excepturi explicabo
-    quos maxime nam ea. Repellat, distinctio incidunt. Veniam aliquam deserunt quo placeat velit alias.</p>
+<br />
+<p>Update your personal details here. It is recommended that you do not use the same password you use on other sites.</p>
+<br />
 <form ng-submit="updateUser()" name="updateAccountForm" novalidate>
     <table class="table">
         <tbody>
@@ -79,6 +74,7 @@ USERUPDATE {{userUpdate}}
     <button ng-show="editMode" ng-click="cancelUpdate()" class="btn btn-default">Cancel</button>
 
 </form>
+<br />
 <button ng-hide="editMode" ng-click="toggleEditMode()" class="btn btn-default">Edit</button>
 <button ng-hide="editMode" class="btn btn-danger" data-toggle="modal" data-target="#datadeleting">Delete Account</button>
 
@@ -87,12 +83,12 @@ USERUPDATE {{userUpdate}}
 <!-- Data Saved/Not Saved Confirmation -->
 <div class="modal fade" id="datasaving" role="dialog">
     <div class="modal-dialog">
-        <div ng-show="dataSaved" class="alert alert-success alert-dismissible" role="alert">
+        <div ng-if="dataSaved" class="alert alert-success alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
             <h4>Account details successfully changed</h4>
             <h5>Please Log in again to see changes</h5>
         </div>
-        <div ng-show="dataNotSaved" class="alert alert-danger" role="alert">
+        <div ng-if="dataNotSaved" class="alert alert-danger" role="alert">
             <h4>Changes not saved</h4>
             <h5>Please check your details and try again</h5>
         </div>
@@ -119,15 +115,17 @@ USERUPDATE {{userUpdate}}
             </div>
         </div>
 
-        <!-- SET THESE TO APPEAR WHEN YOU SUCCEED OR FAIL IN DELETING ACCOUNT -- SET VARIABLES IN SERVICE -->
-        <div ng-show="dataSaved" class="alert alert-success alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
-            <h4>Account details successfully changed</h4>
-            <h5>Please Log in again to see changes</h5>
+        <!-- Deletion Success / Failure visual feedback -->
+        <div ng-if="accountDeleteSuccess" class="alert alert-success" role="alert">
+            <h4>Account has been successfully deleted</h4>
+            <h5>You will now be logged out..</h5>
         </div>
-        <div ng-show="dataNotSaved" class="alert alert-danger" role="alert">
-            <h4>Changes not saved</h4>
-            <h5>Please check your details and try again</h5>
+        <div ng-if="accountDeleteFail" class="alert alert-danger" role="alert">
+            <button type="button" class="close" data-dismiss="alert" ng-click="resetVisualFeedbackVars()"><span>&times;</span></button>
+            <h4>Something went wrong</h4>
+            <h5>Your account has not been deleted. Please check your password and try again</h5>
         </div>
 
     </div>
+
+</div>

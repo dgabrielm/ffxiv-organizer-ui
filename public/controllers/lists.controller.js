@@ -178,10 +178,10 @@ app.controller('listsController', ['$scope', 'listsService', 'iconService', 'inv
         // remove ingredients used from inventory
         for (i = 0; i < item.ingredients.length; i++) {
             if (i == 0 || i % 4 == 0) {
-                if (inventoryService.inventory[item.ingredients[i]].qty <= parseInt(item.ingredients[i + 1])) {
+                if (parseInt(inventoryService.inventory[item.ingredients[i]].qty) <= parseInt(item.ingredients[i + 1]) * parseInt(item.qty)) {
                     inventoryService.deleteItem(item.ingredients[i]);
                 } else {
-                    inventoryService.inventory[item.ingredients[i]].qty -= parseInt(item.ingredients[i + 1]);
+                    inventoryService.inventory[item.ingredients[i]].qty -= parseInt(item.ingredients[i + 1]) * parseInt(item.qty);
                 }
             }
         }

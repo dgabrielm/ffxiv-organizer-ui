@@ -5,6 +5,8 @@ app.directive('ftr', [function() {
         templateUrl: 'templates/footer.html',
         transclude: true,
         replace: true,
-        controller: 'ftrController'
+        controller: function () {
+            
+        }
     };
 }]);

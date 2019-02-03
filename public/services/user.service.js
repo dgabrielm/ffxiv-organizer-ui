@@ -3,10 +3,7 @@ app.service('userService', ['$http', '$location', '$window', 'inventoryService',
     var $this = this;
 
     this.login = function (usr, pwd) {
-        // reset user feedback variable
-        $this.loginFailed = false;
-
-        $http.get(USERS_CONFIG.location + ':' + USERS_CONFIG.port + '/users/' + usr + '/' + pwd)
+        return $http.get(USERS_CONFIG.location + ':' + USERS_CONFIG.port + '/users/' + usr + '/' + pwd)
             .then(function (response) {
                 if (response.data !== null) {
                     $this.user = response.data;
@@ -15,38 +12,12 @@ app.service('userService', ['$http', '$location', '$window', 'inventoryService',
                     inventoryService.getInventory($this.user._id);
                     listsService.getLists($this.user._id);
                 } else {
-                    // need to use this variable to provide some visual feedback
-                    $this.loginFailed = true;
-                }
-            });
-    };
-
-    this.deleteAccount = function (password) {
-
-        $http.delete(USERS_CONFIG.location + ':' + USERS_CONFIG.port + '/users/' + $this.user.username + '/' + password)
-            .then(function (response) {
-                if (response.data.n == 0) {
                     throw new Error;
                 }
-                $http.delete(INVENTORIES_CONFIG.location + ':' + INVENTORIES_CONFIG.port + '/inventories/' + $this.user._id);
-            })
-            .then(function () {
-                $http.delete(LISTS_CONFIG.location + ':' + LISTS_CONFIG.port + '/lists/' + $this.user._id);
-            })
-            .then(function () {
-                // set good feedback variable!
-                setTimeout(function () { $this.logout(); }, 2000);
-            })
-            .catch(function (error) {
-                // set wrong password feedback variable!
-                console.log(error);
             });
-
     };
 
     this.logout = function () {
-        // remove this
-        $this.loggedIn = false;
         $window.location.href = '/';
     };
 
@@ -56,6 +27,34 @@ app.service('userService', ['$http', '$location', '$window', 'inventoryService',
         } else {
             return this.user.username;
         }
+    };
+
+    this.getUsernames = function () {
+        $http.get(USERS_CONFIG.location + ':' + USERS_CONFIG.port + '/users/usernames')
+            .then(function (response) {
+                $this.usernames = response.data;
+            });
+    };
+
+    this.updateUser = function (user, current_password) {
+        return $http.post(USERS_CONFIG.location + ':' + USERS_CONFIG.port + '/users/' + $this.user.username + '/' + current_password, user);
+    };
+
+    this.deleteAccount = function (password) {
+        return $http.delete(USERS_CONFIG.location + ':' + USERS_CONFIG.port + '/users/' + $this.user.username + '/' + password)
+            .then(function (response) {
+                if (response.data.n == 0) {
+                    throw new Error;
+                }
+                $http.delete(INVENTORIES_CONFIG.location + ':' + INVENTORIES_CONFIG.port + '/inventories/' + $this.user._id);
+            })
+            .then(function () {
+                $http.delete(LISTS_CONFIG.location + ':' + LISTS_CONFIG.port + '/lists/' + $this.user._id);
+            })
+    };
+
+    this.createUser = function (register) {
+        return $http.post(USERS_CONFIG.location + ':' + USERS_CONFIG.port + '/users/', register);
     };
 
 }]);

@@ -3,7 +3,6 @@ const app = express();
 const path = require ('path');
 const config = require('./config');
 
-// sets root directory to 'public'
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function(req, res, next) {

@@ -25,9 +25,11 @@
    <script src="controllers/inventory.controller.js"></script>
    <script src="controllers/lists.controller.js"></script>
    <script src="controllers/register.controller.js"></script>
-   <script src="controllers/nav.controller.js"></script>
-   <script src="controllers/ftr.controller.js"></script>
-   <script src="controllers/jumbotron.controller.js"></script>
+
+   <!-- Directives -->
+   <script src="directives/nav-bar.directive.js"></script>
+   <script src="directives/jumbotron.directive.js"></script>
+   <script src="directives/ftr.directive.js"></script>
 
    <!-- Services -->
    <script src="services/user.service.js"></script>
@@ -35,11 +37,7 @@
    <script src="services/inventory.service.js"></script>
    <script src="services/icon.service.js"></script>
    <script src="services/lists.service.js"></script>
-
-   <!-- Directives -->
-   <script src="directives/nav-bar.directive.js"></script>
-   <script src="directives/jumbotron.directive.js"></script>
-   <script src="directives/ftr.directive.js"></script>
+   <script src="services/background.service.js"></script>
 
    <!-- Stylesheet imports -->
    <link rel="stylesheet" href="css/bootstrap.min.css" />
@@ -53,9 +51,7 @@
    <header nav-bar></header>
 
    <!-- Jumbotron -->
-   <div jumbotron ng-style="{'background':'transparent url(' + bg + ')'}"></div>
-
-   
+   <div jumbotron></div>
 
    <!-- View -->
    <main ng-view class="container text-center"></main>

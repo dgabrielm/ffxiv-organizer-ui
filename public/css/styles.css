@@ -39,8 +39,12 @@
     color: black;
 } 
 
-.jumbotron {
-    background-image: url("../img/bg.jpg");
+/* .jumbotron {
+    background-image: url("../img/jumbotron-images/1.jpg");
+} */
+
+.bg-inverse {
+    background-color: #222222;
 }
 
 .back {

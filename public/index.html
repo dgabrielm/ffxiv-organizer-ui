@@ -14,7 +14,6 @@
    <script src="js/angular.min.js"></script>
    <script src="js/angular-route.min.js"></script>
    <script src="js/angular-animate.min.js"></script>
-   <script src="js/ngtweet.min.js"></script>
    <script src="js/angular-toArrayFilter.js"></script>
    <script src="app.config.js"></script>
    <script src="app.js"></script>
@@ -54,12 +53,12 @@
    <header nav-bar></header>
 
    <!-- Jumbotron -->
-   <div jumbotron></div>
+   <div jumbotron ng-style="{'background':'transparent url(' + bg + ')'}"></div>
+
+   
 
    <!-- View -->
    <main ng-view class="container text-center"></main>
-
-   {{$route}}
 
    <!-- Footer -->
    <br /><br />

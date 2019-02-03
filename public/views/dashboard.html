@@ -1,14 +1,71 @@
-<h1>Welcome to the App</h1>
-<h3>App news here!</h3>
+<h1>Dashboard</h1>
+<h3>Check out the awesome apps available from FFXIV Organizer:</h3>
 
 <div class="col-md-8">
-    <h3>Also the place for samples of each application??</h3>
+    <div class="row">
+        <br /><br /><br />
+        <div class="col-md-6 col-sm-6">
+            <div class="well well-lg">
+                <h3>Inventory <img src="./img/inventories.png" width="30" height="30" /></h3>
+                <hr />
+                <p>
+                    The inventory app is designed to model your inventory in FFXIV Online. Search for items through the
+                    database app to add to your inventory. See if you have stock to create items using the lists app!
+                </p>
+                <br />
+                <button ng-if="!hasInventory" type="button" ng-click="createInventory()" class="btn btn-warning">Sign
+                    up for an Inventory!</button>
+                <a href="/inventory"><button ng-if="hasInventory" type="button" ng-click="" class="btn btn-primary">Go to your Inventory</button></a>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-6">
+            <div class="well well-lg">
+                <h3>Lists <img src="./img/lists.png" width="30" height="30" /></h3>
+                <hr />
+                <p>
+                    With the lists app you can make lists of items you want to craft and see which items you will need
+                    to craft them. Sign up for the inventory app and see your current stock displayed! Use the database
+                    app to add items to your lists!
+                </p>
+                <br />
+                <button ng-if="!hasLists" type="button" ng-click="createLists()" class="btn btn-warning">Get started
+                    with Lists!</button>
+                <a href="/lists"><button ng-if="hasLists" type="button" ng-click="" class="btn btn-primary">Have a
+                        look at your Lists</button></a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <br /><br />
+        <div class="col-md-6 col-sm-6">
+            <div class="well well-lg">
+                <h3>Account <img src="./img/settings.png" width="30" height="30" /></h3>
+                <hr />
+                <p>
+                    With the lists app you can make lists of items you want to craft and see which items you will need
+                    to craft them. Sign up for the inventory app and see your current stock displayed! Use the database
+                    app to add items to your lists!
+                </p>
+                <br />
+                <a href="/account"><button type="button" ng-click="" class="btn btn-primary">Review your account info</button></a>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-6">
+            <div class="well well-lg">
+                <h3>Database <img src="./img/db.svg.png" width="30" height="30" /></h3>
+                <hr />
+                <p>
+                    A simple database with all the information needed to make quick simple lists. Search for items to
+                    add to lists of items you wish to craft. Find items to add to your inventory. Updated for FFXIV
+                    version 4.4!
+                </p>
+                <br />
+                <a href="/database"><button type="button" class="btn btn-primary">Search for items</button></a>
+            </div>
+        </div>
+    </div>
+    <br />
 </div>
 <div class="col-md-4">
-    <h3>Maybe a Twitter Feed or something?</h3>
-
-    <a class="twitter-timeline" href="https://twitter.com/TwitterDev" data-widget-id="673710543212052480">Tweets from
-        https://twitter.com/TwitterDev</a>
-    <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + "://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>
-
+    <img src="../img/dashboard.png" />
 </div>

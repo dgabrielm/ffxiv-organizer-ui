@@ -10,8 +10,8 @@
                <span class="icon-bar"></span>
                <span class="icon-bar"></span>
             </button>
-            <a href="#"><img class="navbar-brand" src="img/book-logo.png" /></a>
-            <a href="#"><img class="navbar-brand" src="img/dark-logo.png" /></a>
+            <a href="#" ng-click="getNewBg()"><img class="navbar-brand" src="img/book-logo.png" /></a>
+            <a href="#" ng-click="getNewBg()"><img class="navbar-brand" src="img/dark-logo.png" /></a>
          </div>
 
          <!-- Collect the nav links, forms, and other content for toggling -->
@@ -35,14 +35,14 @@
                <li ng-if="!loggedIn" class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                      aria-expanded="false">Not Logged In<span class="caret"></span></a>
-                  <form class="dropdown-menu" ng-submit="login(loginDetails.usr, loginDetails.pwd)">
+                  <form class="dropdown-menu bg-inverse" ng-submit="login(loginDetails.usr, loginDetails.pwd)">
                      <div class="form-group container-fluid">
                         <input type="text" class="form-control" placeholder="Username" ng-model="loginDetails.usr">
                      </div>
                      <div class="form-group container-fluid">
                         <input type="password" class="form-control" placeholder="Password" ng-model="loginDetails.pwd">
                      </div>
-                     <div class="container-fluid"">
+                     <div class="container-fluid">
                         <button type="submit" class="btn btn-primary">Sign in</button>
                      </div>
                   </form>

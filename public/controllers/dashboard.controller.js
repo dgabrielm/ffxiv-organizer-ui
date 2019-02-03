@@ -6,15 +6,15 @@ app.controller('dashboardController', ['$scope', 'inventoryService', 'listsServi
         $scope.hasLists = listsService.hasLists
     });
 
-    $scope.createLists = function () {
-        listsService.createListRecords(userService.user._id);
-    };
-
     $scope.$watch(function () {
         return inventoryService.hasInventory;
     }, function (newValue, oldValue) {
         $scope.hasInventory = inventoryService.hasInventory;
     });
+    
+    $scope.createLists = function () {
+        listsService.createListRecords(userService.user._id);
+    };
 
     $scope.createInventory = function () {
         inventoryService.createInventory(userService.user._id);

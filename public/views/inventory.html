@@ -77,29 +77,24 @@
 
     <h3>Import Inventory</h3>
     <br />
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est eius quas quia natus dolore nemo iste ab, illo
-        a. Laborum quos beatae ea perferendis ipsa. At accusamus architecto vitae assumenda?</p>
-    <br /><br />
+    <p>Import your inventory from a JSON file downloaded from FFXIV-Organizer.</p>
+    <br />
     <div class="well">
         <div class="form-group">
-            <label>Upload CSV Representing Inventory</label>
+            <label>Upload JSON representation of inventory</label>
+            <br /><br />
             <input type="file">
-            <p class="help-block">CSV files only</p>
-        </div>
-    </div>
-    <hr />
-    <div class="well">
-        <div class="form-group">
-            <label>Upload PDF downloaded from Lodestone</label>
-            <input type="file">
-            <p class="help-block">Coming Soon</p>
+            <br />
+            <p class="help-block">This service is coming soon</p>
+            <br />
+            <button type="button" ng-disabled="true" ng-click="" class="btn btn-default">Import Inventory</button>
         </div>
     </div>
     <hr />
     <h3>Export Inventory</h3>
     <br />
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est eius quas quia natus dolore nemo iste ab, illo
-        a. Laborum quos beatae ea perferendis ipsa. At accusamus architecto vitae assumenda?</p>
+    <p>You can download your inventory data to use with another FFXIV-Organizer account:</p>
     <br />
-    <button type="button" ng-click="downloadInventory()" class="btn btn-default">Download Inventory as CSV</button>
+    <button type="button" ng-click="downloadInventory()" class="btn btn-default">Download Inventory as JSON</button>
+    <a id="downloadAnchorElem" style="display:none"></a>
 </div>

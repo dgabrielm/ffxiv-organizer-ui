@@ -23,9 +23,7 @@ app.service('inventoryService', ['$http', 'INVENTORIES_CONFIG', function ($http,
             if (response.data !== null) {
                 $this.unsavedChanges = false;
                 $this.backupInventory = JSON.parse(JSON.stringify($this.inventory));
-                // add user feedback variables: saveSuccess or something
             } else {
-                // add user feedback variable: saveFailed or something
             }
         });
     };
@@ -54,7 +52,6 @@ app.service('inventoryService', ['$http', 'INVENTORIES_CONFIG', function ($http,
         let inv = {};
         inv.user_id = id;
         inv.inventory = $this.inventory;
-
         $http.post(INVENTORIES_CONFIG.location + ':' + INVENTORIES_CONFIG.port + '/inventories/', inv)
             .then(function (response) {
                 if (response.data !== null) {
@@ -68,6 +65,5 @@ app.service('inventoryService', ['$http', 'INVENTORIES_CONFIG', function ($http,
                 }
             });
     };
-
 
 }]);

@@ -4,6 +4,7 @@
 
 <form ng-submit="searchDatabaseByName()">
 
+    <!-- Search Bar -->
     <div class="row">
 
         <div class="col-md-9 col-sm-9">
@@ -71,8 +72,11 @@
 
         <!-- Results -->
         <tr ng-repeat="result in results[currentPage]">
+
+            <!-- RESULT DATA -->
             <div class="row">
                 <td>
+
                     <!-- Item data -->
                     <div class="col-md-1 align-middle">
                         <img ng-src="https://xivapi.com/i2/{{result._id}}.png" />
@@ -82,11 +86,11 @@
                         <small>{{result.description}}</small>
                     </div>
 
-                    <!-- Inventory/Lists connection -->
                     <div class="col-md-4">
 
                         <br />
 
+                        <!-- Inventory connector -->
                         <div class="row">
                             <div class="col-md-4">
                                 <button class="btn btn-default btn-sm" type="button">Inventory</button>
@@ -99,6 +103,7 @@
                             </div>
                         </div>
 
+                        <!-- Craft Lists connector -->
                         <div class="row" ng-if="result.ingredients != null">
                             <div class="col-md-4">
                                 <div class="dropdown">
@@ -120,34 +125,6 @@
                                 <button type="button" class="btn btn-default btn-sm" ng-click="updateQtyOrAddItemToList(result)">Update</button>
                             </div>
                         </div>
-
-                        <!-- EXAMPLE FROM LISTS APP OF HOW TO CONDITIONALLY DISPLAY 0 or NUMBER AND ADD TO LISTS -->
-                        <!-- <td ng-if="inventory[ingredient.$key] == undefined">
-                    <input class="form-control input-sm" type="number" ng-model="quantity[ingredient.$key]" ng-change="setUnsavedInv(); inventoryUpdater(ingredient.$key, quantity[ingredient.$key], ingredient)"
-                        placeholder="0" />
-                </td>
-                <td ng-if="inventory[ingredient.$key] != undefined">
-                    <input class="form-control input-sm" type="number" ng-model="inventory[ingredient.$key].qty"
-                        ng-change="setUnsavedInv()" placeholder="{{inventory[ingredient.$key].qty}}" />
-                </td> -->
-
-                        <!-- <div class="row">
-                            <div class="col-md-4">
-                                <div class="dropdown">
-                                    <button class="btn btn-default dropdown-toggle btn-sm" type="button" data-toggle="dropdown">Obtain-Lists
-                                        <span class="caret"></span></button>
-                                    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">List 1</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <input class="form-control input-sm" type="number" placeholder="0" />
-                            </div>
-                            <div class="col-md-4">
-                                <button type="button" class="btn btn-default btn-sm">Update</button>
-                            </div>
-                        </div> -->
 
                     </div>
 
@@ -182,8 +159,10 @@
                             </li>
                         </ul>
                     </div>
+
                 </td>
             </div>
+
         </tr>
 
         <!-- Page Buttons -->
@@ -199,5 +178,18 @@
         </tr>
 
     </table>
-    </div>
+
 </form>
+
+<!-- Alert for no results -->
+<div ng-if="noResults" class="alert alert-info alert-dismissable" role="alert">
+    <button type="button" class="close" data-dismiss="alert" ng-click="resetVisualFeedbackVars()"><span>&times;</span></button>
+    <h5>No results were returned. If you think this is a mistake; please contact the site administrator.</h5>
+</div>
+
+<!-- Alert for no category results -->
+<div ng-if="noCategoryResults" class="alert alert-info alert-dismissable" role="alert">
+    <button type="button" class="close" data-dismiss="alert" ng-click="resetVisualFeedbackVars()"><span>&times;</span></button>
+    <h5>No results were returned. Note that not all categories of items are currently included in FFXIV Organizer. Only
+        craftable items and recipe ingredients are searchable here.</h5>
+</div>

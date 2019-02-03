@@ -1,4 +1,4 @@
-app.controller('navController', ['$scope', 'userService', 'inventoryService', 'listsService', function ($scope, userService, inventoryService, listsService) {
+app.controller('navController', ['$scope', 'userService', 'inventoryService', 'listsService', '$rootScope', function ($scope, userService, inventoryService, listsService, $rootScope) {
 
     // loggedIn status watched from user service
     $scope.loggedIn = userService.loggedIn;
@@ -7,6 +7,10 @@ app.controller('navController', ['$scope', 'userService', 'inventoryService', 'l
     }, function (newValue, oldValue) {
         $scope.loggedIn = userService.loggedIn;
     });
+
+    $scope.getNewBg = function () {
+        $rootScope.getNewBg();
+    }
 
     // watching user service to set username 
     $scope.$watch(function () {

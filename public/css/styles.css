@@ -37,19 +37,10 @@
 
 .text-black {
     color: black;
-} 
-
-/* .jumbotron {
-    background-image: url("../img/jumbotron-images/1.jpg");
-} */
+}
 
 .bg-inverse {
     background-color: #222222;
-}
-
-.back {
-    /* background-color: #d0cfb9; */
-    /* background-image: url("../img/tex-bg-2.png"); */
 }
 
 /* ANIMATIONS */

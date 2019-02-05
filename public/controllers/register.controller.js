@@ -1,4 +1,4 @@
-app.controller('registerController', ['$scope', '$http', 'userService', function ($scope, $http, userService) {
+app.controller('RegisterController', ['$scope', 'userService', function ($scope, userService) {
 
     $scope.loginMode = true;
     $scope.register = {};
@@ -7,8 +7,7 @@ app.controller('registerController', ['$scope', '$http', 'userService', function
         $scope.registerFailed = false;
         $scope.registerSuccessful = false;
         $scope.usernameNotAvailable = false;
-        userService.loginFailed = false;
-        $scope.loginFailed = false;
+        userService.setLoginFailed(false);
     };
 
     $scope.$watch(function () {
@@ -23,10 +22,7 @@ app.controller('registerController', ['$scope', '$http', 'userService', function
 
     $scope.login = function (usr, pwd) {
         $scope.resetVisualFeedbackVars();
-        userService.login(usr, pwd)
-            .catch(function (error) {
-                $scope.loginFailed = true;
-            });
+        userService.login(usr, pwd);
     };
 
     $scope.isValidForm = function () {
@@ -36,7 +32,8 @@ app.controller('registerController', ['$scope', '$http', 'userService', function
     $scope.usernameIsAvailable = function () {
         $scope.resetVisualFeedbackVars();
         var rtn = true;
-        userService.usernames.forEach(usr => {
+        var usernames = userService.usernames;
+        usernames.forEach(usr => {
             if (usr.username == $scope.register.username) {
                 rtn = false;
             }

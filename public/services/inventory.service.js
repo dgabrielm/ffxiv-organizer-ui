@@ -2,7 +2,10 @@ app.service('inventoryService', ['$http', 'INVENTORIES_CONFIG', function ($http,
 
     var $this = this;
 
-    this.unsavedChanges = false;
+    this.setUnsavedChanges = function (bool) {
+        $this.unsavedChanges = bool;
+    };
+
     this.restoreInventory = function () {
         $this.inventory = JSON.parse(JSON.stringify($this.backupInventory));
     };

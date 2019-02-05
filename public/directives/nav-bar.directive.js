@@ -6,17 +6,12 @@ app.directive('navBar', [function () {
         transclude: true,
         replace: true,
         controller: function ($scope, userService, inventoryService, listsService, bgService) {
-            // loggedIn status watched from user service
-            $scope.loggedIn = userService.loggedIn;
+
             $scope.$watch(function () {
                 return userService.loggedIn;
             }, function (newValue, oldValue) {
                 $scope.loggedIn = userService.loggedIn;
             });
-
-            $scope.getNewBg = function () {
-                bgService.getNewBg();
-            }
 
             $scope.$watch(function () {
                 return userService.user;
@@ -24,25 +19,11 @@ app.directive('navBar', [function () {
                 $scope.username = userService.getUsername();
             });
 
-            $scope.login = function (usr, pwd) {
-                $scope.resetLoginFailed();
-                userService.login(usr, pwd)
-                    .catch(function (error) {
-                        userService.loginFailed = true;
-                    });
-            };
-
-            $scope.resetLoginFailed = function () {
-                userService.loginFailed = false;
-            };
-
             $scope.$watch(function () {
                 return userService.loginFailed;
             }, function (newValue, oldValue) {
                 $scope.loginFailed = userService.loginFailed;
             });
-
-            $scope.logout = userService.logout;
 
             $scope.$watch(function () {
                 return inventoryService.unsavedChanges;
@@ -55,6 +36,24 @@ app.directive('navBar', [function () {
             }, function (newValue, oldValue) {
                 $scope.listsChanges = listsService.unsavedChanges;
             });
+
+            $scope.resetLoginFailed = function () {
+                userService.setLoginFailed(false);
+            };
+
+            $scope.login = function (usr, pwd) {
+                $scope.resetLoginFailed();
+                userService.login(usr, pwd);
+            };
+
+            $scope.getNewBg = function () {
+                bgService.getNewBg();
+            }
+
+            $scope.logout = function () {
+                userService.logout();
+            };
+
         }
     }
 }]);

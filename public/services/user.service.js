@@ -14,12 +14,17 @@ app.service('userService', ['$http', '$location', '$window', 'inventoryService',
                 } else {
                     throw new Error;
                 }
+            })
+            .catch(function (error) {
+                $this.loginFailed = true;
             });
     };
 
     this.logout = function () {
         $window.location.href = '/';
     };
+
+    // GETTERS & SETTERS
 
     this.getUsername = function () {
         if ($this.user === undefined) {
@@ -28,6 +33,12 @@ app.service('userService', ['$http', '$location', '$window', 'inventoryService',
             return this.user.username;
         }
     };
+
+    this.setLoginFailed = function (bool) {
+        $this.loginFailed = bool;
+    };
+
+    // HTTP
 
     this.getUsernames = function () {
         $http.get(USERS_CONFIG.location + ':' + USERS_CONFIG.port + '/users/usernames')

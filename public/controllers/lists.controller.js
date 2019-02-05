@@ -1,5 +1,7 @@
-app.controller('listsController', ['$scope', 'listsService', 'iconService', 'inventoryService', 'userService', 'databaseService', function ($scope, listsService, iconService, inventoryService, userService, databaseService) {
+app.controller('ListsController', ['$scope', 'listsService', 'iconService', 'inventoryService', 'userService', function ($scope, listsService, iconService, inventoryService, userService) {
 
+    var user;
+    
     $scope.convertIcon = function (icon) {
         return iconService.convertIcon(icon);
     }
@@ -9,31 +11,35 @@ app.controller('listsController', ['$scope', 'listsService', 'iconService', 'inv
     };
 
     $scope.flickSwitch = function (position) {
-        var obj = {};
-        obj[position] = true
-        listsService.switch = obj;
+        listsService.setSwitch(position);
         $scope.generateRequiredIngredients();
     };
 
     $scope.cancelChanges = function () {
         listsService.restoreLists();
-        listsService.unsavedChanges = false;
+        listsService.setUnsavedChanges(false);
         $scope.generateRequiredIngredients();
     };
 
     $scope.cancelInventoryChanges = function () {
         inventoryService.restoreInventory();
-        inventoryService.unsavedChanges = false;
+        inventoryService.setUnsavedChanges(false);
     };
 
     $scope.setUnsaved = function () {
-        listsService.unsavedChanges = true;
+        listsService.setUnsavedChanges(true);
     };
 
     $scope.$watch(function () {
         return listsService.lists;
     }, function (newValue, oldValue) {
         $scope.lists = listsService.lists;
+    });
+
+    $scope.$watch(function () {
+        return userService.user;
+    }, function (newValue, oldValue) {
+        user = userService.user;
     });
 
     $scope.$watch(function () {
@@ -94,7 +100,7 @@ app.controller('listsController', ['$scope', 'listsService', 'iconService', 'inv
     // LISTS
 
     $scope.changeList = function (list) {
-        listsService.currentCraftList = list;
+        listsService.setCurrentCraftList(list);
     };
 
     $scope.deleteList = function () {
@@ -109,11 +115,11 @@ app.controller('listsController', ['$scope', 'listsService', 'iconService', 'inv
     };
 
     $scope.createListRecords = function () {
-        listsService.createListRecords(userService.user._id);
+        listsService.createListRecords(user._id);
     };
 
     $scope.persistChanges = function () {
-        listsService.persistChanges(userService.user._id);
+        listsService.persistChanges(user._id);
         $scope.generateRequiredIngredients();
     };
 
@@ -132,11 +138,11 @@ app.controller('listsController', ['$scope', 'listsService', 'iconService', 'inv
     };
 
     $scope.setUnsavedInv = function () {
-        inventoryService.unsavedChanges = true;
+        inventoryService.setUnsavedChanges(true);
     };
 
     $scope.persistInventoryChanges = function () {
-        inventoryService.persistChanges(userService.user._id);
+        inventoryService.persistChanges(user._id);
     };
 
     // EDITING LISTS / CRAFTING / INGREDIENTS

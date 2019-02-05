@@ -1,4 +1,6 @@
-app.controller('inventoryController', ['$scope', 'inventoryService', 'iconService', '$window', 'userService', function ($scope, inventoryService, iconService, $window, userService) {
+app.controller('InventoryController', ['$scope', 'inventoryService', 'iconService', '$window', 'userService', function ($scope, inventoryService, iconService, $window, userService) {
+
+    var user = userService.user;
 
     $scope.$watch(function () {
         return inventoryService.inventory;
@@ -25,7 +27,7 @@ app.controller('inventoryController', ['$scope', 'inventoryService', 'iconServic
     });
 
     $scope.createInventory = function () {
-        inventoryService.createInventory(userService.user._id);
+        inventoryService.createInventory(user._id);
     };
 
     $scope.setUnsaved = function () {
@@ -37,10 +39,10 @@ app.controller('inventoryController', ['$scope', 'inventoryService', 'iconServic
     };
 
     $scope.downloadInventory = function () {
-        var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(inventoryService.inventory));
+        var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify($scope.inventory));
         var dlAnchorElem = document.getElementById('downloadAnchorElem');
-        dlAnchorElem.setAttribute("href",     dataStr     );
-        dlAnchorElem.setAttribute("download", userService.user.username + "inventory.json");
+        dlAnchorElem.setAttribute("href", dataStr);
+        dlAnchorElem.setAttribute("download", uuser.username + "inventory.json");
         dlAnchorElem.click();
     };
 
@@ -50,18 +52,18 @@ app.controller('inventoryController', ['$scope', 'inventoryService', 'iconServic
 
     $scope.cancelChanges = function () {
         inventoryService.restoreInventory();
-        inventoryService.unsavedChanges = false;
+        inventoryService.setUnsavedChanges(false);
     };
 
     $scope.updateQty = function (id, qty) {
         if (qty !== 0 && qty !== null && qty !== undefined && qty != '') {
-            inventoryService.inventory[id].qty = qty;
+            $scope.inventory[id].qty = qty;
         }
     };
 
     $scope.checkValid = function (id) {
-        if (inventoryService.inventory[id].qty == undefined || inventoryService.inventory[id].qty < 1) {
-            inventoryService.inventory[id].qty = 1;
+        if ($scope.inventory[id].qty == undefined || $scope.inventory[id].qty < 1) {
+            $scope.inventory[id].qty = 1;
         }
     };
 
@@ -74,7 +76,7 @@ app.controller('inventoryController', ['$scope', 'inventoryService', 'iconServic
     };
 
     $scope.persistChanges = function () {
-        inventoryService.persistChanges(userService.user._id);
+        inventoryService.persistChanges(user._id);
     };
 
 }]);

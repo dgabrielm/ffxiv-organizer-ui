@@ -1,4 +1,4 @@
-app.controller('dashboardController', ['$scope', 'inventoryService', 'listsService', 'userService', '$location', function ($scope, inventoryService, listsService, userService, $location) {
+app.controller('DashboardController', ['$scope', 'inventoryService', 'listsService', 'userService', function ($scope, inventoryService, listsService, userService) {
 
     $scope.$watch(function () {
         return listsService.hasLists;

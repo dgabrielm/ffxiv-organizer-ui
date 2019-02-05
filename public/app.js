@@ -1,4 +1,4 @@
-const app = angular.module('ffxivOrganizer', ['ngRoute', 'ngAnimate', 'angular-toArrayFilter', 'appConfig']);
+const app = angular.module('ffxivOrganizer', ['ngRoute', 'ngAnimate', 'angular-toArrayFilter', 'appConfig', 'angular-mocks']);
 
 app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
 
@@ -7,27 +7,27 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
     $routeProvider
         .when('/account', {
             templateUrl: 'views/account.html',
-            controller: 'accountController'
+            controller: 'AccountController'
         })
         .when('/register', {
             templateUrl: 'views/register.html',
-            controller: 'registerController'
+            controller: 'RegisterController'
         })
         .when('/dashboard', {
             templateUrl: 'views/dashboard.html',
-            controller: 'dashboardController'
+            controller: 'DashboardController'
         })
         .when('/database', {
             templateUrl: 'views/database.html',
-            controller: 'databaseController'
+            controller: 'DatabaseController'
         })
         .when('/lists', {
             templateUrl: 'views/lists.html',
-            controller: 'listsController'
+            controller: 'ListsController'
         })
         .when('/inventory', {
             templateUrl: 'views/inventory.html',
-            controller: 'inventoryController'
+            controller: 'InventoryController'
         })
         .otherwise({
             redirectTo: '/register'

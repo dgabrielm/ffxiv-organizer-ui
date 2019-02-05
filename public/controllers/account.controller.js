@@ -1,4 +1,4 @@
-app.controller('accountController', ['$scope', 'userService', '$http', 'USERS_CONFIG', function ($scope, userService, $http, USERS_CONFIG) {
+app.controller('AccountController', ['$scope', 'userService', function ($scope, userService) {
 
     $scope.editMode = false;
 
@@ -23,7 +23,11 @@ app.controller('accountController', ['$scope', 'userService', '$http', 'USERS_CO
         $scope.dataNotSaved = true;
     }
 
-    $scope.user = userService.user;
+    $scope.$watch(function () {
+        return userService.user;
+    }, function (newValue, oldValue) {
+        $scope.user = userService.user;
+    });
 
     $scope.deleteAccount = function () {
         $scope.resetVisualFeedbackVars();
@@ -42,23 +46,23 @@ app.controller('accountController', ['$scope', 'userService', '$http', 'USERS_CO
         $scope.userUpdate.password = $scope.userUpdate.new_password;
         var usr = {};
         if ($scope.userUpdate.first_name !== undefined && $scope.userUpdate.first_name !== null &&
-            $scope.userUpdate.first_name !== '' && $scope.userUpdate.first_name !== userService.user.first_name) {
+            $scope.userUpdate.first_name !== '' && $scope.userUpdate.first_name !== $scope.user.first_name) {
             usr.first_name = $scope.userUpdate.first_name;
         }
         if ($scope.userUpdate.last_name !== undefined && $scope.userUpdate.last_name !== null &&
-            $scope.userUpdate.last_name !== '' && $scope.userUpdate.last_name !== userService.user.last_name) {
+            $scope.userUpdate.last_name !== '' && $scope.userUpdate.last_name !== $scope.user.last_name) {
             usr.last_name = $scope.userUpdate.last_name;
         }
         if ($scope.userUpdate.character_name !== undefined && $scope.userUpdate.character_name !== null &&
-            $scope.userUpdate.character_name !== '' && $scope.userUpdate.character_name !== userService.user.character_name) {
+            $scope.userUpdate.character_name !== '' && $scope.userUpdate.character_name !== $scope.user.character_name) {
             usr.character_name = $scope.userUpdate.character_name;
         }
         if ($scope.userUpdate.email_address !== undefined && $scope.userUpdate.email_address !== null &&
-            $scope.userUpdate.email_address !== '' && $scope.userUpdate.email_address !== userService.user.email_address) {
+            $scope.userUpdate.email_address !== '' && $scope.userUpdate.email_address !== $scope.user.email_address) {
             usr.email_address = $scope.userUpdate.email_address;
         }
         if ($scope.userUpdate.username !== undefined && $scope.userUpdate.username !== null &&
-            $scope.userUpdate.username !== '' && $scope.userUpdate.username !== userService.user.username) {
+            $scope.userUpdate.username !== '' && $scope.userUpdate.username !== $scope.user.username) {
             usr.username = $scope.userUpdate.username;
         }
         if ($scope.userUpdate.password !== undefined && $scope.userUpdate.password !== null &&

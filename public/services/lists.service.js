@@ -3,8 +3,23 @@ app.service('listsService', ['$http', 'LISTS_CONFIG', function ($http, LISTS_CON
     var $this = this;
 
     this.currentCraftList = "general";
-    this.unsavedChanges = false;
+
+    this.setCurrentCraftList = function (listName) {
+        $this.currentCraftList = listName.toString();
+    };
+
+    this.setUnsavedChanges = function (bool) {
+        $this.unsavedChanges = bool;
+    };
+    
     this.switch = { current: true };
+
+    this.setSwitch = function (position) {
+        var obj = {};
+        obj[position] = true
+        $this.switch = obj;
+    };
+
     this.restoreLists = function () {
         $this.lists = JSON.parse(JSON.stringify($this.backupLists));
     };

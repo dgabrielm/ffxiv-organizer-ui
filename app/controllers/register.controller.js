@@ -33,7 +33,7 @@ app.controller('RegisterController', ['$scope', 'userService', function ($scope,
         $scope.resetVisualFeedbackVars();
         var rtn = true;
         var usernames = userService.usernames;
-        usernames.forEach(usr => {
+        usernames.forEach(function (usr) {
             if (usr.username == $scope.register.username) {
                 rtn = false;
             }

@@ -52,7 +52,7 @@ app.service('inventoryService', ['$http', 'INVENTORIES_CONFIG', function ($http,
     };
 
     this.createInventory = function (id) {
-        let inv = {};
+        var inv = {};
         inv.user_id = id;
         inv.inventory = $this.inventory;
         $http.post(INVENTORIES_CONFIG.location + ':' + INVENTORIES_CONFIG.port + '/inventories/', inv)

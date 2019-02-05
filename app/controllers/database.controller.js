@@ -69,7 +69,7 @@ app.controller('DatabaseController', ['$scope', 'databaseService', '$window', 'i
 
     $scope.getListsObject = function () {
         var obj = {};
-        $scope.lists.craft_lists[$scope.currentCraftList].forEach(item => {
+        $scope.lists.craft_lists[$scope.currentCraftList].forEach(function (item) {
             obj[item._id + item.craft_type] = {
                 qty: item.qty
             };
@@ -84,7 +84,9 @@ app.controller('DatabaseController', ['$scope', 'databaseService', '$window', 'i
     $scope.updateQtyOrAddItemToList = function (item) {
         if (item.listQty > 0 && item.listQty !== null && item.listQty !== undefined && item.listQty != '') {
             if ($scope.listsObj[item._id + item.craft_type] !== undefined) {
-                $scope.lists.craft_lists[$scope.currentCraftList].find(it => it._id + it.craft_type == item._id + item.craft_type).qty = item.listQty;
+                $scope.lists.craft_lists[$scope.currentCraftList].find(function (it) { 
+                    it._id + it.craft_type == item._id + item.craft_type
+                }).qty = item.listQty;
             } else {
                 $scope.lists.craft_lists[$scope.currentCraftList].push({
                     _id: item._id,
@@ -162,7 +164,7 @@ app.controller('DatabaseController', ['$scope', 'databaseService', '$window', 'i
         var page = 0;
         var item = 0;
 
-        results.forEach(result => {
+        results.forEach(function (result) {
             item++;
             if (result.ingredients != null) {
                 if (result.ingredients.carpenter.length != 0) { result.craft_type = 'carpenter'; }

@@ -49,7 +49,7 @@ app.service('listsService', ['$http', 'LISTS_CONFIG', function ($http, LISTS_CON
             });
         }
         // iterate over items in current list (array inside obj inside obj)
-        lst.forEach(itemToCraft => {
+        lst.forEach(function (itemToCraft) {
             // iterate over each item's ingredients (array of strings [id, qty, name, icon_id, id, qty, etc...])
             for (i = 0; i < itemToCraft.ingredients.length; i++) {
                 // Jump every entries
@@ -72,7 +72,7 @@ app.service('listsService', ['$http', 'LISTS_CONFIG', function ($http, LISTS_CON
 
     this.assessListItems = function (inventory) {
         // iterate over items in current craft list
-        $this.lists.craft_lists[$this.currentCraftList].forEach(craftListItem => {
+        $this.lists.craft_lists[$this.currentCraftList].forEach(function (craftListItem) {
             // start off assuming inventory contains required items
             craftListItem.hasItems = true;
             // iterate over each item's ingredients
@@ -94,7 +94,7 @@ app.service('listsService', ['$http', 'LISTS_CONFIG', function ($http, LISTS_CON
     };
 
     this.createListRecords = function (id) {
-        let lst = {};
+        var lst = {};
         lst.user_id = id;
         lst.lists = $this.lists;
         $http.post(LISTS_CONFIG.location + ':' + LISTS_CONFIG.port + '/lists/', lst)

@@ -207,7 +207,7 @@ app.controller('ListsController', ['$scope', 'listsService', 'iconService', 'inv
 
     $scope.craftAllItems = function () {
         // remove ingredients used from inventory
-        Object.keys(listsService.requiredIngredients).forEach((key, index) => {
+        Object.keys(listsService.requiredIngredients).forEach(function (key, index) {
             var qtyToRemove = listsService.requiredIngredients[key].qty;
             if (inventoryService.inventory[key].qty <= qtyToRemove) {
                 inventoryService.deleteItem(key);
@@ -216,7 +216,7 @@ app.controller('ListsController', ['$scope', 'listsService', 'iconService', 'inv
             }
         });
         // add or update qty of recently crafted items in inventory
-        listsService.lists.craft_lists[listsService.currentCraftList].forEach(item => {
+        listsService.lists.craft_lists[listsService.currentCraftList].forEach(function (item) {
             if (inventoryService.inventory[item._id] == undefined) {
                 inventoryService.inventory[item._id] = {
                     name: item.name,

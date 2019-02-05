@@ -3,7 +3,7 @@ const app = express();
 const path = require ('path');
 const config = require('./config');
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'app')));
 
 app.use(function(req, res, next) {
    res.header("Access-Control-Allow-Origin", "*");
@@ -12,7 +12,7 @@ app.use(function(req, res, next) {
  });
 
 app.get('/*', (req, res) => {
-   res.sendFile('index.html', { root: 'public/'});
+   res.sendFile('index.html', { root: 'app/'});
 });
 
 app.listen(config.app.port, () => {

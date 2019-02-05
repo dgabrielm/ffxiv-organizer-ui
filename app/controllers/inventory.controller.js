@@ -42,7 +42,7 @@ app.controller('InventoryController', ['$scope', 'inventoryService', 'iconServic
         var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify($scope.inventory));
         var dlAnchorElem = document.getElementById('downloadAnchorElem');
         dlAnchorElem.setAttribute("href", dataStr);
-        dlAnchorElem.setAttribute("download", uuser.username + "inventory.json");
+        dlAnchorElem.setAttribute("download", user.username + "inventory.json");
         dlAnchorElem.click();
     };
 

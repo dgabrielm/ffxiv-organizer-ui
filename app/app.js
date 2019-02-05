@@ -1,6 +1,7 @@
-const app = angular.module('ffxivOrganizer', ['ngRoute', 'ngAnimate', 'angular-toArrayFilter', 'appConfig']);
 
-app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
+(function () {
+angular.module('ffxivOrganizer', ['ngRoute', 'ngAnimate', 'angular-toArrayFilter', 'appConfig'])
+.config(function ($routeProvider, $locationProvider) {
 
     $locationProvider.html5Mode(true);
 
@@ -33,12 +34,12 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
             redirectTo: '/register'
         });
 
-}]);
-
-app.run(['$location', 'userService', function ($location, userService) {
+})
+.run(function ($location, userService) {
 
     if (!userService.loggedIn && $location.$$path != '/register') {
         $location.path('register');
     }
 
-}]);
+})
+})();

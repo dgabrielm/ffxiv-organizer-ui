@@ -1,4 +1,6 @@
-app.service('listsService', ['$http', 'LISTS_CONFIG', function ($http, LISTS_CONFIG) {
+(function () {
+angular.module('ffxivOrganizer')
+.service('listsService', function ($http, LISTS_CONFIG) {
 
     var $this = this;
 
@@ -165,4 +167,5 @@ app.service('listsService', ['$http', 'LISTS_CONFIG', function ($http, LISTS_CON
             });
     };
 
-}]);
+})
+})();

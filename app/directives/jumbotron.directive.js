@@ -1,4 +1,6 @@
-app.directive('jumbotron', [function () {
+(function () {
+angular.module('ffxivOrganizer')
+.directive('jumbotron', function () {
     return {
         restrict: 'EA',
         scope: {},
@@ -15,4 +17,5 @@ app.directive('jumbotron', [function () {
 
         }
     };
-}]);
+})
+})();

@@ -1,4 +1,6 @@
-app.service('databaseService', ['$http', 'ITEMS_CONFIG', function ($http, ITEMS_CONFIG) {
+(function () {
+angular.module('ffxivOrganizer')
+.service('databaseService', function ($http, ITEMS_CONFIG) {
 
     var $this = this;
     
@@ -27,4 +29,5 @@ app.service('databaseService', ['$http', 'ITEMS_CONFIG', function ($http, ITEMS_
 
     this.getCategories();
 
-}]);
+})
+})();

@@ -1,4 +1,6 @@
-app.controller('InventoryController', ['$scope', 'inventoryService', 'iconService', '$window', 'userService', function ($scope, inventoryService, iconService, $window, userService) {
+(function () {
+angular.module('ffxivOrganizer')
+.controller('InventoryController', function ($scope, inventoryService, iconService, $window, userService) {
 
     var user = userService.user;
 
@@ -79,4 +81,5 @@ app.controller('InventoryController', ['$scope', 'inventoryService', 'iconServic
         inventoryService.persistChanges(user._id);
     };
 
-}]);
+})
+})();

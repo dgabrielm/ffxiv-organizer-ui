@@ -1,4 +1,6 @@
-app.controller('ListsController', ['$scope', 'listsService', 'iconService', 'inventoryService', 'userService', function ($scope, listsService, iconService, inventoryService, userService) {
+(function () {
+angular.module('ffxivOrganizer')
+.controller('ListsController', function ($scope, listsService, iconService, inventoryService, userService) {
 
     var user;
     
@@ -234,4 +236,5 @@ app.controller('ListsController', ['$scope', 'listsService', 'iconService', 'inv
 
     $scope.generateRequiredIngredients();
 
-}]);
+})
+})();

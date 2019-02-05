@@ -1,4 +1,6 @@
-app.controller('DashboardController', ['$scope', 'inventoryService', 'listsService', 'userService', function ($scope, inventoryService, listsService, userService) {
+(function () {
+angular.module('ffxivOrganizer')
+.controller('DashboardController', function ($scope, inventoryService, listsService, userService) {
 
     $scope.$watch(function () {
         return listsService.hasLists;
@@ -20,4 +22,5 @@ app.controller('DashboardController', ['$scope', 'inventoryService', 'listsServi
         inventoryService.createInventory(userService.user._id);
     };
 
-}]);
+})
+})();

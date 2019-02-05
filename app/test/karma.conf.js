@@ -15,18 +15,33 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      '../bower_components/angular/angular.min.js',
-      '../bower_components/angular-animate/angular-animate.min.js',
+      '../bower_components/angular/angular.js',
+      '../bower_components/angular-route/angular-route.js',
+      '../bower_components/angular-animate/angular-animate.js',
       '../bower_components/angular-mocks/angular-mocks.js',
-      '../bower_components/angular-route/angular-route.min.js',
-      '../controllers/*.js',
-      '../directives/*.js',
-      '../js/*.js',
-      '../services/*.js',
-      '../test/unit/controllers/*.js',
-      '../*.js'
+      '../js/angular-toArrayFilter.js',
+      '../app.config.js',
+      '../app.js',
+      '../controllers/account.controller.js',
+      '../controllers/dashboard.controller.js',
+      '../controllers/inventory.controller.js',
+      '../controllers/lists.controller.js',
+      '../controllers/register.controller.js',
+      '../directives/nav-bar.directive.js',
+      '../directives/jumbotron.directive.js',
+      '../directives/ftr.directive.js',
+      '../services/user.service.js',
+      '../services/database.service.js',
+      '../services/inventory.service.js',
+      '../services/icon.service.js',
+      '../services/lists.service.js',
+      '../services/background.service.js',
+      '../bower_components/bootstrap/dist/css/bootstrap.css',
+      '../css/styles.css',
+      '../bower_components/jquery/dist/jquery.min.js',
+      '../bower_components/bootstrap/dist/js/bootstrap.js',
+      '../test/unit/controllers/*.js'
     ],
-
 
     // list of files / patterns to exclude
     exclude: [

@@ -1,4 +1,6 @@
-app.service('inventoryService', ['$http', 'INVENTORIES_CONFIG', function ($http, INVENTORIES_CONFIG) {
+(function () {
+angular.module('ffxivOrganizer')
+.service('inventoryService', function ($http, INVENTORIES_CONFIG) {
 
     var $this = this;
 
@@ -69,4 +71,5 @@ app.service('inventoryService', ['$http', 'INVENTORIES_CONFIG', function ($http,
             });
     };
 
-}]);
+})
+})();

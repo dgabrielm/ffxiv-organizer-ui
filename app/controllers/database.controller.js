@@ -1,4 +1,6 @@
-app.controller('DatabaseController', ['$scope', 'databaseService', '$window', 'iconService', 'inventoryService', 'listsService', function ($scope, databaseService, $window, iconService, inventoryService, listsService) {
+(function () {
+angular.module('ffxivOrganizer')
+.controller('DatabaseController',  function ($scope, databaseService, $window, iconService, inventoryService, listsService) {
 
     $scope.resultsPerPage = 25;
 
@@ -193,4 +195,5 @@ app.controller('DatabaseController', ['$scope', 'databaseService', '$window', 'i
 
     $scope.resetVisualFeedbackVars();
 
-}]);
+})
+})();

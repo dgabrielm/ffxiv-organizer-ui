@@ -1,4 +1,6 @@
-app.controller('AccountController', ['$scope', 'userService', function ($scope, userService) {
+(function () {
+angular.module('ffxivOrganizer')
+.controller('AccountController', function ($scope, userService) {
 
     $scope.editMode = false;
 
@@ -81,4 +83,5 @@ app.controller('AccountController', ['$scope', 'userService', function ($scope, 
             });
     }
 
-}]);
+})
+})();

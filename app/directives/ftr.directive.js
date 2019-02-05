@@ -1,4 +1,6 @@
-app.directive('ftr', [function() {
+(function () {
+angular.module('ffxivOrganizer')
+.directive('ftr', function() {
     return {
         restrict: 'EA',
         scope: {},
@@ -9,4 +11,5 @@ app.directive('ftr', [function() {
             
         }
     };
-}]);
+})
+})();

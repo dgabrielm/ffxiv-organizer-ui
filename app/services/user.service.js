@@ -1,4 +1,6 @@
-app.service('userService', ['$http', '$location', '$window', 'inventoryService', 'listsService', 'USERS_CONFIG', 'INVENTORIES_CONFIG', 'LISTS_CONFIG', function ($http, $location, $window, inventoryService, listsService, USERS_CONFIG, INVENTORIES_CONFIG, LISTS_CONFIG) {
+(function () {
+angular.module('ffxivOrganizer')
+.service('userService', function ($http, $location, $window, inventoryService, listsService, USERS_CONFIG, INVENTORIES_CONFIG, LISTS_CONFIG) {
 
     var $this = this;
 
@@ -68,4 +70,5 @@ app.service('userService', ['$http', '$location', '$window', 'inventoryService',
         return $http.post(USERS_CONFIG.location + ':' + USERS_CONFIG.port + '/users/', register);
     };
 
-}]);
+})
+})();

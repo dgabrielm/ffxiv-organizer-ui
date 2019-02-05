@@ -1,4 +1,6 @@
-app.controller('RegisterController', ['$scope', 'userService', function ($scope, userService) {
+(function () {
+angular.module('ffxivOrganizer')
+.controller('RegisterController', function ($scope, userService) {
 
     $scope.loginMode = true;
     $scope.register = {};
@@ -59,4 +61,5 @@ app.controller('RegisterController', ['$scope', 'userService', function ($scope,
     userService.getUsernames();
     $scope.resetVisualFeedbackVars();
 
-}]);
+})
+})();

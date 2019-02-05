@@ -1,4 +1,6 @@
-app.directive('navBar', [function () {
+(function () {
+angular.module('ffxivOrganizer')
+.directive('navBar', function () {
     return {
         restrict: 'EA',
         scope: {},
@@ -56,4 +58,5 @@ app.directive('navBar', [function () {
 
         }
     }
-}]);
+})
+})();

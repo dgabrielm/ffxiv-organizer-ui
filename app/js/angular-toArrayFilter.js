@@ -1,5 +1,5 @@
+(function () {
 angular.module('angular-toArrayFilter', [])
-
 .filter('toArray', function () {
   return function (obj, addKey) {
     if (!(obj instanceof Object)) {
@@ -14,4 +14,5 @@ angular.module('angular-toArrayFilter', [])
       });
     }
   };
-});
+})
+})();

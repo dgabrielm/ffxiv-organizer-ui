@@ -1,4 +1,6 @@
-app.service('bgService', [function () {
+(function () {
+angular.module('ffxivOrganizer')
+.service('bgService', function () {
 
     $this = this;
 
@@ -24,4 +26,5 @@ app.service('bgService', [function () {
 
     this.getNewBg();
 
-}]);
+})
+})();

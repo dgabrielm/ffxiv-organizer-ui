@@ -11,10 +11,10 @@ app.use(function(req, res, next) {
    next();
  });
 
-app.get('/*', (req, res) => {
+app.get('/*', function (req, res) {
    res.sendFile('index.html', { root: 'app/'});
 });
 
-app.listen(config.app.port, () => {
+app.listen(config.app.port, function () {
    console.log('app has started successfully');
 });

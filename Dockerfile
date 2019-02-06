@@ -2,11 +2,15 @@ FROM node:10
 
 WORKDIR /ffxiv-organizer/ui
 
-COPY package*.json ./
+COPY . .
 
 RUN npm install
 
-COPY . .
+RUN cd app
+
+RUN bower install
+
+RUN cd ..
 
 EXPOSE 8888
 

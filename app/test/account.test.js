@@ -1,17 +1,21 @@
-describe('Account Controller Test Suite', function() {
-  beforeEach(module('ffxivOrganizer'));
+describe('Account Controller Test Suite', function () {
 
-  var $controller;
+  var $controller, $rootScope, userService;
 
-  beforeEach(inject(function(_$controller_){
+  beforeEach(function () {
+    angular.mock.module('ffxivOrganizer');
+  });
+
+  beforeEach(inject(function (_$controller_, _$rootScope_) {
     $controller = _$controller_;
+    $rootScope = _$rootScope_;
   }));
 
-  describe('resetVisualFeedbackVars', function() {
+  describe('resetVisualFeedbackVars', function () {
     var $scope, controller;
 
-    beforeEach(function() {
-      $scope = {};
+    beforeEach(function () {
+      $scope = $rootScope.$new();
       controller = $controller('AccountController', { $scope: $scope });
     });
 
@@ -22,7 +26,7 @@ describe('Account Controller Test Suite', function() {
       expect($scope.accountDeleteFail).toEqual(false);
       expect($scope.accountDeleteSuccess).toEqual(false);
     });
-    
+
   });
 
 });

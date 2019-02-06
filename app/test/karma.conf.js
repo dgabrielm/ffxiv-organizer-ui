@@ -40,7 +40,7 @@ module.exports = function(config) {
       '../css/styles.css',
       '../bower_components/jquery/dist/jquery.min.js',
       '../bower_components/bootstrap/dist/js/bootstrap.js',
-      'unit/controllers/*.js'
+      '*.js'
     ],
 
     // list of files / patterns to exclude

@@ -1,0 +1,40 @@
+{
+  "name": "ffxiv-organizer-ui",
+  "version": "1.2.0-SNAPSHOT",
+  "description": "User Interface for ffxiv-organizer.app",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "start": "node server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dgabrielm/ffxiv-organizer-ui.git"
+  },
+  "keywords": [
+    "Final",
+    "Fantasy",
+    "XIV",
+    "Crafting",
+    "Organiser"
+  ],
+  "author": "Dario Gabriel Mincioni",
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/dgabrielm/ffxiv-organizer-ui/issues"
+  },
+  "homepage": "https://github.com/dgabrielm/ffxiv-organizer-ui#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "bower": "^1.8.8",
+    "jasmine": "^3.3.1",
+    "karma": "^4.0.1",
+    "karma-jasmine": "^2.0.1",
+    "karma-phantomjs-launcher": "^1.0.4"
+  }
+}

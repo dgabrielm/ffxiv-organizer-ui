@@ -1,0 +1,17 @@
+version: '3'
+services:
+   app:
+      container_name: ffxiv-organizer-items-db
+      restart: always
+      build: .
+      image: ffxiv-organizer-items-db
+      command: mongod --port 33222
+      ports:
+         - "33222:33222"
+      volumes:
+         - ./data/db:/data/db
+      networks:
+         - ffxiv-organizer-network
+networks:
+  ffxiv-organizer-network:
+      external: true

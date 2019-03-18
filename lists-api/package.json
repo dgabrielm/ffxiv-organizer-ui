@@ -1,0 +1,39 @@
+{
+  "name": "ffxiv-organizer-lists-api",
+  "version": "1.0.0-SNAPSHOT",
+  "description": "api for lists app",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app",
+    "test": "mocha test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dgabrielm/ffxiv-organizer-lists-api.git"
+  },
+  "keywords": [
+    "FFXIV",
+    "Organizer",
+    "App",
+    "API",
+    "Lists"
+  ],
+  "author": "Dario Gabriel Mincioni",
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/dgabrielm/ffxiv-organizer-lists-api/issues"
+  },
+  "homepage": "https://github.com/dgabrielm/ffxiv-organizer-lists-api#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "mongodb": "^3.1.9",
+    "mongoose": "^5.3.13"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0",
+    "sinon": "^7.1.1",
+    "sinon-test": "^2.4.0"
+  }
+}

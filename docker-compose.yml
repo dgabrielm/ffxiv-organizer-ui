@@ -1,9 +1,0 @@
-version: '3'
-services:
-   app: 
-      container_name: ffxiv-organizer-ui
-      restart: always
-      build: .
-      image: ffxiv-organizer-ui
-      ports:
-         - '8888:8888'

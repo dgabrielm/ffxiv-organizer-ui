@@ -1,0 +1,27 @@
+{
+  "name": "ffxiv-organizer-lists-db",
+  "version": "1.0.0",
+  "description": "Database for lists information",
+  "main": "docker-compose.yml",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dgabrielm/ffxiv-organizer-lists-db.git"
+  },
+  "keywords": [
+    "FFXIV",
+    "Organizer",
+    "App",
+    "API",
+    "Database",
+    "Lists"
+  ],
+  "author": "Dario Gabriel Mincioni",
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/dgabrielm/ffxiv-organizer-lists-db/issues"
+  },
+  "homepage": "https://github.com/dgabrielm/ffxiv-organizer-lists-db#readme"
+}

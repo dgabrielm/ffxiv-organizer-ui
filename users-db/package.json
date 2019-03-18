@@ -1,0 +1,27 @@
+{
+  "name": "ffxiv-organizer-users-db",
+  "version": "1.0.1",
+  "description": "Database for user information",
+  "main": "docker-compose.yml",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dgabrielm/ffxiv-organizer-users-db.git"
+  },
+  "keywords": [
+    "FFXIV",
+    "Organizer",
+    "App",
+    "API",
+    "Database",
+    "Users"
+  ],
+  "author": "Dario Gabriel Mincioni",
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/dgabrielm/ffxiv-organizer-users-db/issues"
+  },
+  "homepage": "https://github.com/dgabrielm/ffxiv-organizer-users-db#readme"
+}

@@ -1,0 +1,33 @@
+{
+  "name": "ffxiv-organizer-items-db",
+  "version": "1.2.0-SNAPSHOT",
+  "ffxiv_version": "4.45",
+  "description": "Database for FFXIV item information",
+  "main": "docker-compose.yml",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dgabrielm/ffxiv-organizer-items-db.git"
+  },
+  "keywords": [
+    "FFXIV",
+    "Organizer",
+    "App",
+    "API",
+    "Database",
+    "Items"
+  ],
+  "author": "Dario Gabriel Mincioni",
+  "dependencies": {
+    "fast-csv": "^2.4.1",
+    "fs": "0.0.1-security",
+    "sanitize-html": "^1.19.3"
+  },
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/dgabrielm/ffxiv-organizer-items-db/issues"
+  },
+  "homepage": "https://github.com/dgabrielm/ffxiv-organizer-items-db#readme"
+}

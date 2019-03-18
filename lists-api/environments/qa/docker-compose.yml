@@ -1,0 +1,14 @@
+version: '3'
+services:
+   app: 
+      container_name: ffxiv-organizer-lists-api
+      restart: always
+      build: .
+      image: ffxiv-organizer-lists-api
+      ports:
+         - '8765:8765'
+      networks:
+         - ffxiv-organizer-network
+networks:
+   ffxiv-organizer-network:
+      external: true

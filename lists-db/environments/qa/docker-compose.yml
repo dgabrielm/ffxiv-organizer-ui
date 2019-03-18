@@ -1,0 +1,17 @@
+version: '3'
+services:
+   app:
+      container_name: ffxiv-organizer-lists-db
+      restart: always
+      build: .
+      image: ffxiv-organizer-lists-db
+      command: mongod --port 33444
+      ports:
+         - "33444:33444"
+      volumes:
+         - ./data/db:/data/db
+      networks:
+         - ffxiv-organizer-network
+networks:
+  ffxiv-organizer-network:
+      external: true

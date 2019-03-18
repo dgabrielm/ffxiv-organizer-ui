@@ -1,0 +1,11 @@
+[
+  {
+    "_id": 0,
+    "first_name": "Test-name",
+    "last_name": "Test-surname",
+    "email_address": "test@test.com",
+    "character_name": "Test Character",
+    "username": "test",
+    "password": "test"
+  }
+]

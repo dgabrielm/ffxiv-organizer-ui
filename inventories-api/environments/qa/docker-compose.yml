@@ -1,0 +1,14 @@
+version: '3'
+services:
+   app: 
+      container_name: ffxiv-organizer-inventories-api
+      restart: always
+      build: .
+      image: ffxiv-organizer-inventories-api
+      ports:
+         - '5678:5678'
+      networks:
+         - ffxiv-organizer-network
+networks:
+   ffxiv-organizer-network:
+      external: true
